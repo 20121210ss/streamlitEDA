@@ -1,0 +1,15 @@
+beautifulsoup4==4.12.2
+dataprep>=0.4.1
+langchain==0.0.335
+lxml==4.9.3
+pandas>=1.5.3
+pandasai==1.4.8
+Requests==2.31.0
+streamlit==1.28.1
+typing_extensions==4.8.0
+ydata-profiling == 4.2.0
+matplotlib>=3.2,<4.0.0
+numpy >=1.19.3,<2
+pydantic >=1.8.1, <2
+streamlit-pandas-profiling==0.1.3
+mitosheet 
