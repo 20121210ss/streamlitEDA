@@ -24,7 +24,7 @@ Height=400
 # 在主頁面上顯示的內容
 def main():
     
-    st.subheader("測試程式")
+    st.subheader("測試EDA程式")
     
     # 上傳檔案
     uploaded_file = st.file_uploader("上傳檔案", type=["csv", "xlsx", "json"])
