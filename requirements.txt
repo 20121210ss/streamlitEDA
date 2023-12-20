@@ -6,8 +6,7 @@ Requests==2.31.0
 streamlit==1.28.1
 typing_extensions == 4.8.0
 ydata-profiling == 4.2.0
-matplotlib==3.2.2
-freetype-py==2.10.4
+matplotlib == 3.7.2
 numpy >=1.19.3,<2
 pydantic >=1.8.1, <2
 streamlit-pandas-profiling==0.1.3
