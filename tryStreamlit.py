@@ -16,8 +16,12 @@ if 'fullReport' not in st.session_state:
     
 if 'minReport' not in st.session_state:
     st.session_state.minReport = None
+    
+if 'code' not in st.session_state:
+    st.session_state.code = None
 
 st.set_page_config(layout="wide")
+
 
 Height=400
 
@@ -78,8 +82,7 @@ def main():
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
         with tab1_4:
             st.text("code頁籤")
-            code = 'print("test code")'
-            st.code(code, language="python", line_numbers=True)
+            st.code(st.session_state.code, language="python", line_numbers=True)
         with tab1_5:
             st.text("Prompt頁籤")
     
@@ -182,8 +185,7 @@ def DataFrame():
         new_dfs, code = spreadsheet(st.session_state.df)
 
         # Display the code
-        st.code(code)
-        #spreadsheet(st.session_state.df)
+        st.session_state.code=code
 
 def Visualization():  
     if st.session_state.df is not None:
