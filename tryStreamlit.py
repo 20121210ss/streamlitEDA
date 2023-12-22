@@ -184,7 +184,7 @@ def DataFrame():
         # The second return value is Mito generated code
         # new_dfs, code = spreadsheet(st.session_state.df)
         # new_df = list(new_dfs.values())[0]
-        selection = spreadsheet(return_type='selection')
+        selection = spreadsheet(st.session_state.df,return_type='selection')
         st.write(selection)
         # Display the code
         # st.session_state.code=code
