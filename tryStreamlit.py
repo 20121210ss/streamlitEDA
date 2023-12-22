@@ -182,10 +182,13 @@ def display_messages(messages):
 def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
-        new_dfs, code, selection= spreadsheet(st.session_state.df,code_options='None',return_type='selection')
+        new_dfs, code = spreadsheet(st.session_state.df)
+        # selection = spreadsheet(return_type='selection')
+        # st.write(selection)
+        
         # Display the code
         st.session_state.code=code
-        st.write(selection)
+        
 
 def Visualization():  
     if st.session_state.df is not None:
