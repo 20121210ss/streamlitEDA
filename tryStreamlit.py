@@ -182,14 +182,11 @@ def display_messages(messages):
 def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
-        new_dfs, code = spreadsheet(st.session_state.df)
-       
-        # selection = spreadsheet(return_type='selection')
+        new_dfs, code = spreadsheet(st.session_state.df,return_type='selection')
         
         # Display the code
         st.session_state.code=code
         
-
 def Visualization():  
     if st.session_state.df is not None:
         # 顯示資料集的圖表
