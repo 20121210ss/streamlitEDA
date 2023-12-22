@@ -21,6 +21,20 @@ st.set_page_config(layout="wide")
 
 Height=400
 
+def setsheet():
+    """
+        預設情況下： new_dfs, code = spreadsheet()
+            new_dfs: 資料表
+            code: 對應產出的code
+            
+        ex : analysis = spreadsheet(return_type='analysis')
+            analysis : 重新運行分析mitosheet會用到，回傳目前的mito資料表?
+            selection :  mito中目前選取的儲存格
+            code : 回傳目前執行的code
+            dfs_list : 回傳目前的dataframe
+    """
+    
+
 # 在主頁面上顯示的內容
 def main():
     
@@ -164,7 +178,12 @@ def display_messages(messages):
 
 def DataFrame():
     if st.session_state.df is not None:
-        spreadsheet(st.session_state.df)
+        # The second return value is Mito generated code
+        new_dfs, code = spreadsheet(st.session_state.df)
+
+        # Display the code
+        st.code(code)
+        #spreadsheet(st.session_state.df)
 
 def Visualization():  
     if st.session_state.df is not None:
