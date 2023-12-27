@@ -19,7 +19,11 @@ if 'minReport' not in st.session_state:
     st.session_state.minReport = None
     
 if 'genCode' not in st.session_state:
-    st.session_state.genCode = None
+    st.session_state.genCode = """
+                                # 這是一個示例代碼
+                                def my_function():
+                                    print('Hello, World!')
+                                """
     
     
 st.set_page_config(layout="wide")
