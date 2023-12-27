@@ -21,8 +21,6 @@ if 'minReport' not in st.session_state:
 if 'code' not in st.session_state:
     st.session_state.code = None
     
-if 'mitosheet_state' not in st.session_state:
-    st.session_state.mitosheet_state = None
     
 st.set_page_config(layout="wide")
 
@@ -198,23 +196,7 @@ def Visualization():
         # 顯示資料集的圖表
         st.subheader("資料集分佈圖")
         st.scatter_chart(st.session_state.df,height=Height)
-
-# def PCAdata():
-#     from sklearn.decomposition import PCA
-
-#     # 创建一个PCA对象，指定降维后的维度
-#     pca = PCA(n_components=2)
-
-#     # 用fit_transform方法将数据降维
-#     reduced_data = pca.fit_transform(original_data)
     
-
-def calculate_moving_average(df: pd.DataFrame, column_to_average: ColumnHeader, window_size: int, exponential: bool=False):
-    if exponential:
-        df['EMA'] = df[column_to_average].ewm(span=window_size, adjust=False).mean()
-    else:
-        df['SMA'] = df[column_to_average].rolling(window=window_size).mean()
-    return df
    
 if __name__ == "__main__":
     main()
