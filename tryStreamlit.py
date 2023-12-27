@@ -7,6 +7,8 @@ from streamlit_pandas_profiling import st_profile_report
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from mitosheet.streamlit.v1 import spreadsheet
+from mitosheet.enterprise.api.code_snippets_utils import create_success_return_obj, get_custom_code_snippets
+from mitosheet.types import CodeSnippet, StepsManagerType
 
 if 'df' not in st.session_state:
     st.session_state.df = None
@@ -182,11 +184,12 @@ def display_messages(messages):
 def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
-        new_dfs, code = spreadsheet(st.session_state.df,key='df1')
-        selection = spreadsheet(key='df1',return_type='selection')
+        # new_dfs, code = spreadsheet(st.session_state.df,key='df1')
+        a = spreadsheet(st.session_state.df,key='df1')
+        selection = a.return_type='selection'
         st.write(selection)
         # Display the code
-        st.session_state.code=code
+        # st.session_state.code=code
         
 def Visualization():  
     if st.session_state.df is not None:
