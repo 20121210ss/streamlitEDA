@@ -20,7 +20,10 @@ if 'minReport' not in st.session_state:
     
 if 'code' not in st.session_state:
     st.session_state.code = None
-
+    
+if 'mitosheet_state' not in st.session_state:
+    st.session_state.mitosheet_state = None
+    
 st.set_page_config(layout="wide")
 
 
@@ -184,11 +187,12 @@ def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
         # new_dfs, code = spreadsheet(st.session_state.df,key='df1')
-        a , code = spreadsheet(st.session_state.df,key='df1',editors=[calculate_moving_average])
+        st.session_state.mitosheet_state = spreadsheet(st.session_state.df,key='df1',editors=[calculate_moving_average])
+        code = st.session_state.mitosheet_state['code']
         # selection = spreadsheet(st.session_state.df,key='df1',return_type='selection')
         # st.write(selection)
         # Display the code
-        st.session_state.code=code
+        st.code=code
         
 def Visualization():  
     if st.session_state.df is not None:
@@ -212,9 +216,7 @@ def calculate_moving_average(df: pd.DataFrame, column_to_average: ColumnHeader, 
     else:
         df['SMA'] = df[column_to_average].rolling(window=window_size).mean()
     return df
-
-
-
+   
 if __name__ == "__main__":
     main()
     
