@@ -185,11 +185,11 @@ def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
         # new_dfs, code = spreadsheet(st.session_state.df,key='df1')
-        a = spreadsheet(st.session_state.df,key='df1')
+        a , code = spreadsheet(st.session_state.df,key='df1')
         # selection = a.return_type='selection'
         st.write(a)
         # Display the code
-        # st.session_state.code=code
+        st.session_state.code=code
         
 def Visualization():  
     if st.session_state.df is not None:
