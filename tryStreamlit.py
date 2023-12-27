@@ -19,11 +19,7 @@ if 'minReport' not in st.session_state:
     st.session_state.minReport = None
     
 if 'genCode' not in st.session_state:
-    st.session_state.genCode = """
-                                # 這是一個示例代碼
-                                def my_function():
-                                    print('Hello, World!')
-                                """
+    st.session_state.genCode = None
     
     
 st.set_page_config(layout="wide")
@@ -193,7 +189,7 @@ def DataFrame():
         # st.session_state.df = new_dfs
         st.session_state.genCode = gencode
         st.write(new_dfs)
-        st.write(selection)
+        st.code = gencode
         
 def Visualization():  
     if st.session_state.df is not None:
