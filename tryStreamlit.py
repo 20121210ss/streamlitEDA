@@ -63,7 +63,7 @@ def main():
             with tab1_1:
                 DataFrame()
             with tab1_2:
-                if st.button("重新生成報告"):
+                if st.button("生成報告"):
                     EDAfullreport()
             with tab1_3:
                 Visualization()
