@@ -63,7 +63,7 @@ def main():
             with tab1_1:
                 DataFrame()
             with tab1_2:
-                if st.button('重新生成報告'):
+                if st.button("重新生成報告"):
                     EDAfullreport()
             with tab1_3:
                 Visualization()
@@ -71,7 +71,7 @@ def main():
         with col2:
             tab2_1, tab2_2 = st.tabs(['EDA內容','建議操作'])
             with tab2_1:
-                if st.button('重新生成報告'):
+                if st.button("重新生成報告"):
                     EDAminreport()
             with tab2_2:
                 st.text("建議操作頁籤")
@@ -184,8 +184,9 @@ def display_messages(messages):
 def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
-        new_dfs, code = spreadsheet(st.session_state.df,key='df1')
-        selection = spreadsheet(st.session_state.df,key='df2',return_type='selection')
+        new_dfs, code = spreadsheet(st.session_state.df)
+        selection = spreadsheet(st.session_state.df,return_type='selection')
+        st.session_state.df = new_dfs
         st.write(new_dfs)
         st.write(selection)
         # Display the code
