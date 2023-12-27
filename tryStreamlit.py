@@ -185,7 +185,7 @@ def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
         new_dfs, code = spreadsheet(st.session_state.df)
-        selection = spreadsheet(st.session_state.df,return_type='selection')
+        selection = spreadsheet(st.session_state.df,ket="select",return_type='selection')
         st.session_state.df = new_dfs
         st.write(new_dfs)
         st.write(selection)
