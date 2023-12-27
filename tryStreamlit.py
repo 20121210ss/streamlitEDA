@@ -19,7 +19,8 @@ if 'minReport' not in st.session_state:
     st.session_state.minReport = None
     
 if 'code' not in st.session_state:
-    st.session_state.code
+    st.session_state.code = None
+    
     
 st.set_page_config(layout="wide")
 
