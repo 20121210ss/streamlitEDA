@@ -18,8 +18,8 @@ if 'fullReport' not in st.session_state:
 if 'minReport' not in st.session_state:
     st.session_state.minReport = None
     
-if 'Code' not in st.session_state:
-    st.session_state.Code = None
+if 'code' not in st.session_state:
+    st.session_state.code = None
     
     
 st.set_page_config(layout="wide")
@@ -85,7 +85,7 @@ def main():
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
         with tab1_4:
             st.text("code頁籤")
-            st.code(st.session_state.Code, language="python", line_numbers=True)
+            st.code(st.session_state.code)
         with tab1_5:
             st.text("Prompt頁籤")
     
@@ -184,10 +184,10 @@ def display_messages(messages):
 def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
-        new_dfs, Code = spreadsheet(st.session_state.df)
+        new_dfs, code = spreadsheet(st.session_state.df)
         selection = spreadsheet(st.session_state.df,key="select",return_type='selection')
         # st.session_state.df = new_dfs
-        st.session_state.Code = Code
+        st.session_state.code = code
         st.write(new_dfs)
         st.write(selection)
         
