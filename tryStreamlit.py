@@ -85,7 +85,7 @@ def main():
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
         with tab1_4:
             st.text("code頁籤")
-            #st.code(st.session_state.genCode, language="python", line_numbers=True)
+            st.code(st.session_state.genCode, language="python", line_numbers=True)
         with tab1_5:
             st.text("Prompt頁籤")
     
@@ -189,7 +189,6 @@ def DataFrame():
         # st.session_state.df = new_dfs
         st.session_state.genCode = gencode
         st.write(new_dfs)
-        st.code = gencode
         
 def Visualization():  
     if st.session_state.df is not None:
