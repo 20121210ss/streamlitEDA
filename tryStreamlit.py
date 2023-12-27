@@ -63,18 +63,16 @@ def main():
             with tab1_1:
                 DataFrame()
             with tab1_2:
-                if(st.button('重新生成報告')):
+                if st.button('重新生成報告'):
                     EDAfullreport()
-                EDAfullreport()
             with tab1_3:
                 Visualization()
             
         with col2:
             tab2_1, tab2_2 = st.tabs(['EDA內容','建議操作'])
             with tab2_1:
-                if(st.button('重新生成報告')):
+                if st.button('重新生成報告'):
                     EDAminreport()
-                EDAminreport()
             with tab2_2:
                 st.text("建議操作頁籤")
                 with st.expander("建議操作如下", expanded=True):
