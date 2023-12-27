@@ -7,8 +7,7 @@ from streamlit_pandas_profiling import st_profile_report
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from mitosheet.streamlit.v1 import spreadsheet
-from mitosheet.enterprise.api.code_snippets_utils import create_success_return_obj, get_custom_code_snippets
-from mitosheet.types import CodeSnippet, StepsManagerType
+from mitosheet.extensions.v1 import ColumnHeader
 
 if 'df' not in st.session_state:
     st.session_state.df = None
@@ -185,9 +184,9 @@ def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
         # new_dfs, code = spreadsheet(st.session_state.df,key='df1')
-        a , code = spreadsheet(st.session_state.df,key='df1')
-        selection = spreadsheet(st.session_state.df,key='df1',return_type='selection')
-        st.write(selection)
+        a , code = spreadsheet(st.session_state.df,key='df1',editors=[calculate_moving_average])
+        # selection = spreadsheet(st.session_state.df,key='df1',return_type='selection')
+        # st.write(selection)
         # Display the code
         st.session_state.code=code
         
@@ -196,6 +195,25 @@ def Visualization():
         # 顯示資料集的圖表
         st.subheader("資料集分佈圖")
         st.scatter_chart(st.session_state.df,height=Height)
+
+# def PCAdata():
+#     from sklearn.decomposition import PCA
+
+#     # 创建一个PCA对象，指定降维后的维度
+#     pca = PCA(n_components=2)
+
+#     # 用fit_transform方法将数据降维
+#     reduced_data = pca.fit_transform(original_data)
+    
+
+def calculate_moving_average(df: pd.DataFrame, column_to_average: ColumnHeader, window_size: int, exponential: bool=False):
+    if exponential:
+        df['EMA'] = df[column_to_average].ewm(span=window_size, adjust=False).mean()
+    else:
+        df['SMA'] = df[column_to_average].rolling(window=window_size).mean()
+    return df
+
+
 
 if __name__ == "__main__":
     main()
