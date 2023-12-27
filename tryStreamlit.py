@@ -61,9 +61,10 @@ def main():
         with col1:
             tab1_1, tab1_2, tab1_3 = st.tabs(['Dataframe','EDA report','Visualization'])
             with tab1_1:
-                
                 DataFrame()
             with tab1_2:
+                if(st.button('重新生成報告')):
+                    EDAfullreport()
                 EDAfullreport()
             with tab1_3:
                 Visualization()
@@ -71,6 +72,8 @@ def main():
         with col2:
             tab2_1, tab2_2 = st.tabs(['EDA內容','建議操作'])
             with tab2_1:
+                if(st.button('重新生成報告')):
+                    EDAminreport()
                 EDAminreport()
             with tab2_2:
                 st.text("建議操作頁籤")
@@ -88,7 +91,6 @@ def main():
         with tab1_5:
             st.text("Prompt頁籤")
     
-
 # 完整EDA報告
 def EDAfullreport():
     
