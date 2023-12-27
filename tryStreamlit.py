@@ -187,8 +187,8 @@ def DataFrame():
     if st.session_state.df is not None:
         # The second return value is Mito generated code
         # new_dfs, code = spreadsheet(st.session_state.df,key='df1')
-        st.session_state.mitosheet_state = spreadsheet(st.session_state.df,key='df1',editors=[calculate_moving_average])
-        new_dfs , code = st.session_state.mitosheet_state
+        new_dfs , code = spreadsheet(st.session_state.df,key='df1',editors=[calculate_moving_average])
+        
         # selection = spreadsheet(st.session_state.df,key='df1',return_type='selection')
         # st.write(selection)
         # Display the code
