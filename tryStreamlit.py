@@ -186,8 +186,10 @@ def DataFrame():
         # The second return value is Mito generated code
         new_dfs, gencode = spreadsheet(st.session_state.df)
         selection = spreadsheet(st.session_state.df,key="select",return_type='selection')
+        
         # st.session_state.df = new_dfs
         st.session_state.genCode = gencode
+        st.write(selection)
         st.write(new_dfs)
         
 def Visualization():  
