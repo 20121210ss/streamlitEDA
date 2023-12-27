@@ -19,8 +19,7 @@ if 'minReport' not in st.session_state:
     st.session_state.minReport = None
     
 if 'code' not in st.session_state:
-    st.session_state.code = None
-    
+    st.session_state.code
     
 st.set_page_config(layout="wide")
 
@@ -85,7 +84,7 @@ def main():
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
         with tab1_4:
             st.text("code頁籤")
-            st.code(st.session_state.code)
+            st.code(st.session_state.code, language="python", line_numbers=True)
         with tab1_5:
             st.text("Prompt頁籤")
     
