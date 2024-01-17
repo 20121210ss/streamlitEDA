@@ -12,3 +12,6 @@ pydantic >=1.8.1, <2
 streamlit-pandas-profiling==0.1.3
 mitosheet 
 scikit-learn==1.3.2 
+pygwalker==0.3.20
+ej2-streamlit-grids == 24.1.41
+streamlit-aggri == 0.3.4.post3
