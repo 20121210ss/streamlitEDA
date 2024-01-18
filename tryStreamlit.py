@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from streamlit.components.v1 import html
 from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
-
+from langchain.chat_models import ChatOpenAI
 
 if 'df' not in st.session_state:
     st.session_state.df = None
@@ -38,6 +38,7 @@ Height=450
 def main():
     
     st.subheader("測試EDA程式")
+    key = st.text_input('openAI key:')
     upload()
             
     if st.session_state.df is not None:    
@@ -78,7 +79,7 @@ def main():
                 st.text("建議操作頁籤")
                 with st.expander("建議操作如下", expanded=True):
                     test = splitOneCol(st.session_state.selectCol)
-                    st.write(predictOneCol(test))
+                    st.write(predictOneCol(test,key))
 
                 
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
@@ -163,10 +164,9 @@ def splitOneCol(selindex):
         result="請點選要針對哪個特徵進行建議"
     return result
 
-def predictOneCol(text):
-    from langchain.chat_models import ChatOpenAI
+def predictOneCol(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
-    llm = ChatOpenAI(openai_api_key="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",model=OPENAI_MODEL)
+    llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
     result = llm.predict("以下是我的資料集中其中一個特徵欄位的分析\n"+text+"\n可以幫我列點這個欄位可能可以做哪些資料前處理的操作嗎")
     return result
 
@@ -219,10 +219,11 @@ def DataFrame():
     if st.session_state.df is not None:
         column_names_list = list(st.session_state.df.columns)
         
-        col = st.radio(
+        col = st.selectbox(
             "想了解哪個欄位",
             column_names_list,
-            index=None
+            index=None,
+            placeholder="選擇欲分析的特徵欄位"
         )
         st.session_state.selectCol = col
         if st.session_state.selectCol is not None:
