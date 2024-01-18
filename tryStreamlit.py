@@ -1,9 +1,7 @@
 import os
 import streamlit as st
 import pandas as pd
-from st_aggrid import AgGrid,ColumnsAutoSizeMode
 from ydata_profiling import ProfileReport 
-from streamlit_pandas_profiling import st_profile_report
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from streamlit.components.v1 import html
