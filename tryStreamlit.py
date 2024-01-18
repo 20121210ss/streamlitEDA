@@ -77,11 +77,9 @@ def main():
             with tab2_2:
                 st.text("建議操作頁籤")
                 with st.expander("建議操作如下", expanded=True):
-                    st.write("建議操作1")
-                    st.write("建議操作2")
-                    st.write("建議操作3")
-                    st.write("建議操作4")
-                    st.write("建議操作5")
+                    test = splitOneCol(st.session_state.selectCol)
+                    st.write(predictOneCol(test))
+
                 
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
         with tab1_4:
@@ -112,7 +110,6 @@ def inputCode(code_placeholder):
         st.session_state.genCode += st.session_state.QC
         st.session_state.cd = ''
         code_placeholder.code(st.session_state.genCode, language="python", line_numbers=True)
-
 
 # 完整EDA報告
 def reRunEDAfullreport():
@@ -157,24 +154,21 @@ def remove_html_tags(input_text):
     text_without_tags = soup.get_text()
     return text_without_tags
 
-def splitChunk(input_text):
-    delimiters = ["Overview", "Variables", "Interactions", "Correlations", "Missing values", "Sample", "Duplicate rows"]
-    chunks = []
+def splitOneCol(selindex):
+    if selindex is not None:
+        sr2 = '''<div class=variable>'''
+        split_result = st.session_state.minReport.split(sr2)
+        result = remove_html_tags(split_result[1])
+    else:
+        result="請點選要針對哪個特徵進行建議"
+    return result
 
-    for i in range(1, len(delimiters)):
-        start_idx = input_text.find(delimiters[i], input_text.find(delimiters[i-1]))
-        end_idx = input_text.find(delimiters[i], start_idx + 1)
-
-        if start_idx != -1 and end_idx != -1:
-            chunks.append(input_text[start_idx:end_idx].strip() + "RRRR")
-
-    # 处理最后一个部分
-    last_delimiter = delimiters[-1]
-    last_start_idx = input_text.find(last_delimiter)
-    if last_start_idx != -1:
-        chunks.append(input_text[last_start_idx:].strip())
-
-    return chunks
+def predictOneCol(text):
+    from langchain.chat_models import ChatOpenAI
+    OPENAI_MODEL = "gpt-3.5-turbo"
+    llm = ChatOpenAI(openai_api_key="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",model=OPENAI_MODEL)
+    result = llm.predict("以下是我的資料集中其中一個特徵欄位的分析\n"+text+"\n可以幫我列點這個欄位可能可以做哪些資料前處理的操作嗎")
+    return result
 
 def chat():
     
@@ -234,11 +228,10 @@ def DataFrame():
         if st.session_state.selectCol is not None:
             st.session_state.selectCol = column_names_list.index(st.session_state.selectCol)
         
-        edited_df = st.data_editor(st.session_state.df,on_change=RR())
+        edited_df = st.data_editor(st.session_state.df,on_change=ResetReport())
         st.session_state.df = edited_df
         
-        
-def RR():
+def ResetReport():
     st.session_state.fullReport = None
     st.session_state.minReport = None
         
