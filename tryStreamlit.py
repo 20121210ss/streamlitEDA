@@ -66,7 +66,7 @@ def main():
                     st.session_state.fullReport = None
 
             with tab1_3:
-                st.write(predictThreePic(st.session_state.colLis,key))
+                st.write(predictThreePic(st.session_state.colList,key))
                 Visualization()
             
         with col2:
