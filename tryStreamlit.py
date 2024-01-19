@@ -152,7 +152,7 @@ def reRunOneColEDAreport(selindex):
         split_result = st.session_state.minReport.split(sr12,2)
         result = split_result[0]+sr12+split_result[-1]
         split_result = result.split(sr2)
-        result = split_result[0]+sr2+split_result[selindex+1]+sr2+split_result[-1]
+        result = split_result[0]+sr2+split_result[selindex]+sr2+split_result[-1]
         st.session_state.OneColReport = result
         html(result,height=Height,scrolling=True)
             
