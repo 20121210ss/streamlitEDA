@@ -77,8 +77,7 @@ def main():
             with tab2_1:
                 if st.session_state.minReport is not None:
                     if st.session_state.selectCol is not None:
-                        st.write(st.session_state.selectCol)
-                        #reRunOneColEDAreport(st.session_state.selectCol)
+                        reRunOneColEDAreport(st.session_state.selectCol)
                     else:
                         html(st.session_state.minReport,height=Height,scrolling=True)
                 else:
@@ -242,7 +241,7 @@ def DataFrame():
         )
         st.session_state.selectCol = col
         if st.session_state.selectCol is not None:
-            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)
+            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)+1
         
         edited_df = st.data_editor(st.session_state.df)
         st.session_state.df = edited_df
