@@ -244,12 +244,9 @@ def DataFrame():
         if st.session_state.selectCol is not None:
             st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)
         
-        edited_df = st.data_editor(st.session_state.df,on_change=ResetReport())
+        edited_df = st.data_editor(st.session_state.df)
         st.session_state.df = edited_df
         
-def ResetReport():
-    st.session_state.fullReport = None
-    st.session_state.minReport = None
         
 @st.cache_resource
 def convert_df(df):
