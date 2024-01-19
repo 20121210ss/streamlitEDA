@@ -147,8 +147,9 @@ def reRunOneColEDAreport(selindex):
     if st.session_state.df is not None:
         sr12 = '''<div class="row spacing">'''
         sr2 = '''<div class=variable>'''
-        
-        split_result = result.split(sr12,2)
+
+        # 使用split方法切割字串
+        split_result = st.session_state.minReport.split(sr12,2)
         result = split_result[0]+sr12+split_result[-1]
         split_result = result.split(sr2)
         result = split_result[0]+sr2+split_result[selindex+1]+sr2+split_result[-1]
@@ -237,7 +238,7 @@ def DataFrame():
         )
         st.session_state.selectCol = col
         if st.session_state.selectCol is not None:
-            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)
+            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)+1
         
         edited_df = st.data_editor(st.session_state.df)
         st.session_state.df = edited_df
