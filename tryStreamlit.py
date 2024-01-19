@@ -73,9 +73,12 @@ def main():
             tab2_1, tab2_2 = st.tabs(['EDA內容','建議操作'])
             with tab2_1:
                 if st.session_state.minReport is not None:
-                     html(st.session_state.minReport,height=Height,scrolling=True)
+                    if st.session_state.selectCol is not None:
+                        reRunOneColEDAreport(st.session_state.selectCol)
+                    else:
+                        html(st.session_state.minReport,height=Height,scrolling=True)
                 else:
-                    reRunEDAminreport(st.session_state.selectCol)
+                    reRunEDAminreport()
                 if st.button("重新生成報告"):
                     st.session_state.minReport = None
                     
@@ -126,7 +129,19 @@ def reRunEDAfullreport():
         st.session_state.fullReport = profile.to_html()
         html(st.session_state.fullReport,height=Height,scrolling=True)
             
-def reRunEDAminreport(selindex):
+def reRunEDAminreport():
+    if st.session_state.df is not None:    
+        sr = '''<div class="row header">'''
+        # 創建 Profile 報告
+        profile = ProfileReport(st.session_state.df,minimal=True)
+        st.session_state.minReport = profile.to_html()
+        # 使用split方法切割字串
+        split_result = st.session_state.minReport.split(sr)
+        result = split_result[0]+sr+split_result[2]
+        st.session_state.minReport = result
+        html(result,height=Height,scrolling=True)
+
+def reRunOneColEDAreport(selindex):
     if st.session_state.df is not None:
         if selindex is not None:
             sr1 = '''<div class="row header">'''
@@ -142,17 +157,6 @@ def reRunEDAminreport(selindex):
             result = split_result[0]+sr12+split_result[-1]
             split_result = result.split(sr2)
             result = split_result[0]+sr2+split_result[selindex+1]+sr2+split_result[-1]
-            st.session_state.minReport = result
-            html(result,height=Height,scrolling=True)
-            
-        else:    
-            sr = '''<div class="row header">'''
-            # 創建 Profile 報告
-            profile = ProfileReport(st.session_state.df,minimal=True)
-            st.session_state.minReport = profile.to_html()
-            # 使用split方法切割字串
-            split_result = st.session_state.minReport.split(sr)
-            result = split_result[0]+sr+split_result[2]
             st.session_state.minReport = result
             html(result,height=Height,scrolling=True)
             
