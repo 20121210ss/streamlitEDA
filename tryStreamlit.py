@@ -179,7 +179,7 @@ def predictOneCol(text,key):
 def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我前五個使用者根據這個資料集，最想看到的資料視覺化圖示，直接列點給我就好，並且附上他的code")
+    result = llm.predict("以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我前三個使用者根據這個資料集，最想看到的資料視覺化圖示，直接列點給我就好，並且附上他的code")
     return result
 
 def chat():
