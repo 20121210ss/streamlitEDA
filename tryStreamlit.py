@@ -237,7 +237,7 @@ def DataFrame():
         )
         st.session_state.selectCol = col
         if st.session_state.selectCol is not None:
-            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)+1
+            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)
         
         edited_df = st.data_editor(st.session_state.df)
         st.session_state.df = edited_df
