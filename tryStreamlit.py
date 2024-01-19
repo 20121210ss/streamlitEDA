@@ -87,7 +87,6 @@ def main():
                 with st.expander("建議操作如下", expanded=True):
                     test = splitOneCol(st.session_state.selectCol)
                     test = remove_html_tags(test)
-                    st.write(test)
                     st.write(predictOneCol(test,key))
 
                 
