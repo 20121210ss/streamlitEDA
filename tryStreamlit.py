@@ -79,6 +79,8 @@ def main():
                 st.text("建議操作頁籤")
                 with st.expander("建議操作如下", expanded=True):
                     test = splitOneCol(st.session_state.selectCol)
+                    test = remove_html_tags(test)
+                    st.write(test)
                     st.write(predictOneCol(test,key))
 
                 
@@ -167,7 +169,7 @@ def splitOneCol(selindex):
 def predictOneCol(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("以下是我的資料集中其中一個特徵欄位的分析\n"+text+"\n可以幫我列點這個欄位可能可以做哪些資料前處理的操作嗎")
+    result = llm.predict("以下是我的資料集中其中一個特徵欄位的分析\n"+text+"\n可以幫我列點這個欄位可能可以做哪些資料前處理的操作嗎，若不需要進行的操作則不用列出")
     return result
 
 def chat():
