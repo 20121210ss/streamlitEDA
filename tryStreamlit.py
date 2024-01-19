@@ -31,6 +31,9 @@ if 'colList ' not in st.session_state:
 
 if 'selectCol' not in st.session_state:
     st.session_state.selectCol = None
+    
+if 'OneColReport' not in st.session_state:
+    st.session_state.OneColReport = None
 
 st.set_page_config(layout="wide")
 
@@ -146,9 +149,7 @@ def reRunOneColEDAreport(selindex):
             sr1 = '''<div class="row header">'''
             sr12 = '''<div class="row spacing">'''
             sr2 = '''<div class=variable>'''
-            # 創建 Profile 報告
-            profile = ProfileReport(st.session_state.df,minimal=True)
-            st.session_state.minReport = profile.to_html()
+
             # 使用split方法切割字串
             split_result = st.session_state.minReport.split(sr1)
             result = split_result[0]+sr1+split_result[2]
@@ -156,7 +157,7 @@ def reRunOneColEDAreport(selindex):
             result = split_result[0]+sr12+split_result[-1]
             split_result = result.split(sr2)
             result = split_result[0]+sr2+split_result[selindex+1]+sr2+split_result[-1]
-            st.session_state.minReport = result
+            st.session_state.OneColReport = result
             html(result,height=Height,scrolling=True)
             
 def remove_html_tags(input_text):
