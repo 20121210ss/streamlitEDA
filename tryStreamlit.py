@@ -145,13 +145,9 @@ def reRunEDAminreport():
 
 def reRunOneColEDAreport(selindex):
     if st.session_state.df is not None:
-        sr1 = '''<div class="row header">'''
         sr12 = '''<div class="row spacing">'''
         sr2 = '''<div class=variable>'''
-
-        # 使用split方法切割字串
-        split_result = st.session_state.minReport.split(sr1)
-        result = split_result[0]+sr1+split_result[2]
+        
         split_result = result.split(sr12,2)
         result = split_result[0]+sr12+split_result[-1]
         split_result = result.split(sr2)
