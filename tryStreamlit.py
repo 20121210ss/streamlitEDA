@@ -25,7 +25,10 @@ if 'QC' not in st.session_state:
     
 if 'cd' not in st.session_state:
     st.session_state.cd = None
-    
+
+if 'colList ' not in st.session_state:
+    st.session_state.colList  = None
+
 if 'selectCol' not in st.session_state:
     st.session_state.selectCol = None
 
@@ -63,6 +66,7 @@ def main():
                     st.session_state.fullReport = None
 
             with tab1_3:
+                st.write(predictThreePic(st.session_state.colLis,key))
                 Visualization()
             
         with col2:
@@ -172,6 +176,12 @@ def predictOneCol(text,key):
     result = llm.predict("以下是我的資料集中其中一個特徵欄位的分析\n"+text+"\n可以幫我列點這個欄位可能可以做哪些資料前處理的操作嗎，若不需要進行的操作則不用列出")
     return result
 
+def predictThreePic(text,key):
+    OPENAI_MODEL = "gpt-3.5-turbo"
+    llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
+    result = llm.predict("以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我前五個使用者根據這個資料集，最想看到的資料視覺化圖示，直接列點給我就好，並且附上他的code")
+    return result
+
 def chat():
     
      # 初始化對話session
@@ -219,17 +229,16 @@ def display_messages(messages):
 
 def DataFrame():
     if st.session_state.df is not None:
-        column_names_list = list(st.session_state.df.columns)
-        
+        st.session_state.colList = list(st.session_state.df.columns)
         col = st.selectbox(
             "想了解哪個欄位",
-            column_names_list,
+            st.session_state.colList,
             index=None,
             placeholder="選擇欲分析的特徵欄位"
         )
         st.session_state.selectCol = col
         if st.session_state.selectCol is not None:
-            st.session_state.selectCol = column_names_list.index(st.session_state.selectCol)
+            st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)
         
         edited_df = st.data_editor(st.session_state.df,on_change=ResetReport())
         st.session_state.df = edited_df
