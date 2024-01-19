@@ -77,7 +77,8 @@ def main():
             with tab2_1:
                 if st.session_state.minReport is not None:
                     if st.session_state.selectCol is not None:
-                        reRunOneColEDAreport(st.session_state.selectCol)
+                        st.write(st.session_state.selectCol)
+                        #reRunOneColEDAreport(st.session_state.selectCol)
                     else:
                         html(st.session_state.minReport,height=Height,scrolling=True)
                 else:
