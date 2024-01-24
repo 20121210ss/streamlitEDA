@@ -13,3 +13,4 @@ mitosheet
 scikit-learn==1.3.2 
 pygwalker==0.3.20
 openai == 0.27.10
+pandasai == 1.4.8

@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from streamlit.components.v1 import html
 from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
 from langchain.chat_models import ChatOpenAI
+from pandasai import SmartDataframe
 
 # 初始化變數-資料集
 if 'df' not in st.session_state:
@@ -283,7 +284,7 @@ def chat(key):
             st.markdown(message["content"])
     
     if st.session_state.df is not None:
-        user_input = st.chat_input("請輸入欲對資料集執行的操作...")
+        user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
         # 接收使用者輸入
         if user_input is not None:
             # 將使用者的輸入加入紀錄
@@ -315,7 +316,8 @@ def chat(key):
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("我的資料集為df\n"+st.session_state.df+"\n我的問題是:"+text+"\n可以給我對應操作的code或幫我解答嗎")
+    df = SmartDataframe(st.session_state.df, config={"llm": llm})
+    result = df.chat("我的問題是:"+text+"\n可以給我對應操作的code或幫我解答嗎")
     return result
 
 # 尚未完善的顯示聊天紀錄功能          
