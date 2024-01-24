@@ -346,6 +346,7 @@ def chat(key):
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
  
+# 詢問資料集
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
@@ -353,8 +354,6 @@ def predictDF(text,key):
     result = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
     return result
 
- 
-   
 if __name__ == "__main__":
     main()
     
