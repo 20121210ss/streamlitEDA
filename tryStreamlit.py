@@ -133,7 +133,7 @@ def main():
                     test = remove_html_tags(test)
                     st.write(predictOneCol(test,key))
     
-            tab1_4 = st.tabs(['code'])
+            tab1_4 = st.tabs(['Code'], key='tab1_4')
             with tab1_4:
                 codePage()
             
