@@ -350,8 +350,6 @@ def chat(key):
                 else:
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
-    
-    #display_messages(st.session_state.messages)
  
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
@@ -360,13 +358,6 @@ def predictDF(text,key):
     result = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
     return result
 
-# 尚未完善的顯示聊天紀錄功能          
-def display_messages(messages):
-    # 显示所有消息
-    ordered_messages = sorted(messages, key=lambda x: x["content"])
-    for message in ordered_messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
  
    
 if __name__ == "__main__":
