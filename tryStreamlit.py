@@ -99,7 +99,9 @@ def main():
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
-                st.write(predictThreePic(str(st.session_state.colList),key))
+                rel = predictThreePic(str(st.session_state.colList),key)
+                for line in rel:
+                    st.write(line.strip())
                 Visualization()
                 
         # 右半部分col1(佔30%)   
@@ -230,9 +232,25 @@ def predictOneCol(text,key):
 def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我前三個使用者根據這個資料集，最想看到的資料視覺化圖示，直接列點給我就好，並且附上他的code")
+    ThreePic = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，直接列點給我就好，並且附上他的code")
+    result = splitThreePic(ThreePic)
     return result
 
+def splitThreePic(ThreePic):
+    split_result = []
+    sr = 'import'
+    zc = ThreePic.split(sr)
+    split_result.append(zc[0])
+    zc1 = (sr + zc[1]).split('2.')
+    split_result.append(zc1[0])
+    split_result.append('2.'+zc1[1])
+    zc2 = (sr + zc[2]).split('3.')
+    split_result.append(zc2[0])
+    split_result.append('3.'+zc2[1])
+    split_result.append(sr + zc[3])
+
+    return split_result
+    
 # 資料集呈現
 def DataFrame():
     if st.session_state.df is not None:
@@ -295,12 +313,11 @@ def chat(key):
             with st.chat_message("assistant"):
                 
                 response = predictDF(user_input,key) 
-                # st.write(pandas_ai.run(st.session_state.df, prompt='可以幫我列出前五列的內容嗎?'))
                 
-                # if os.path.isfile('temp_chart.png'):
-                #     im = plt.imread('temp_chart.png')
-                #     st.image(im)
-                #     os.remove('temp_chart.png')
+                if os.path.isfile('temp_chart.png'):
+                    im = plt.imread('temp_chart.png')
+                    st.image(im)
+                    os.remove('temp_chart.png')
                 
                 if response is not None:
                     st.write(response)
