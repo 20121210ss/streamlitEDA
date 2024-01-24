@@ -39,6 +39,14 @@ if 'selectCol' not in st.session_state:
 # 初始化變數-使用者選擇要了解的一個欄位的Report
 if 'OneColReport' not in st.session_state:
     st.session_state.OneColReport = None
+    
+# 初始化變數-單一欄位的預測結果
+if 'OneColresult' not in st.session_state:
+    st.session_state.OneColresult = None
+    
+# 初始化對話session
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 # 設定streamlit排版
 st.set_page_config(layout="wide")
@@ -130,7 +138,8 @@ def main():
             codePage()
                 
         with tab1_5:
-            st.text("Prompt頁籤")
+            chat(key)
+            
             
 # 上傳檔案
 def upload():
@@ -150,9 +159,9 @@ def codePage():
     # 显示代码内容
     code_placeholder.text("code內容")
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-    st.session_state.inputCode = st.text_area("輸入自行撰寫python code")
+    st.session_state.inputCode = st.text_area("輸入自行撰寫python code",value='')
     st.button("送出",on_click=refreshCode(code_placeholder))
-
+    
 # 重整code頁籤     
 def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
@@ -267,12 +276,7 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
     return StreamlitRenderer(df, spec="./gw_config.json", debug=False)   
 
 # 尚未完善的聊天功能
-def chat():
-    
-     # 初始化對話session
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-        
+def chat(key):      
     # 在應用程式重新運行時顯示歷史記錄中的聊天訊息
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
@@ -290,13 +294,13 @@ def chat():
             # Display assistant response
             with st.chat_message("assistant"):
                 
-                response = "Hi~ 復誦：" + user_input
+                response = predictDF(user_input,key) 
                 # st.write(pandas_ai.run(st.session_state.df, prompt='可以幫我列出前五列的內容嗎?'))
                 
-                # if os.path.isfile('temp_chart.png'):
-                #     im = plt.imread('temp_chart.png')
-                #     st.image(im)
-                #     os.remove('temp_chart.png')
+                if os.path.isfile('temp_chart.png'):
+                    im = plt.imread('temp_chart.png')
+                    st.image(im)
+                    os.remove('temp_chart.png')
                 
                 if response is not None:
                     st.write(response)
@@ -305,6 +309,12 @@ def chat():
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
  
+def predictDF(text,key):
+    OPENAI_MODEL = "gpt-3.5-turbo"
+    llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
+    result = llm.predict("我的資料集為df\n"+st.session_state.df+"\n我的問題是:"+text+"\n可以給我對應操作的code或幫我解答嗎")
+    return result
+
 # 尚未完善的顯示聊天紀錄功能          
 def display_messages(messages):
     # 显示所有消息
