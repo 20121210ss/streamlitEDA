@@ -283,8 +283,9 @@ def chat(key):
             st.markdown(message["content"])
     
     if st.session_state.df is not None:
+        user_input = st.chat_input("請輸入欲對資料集執行的操作...")
         # 接收使用者輸入
-        if user_input := st.chat_input("請輸入欲對資料集執行的操作..."):
+        if user_input is not None:
             # 將使用者的輸入加入紀錄
             st.session_state.messages.append({"role": "user", "content": user_input})
             # Display user message in chat message container
@@ -308,6 +309,8 @@ def chat(key):
                 else:
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
+    
+    display_messages(st.session_state.messages)
  
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
