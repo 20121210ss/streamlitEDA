@@ -152,9 +152,9 @@ def upload():
 # 重整code頁籤     
 def refreshCode(cp):
     if st.session_state.inputCode is not None:
-        st.session_state.outputCode += "\n"+st.session_state.inputCode
+        st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ''
-        cp.code(st.session_state.outputCode, language="python", line_numbers=True)
+        # cp.code(st.session_state.outputCode, language="python", line_numbers=True)
 
 # 完整EDA報告
 def reRunEDAfullreport():
