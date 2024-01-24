@@ -8,6 +8,8 @@ from streamlit.components.v1 import html
 from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
 from langchain.chat_models import ChatOpenAI
 from pandasai import SmartDataframe
+import matplotlib.pyplot as plt
+import seaborn as sns 
 
 # 初始化變數-資料集
 if 'df' not in st.session_state:
@@ -100,8 +102,15 @@ def main():
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
                 rel = predictThreePic(str(st.session_state.colList),key)
-                for line in rel:
-                    st.write(line.strip())
+                # st.write(rel)
+                # for line in rel:
+                #     st.write(line.strip())
+                st.text(rel[0])
+                visualPic(rel[1])
+                st.text(rel[2])
+                visualPic(rel[3])
+                st.text(rel[4])
+                visualPic(rel[5])
                 Visualization()
                 
         # 右半部分col1(佔30%)   
@@ -232,24 +241,41 @@ def predictOneCol(text,key):
 def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    ThreePic = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，直接列點給我就好，並且附上他的code")
+    ThreePic = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code")
+    # result = ThreePic
     result = splitThreePic(ThreePic)
     return result
 
-def splitThreePic(ThreePic):
-    split_result = []
-    sr = 'import'
-    zc = ThreePic.split(sr)
-    split_result.append(zc[0])
-    zc1 = (sr + zc[1]).split('2.')
-    split_result.append(zc1[0])
-    split_result.append('2.'+zc1[1])
-    zc2 = (sr + zc[2]).split('3.')
-    split_result.append(zc2[0])
-    split_result.append('3.'+zc2[1])
-    split_result.append(sr + zc[3])
+def visualPic(PicCode):
+    st.code(PicCode)
+    try:
+        exec(PicCode)
+        os.path.isfile('temp_chart.png')
+        im = plt.imread('temp_chart.png')
+        st.image(im)
+        os.remove('temp_chart.png')
+        
+    except:
+        st.text("no pic")
 
-    return split_result
+# 拆分回傳的結果，分為Code及敘述部分。
+def splitThreePic(ThreePic):
+    try:
+        split_result = []
+        
+        sr1 = '''```'''
+        zc = ThreePic.split(sr1)
+        split_result.append(zc[0])
+        split_result.append((zc[1].split('python'))[1])
+        split_result.append(zc[2])
+        split_result.append((zc[3].split('python'))[1])
+        split_result.append(zc[4])
+        split_result.append((zc[5].split('python'))[1])
+        
+        return split_result
+    except:
+        split_result = ["找無論述1","找無圖1","找無論述2","找無圖2","找無論述3","找無圖3"]
+        return split_result
     
 # 資料集呈現
 def DataFrame():
