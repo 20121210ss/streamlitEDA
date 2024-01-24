@@ -246,6 +246,7 @@ def predictThreePic(text,key):
     return result
 
 def visualPic(PicCode):
+    st.code(PicCode)
     try:
         exec(PicCode)
         plt.savefig('temp_chart.png')
