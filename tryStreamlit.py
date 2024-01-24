@@ -139,7 +139,8 @@ def main():
             codePage()
                 
         with tab1_5:
-            chat(key)
+            st.text('Prompt')
+    chat(key)        
             
             
 # 上傳檔案
