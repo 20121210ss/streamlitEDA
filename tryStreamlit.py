@@ -104,6 +104,8 @@ def main():
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
                 rel = predictThreePic(str(st.session_state.colList),key)
+                st.write(rel)
+                rel = splitThreePic(rel)
                 st.text(rel[0])
                 visualPic(rel[1])
                 st.text(rel[2])
@@ -111,6 +113,7 @@ def main():
                 st.text(rel[4])
                 visualPic(rel[5])
                 Visualization()
+                
                 
         # 右半部分col1(佔30%)   
         with col2:
@@ -241,8 +244,7 @@ def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
     ThreePic = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code")
-    # result = ThreePic
-    result = splitThreePic(ThreePic)
+    result = ThreePic
     return result
 
 def visualPic(PicCode):
