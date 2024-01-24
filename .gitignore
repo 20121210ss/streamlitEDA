@@ -1,5 +1,5 @@
 # .gitignore 文件内容
 .env/
 gw_config.json
-pandasai.log
+*.log
 cache/
