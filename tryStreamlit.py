@@ -315,7 +315,7 @@ def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
     df = SmartDataframe(st.session_state.df, config={"llm": llm})
-    result = df.chat("我的問題是:"+text+"\n可以給我對應操作的code或幫我解答嗎")
+    result = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
     return result
 
 # 尚未完善的顯示聊天紀錄功能          
