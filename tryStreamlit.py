@@ -308,7 +308,7 @@ def Visualization():
         st.subheader("資料集分佈圖")
         renderer = get_pyg_renderer(st.session_state.df)
         # Render your data exploration interface. Developers can use it to build charts by drag and drop.
-        renderer.render_explore(width=740,height=900)
+        renderer.render_explore(width=700,height=900)
 
 # pygwalker
 @st.cache_resource
