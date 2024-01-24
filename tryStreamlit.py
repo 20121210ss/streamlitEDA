@@ -132,11 +132,10 @@ def main():
                     test = splitOneCol(st.session_state.selectCol)
                     test = remove_html_tags(test)
                     st.write(predictOneCol(test,key))
-
-                
-        tab1_4= st.tabs(['code'])
-        with tab1_4:
-            codePage()
+    
+            tab1_4 = st.tabs(['code'])
+            with tab1_4:
+                codePage()
             
     st.text('Prompt')
     chat(key)        
