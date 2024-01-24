@@ -69,7 +69,7 @@ def main():
         upload()
     
     # 若使用者有上傳資料集
-    if st.session_state.df is not None: 
+    if st.session_state.df and key is not None: 
         
         # 整個頁面拆成7:3的分布   
         col1, col2 = st.columns(spec=[0.7,0.3])
@@ -297,10 +297,10 @@ def chat(key):
                 response = predictDF(user_input,key) 
                 # st.write(pandas_ai.run(st.session_state.df, prompt='可以幫我列出前五列的內容嗎?'))
                 
-                if os.path.isfile('temp_chart.png'):
-                    im = plt.imread('temp_chart.png')
-                    st.image(im)
-                    os.remove('temp_chart.png')
+                # if os.path.isfile('temp_chart.png'):
+                #     im = plt.imread('temp_chart.png')
+                #     st.image(im)
+                #     os.remove('temp_chart.png')
                 
                 if response is not None:
                     st.write(response)
