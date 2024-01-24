@@ -15,3 +15,4 @@ pygwalker==0.3.10
 openai == 0.27.10
 pandasai == 1.4.8
 duckdb == 0.8.1
+geopandas == 0.14.2

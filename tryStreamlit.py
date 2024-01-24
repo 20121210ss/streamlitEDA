@@ -8,10 +8,10 @@ from streamlit.components.v1 import html
 from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
 from langchain.chat_models import ChatOpenAI
 from pandasai import SmartDataframe
+import re
+import geopandas as gpd
 import seaborn as sns 
 
-import matplotlib
-matplotlib.use('Agg')
 
 # 初始化變數-資料集
 if 'df' not in st.session_state:
@@ -104,14 +104,13 @@ def main():
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
                 rel = predictThreePic(str(st.session_state.colList),key)
-                st.write(rel)
                 rel = splitThreePic(rel)
-                st.text(rel[0])
-                visualPic(rel[1])
-                st.text(rel[2])
-                visualPic(rel[3])
-                st.text(rel[4])
-                visualPic(rel[5])
+                st.text(rel[0][0])
+                visualPic(rel[0][1])
+                st.text(rel[1][0])
+                visualPic(rel[1][1])
+                st.text(rel[2][0])
+                visualPic(rel[2][1])
                 Visualization()
                 
                 
@@ -261,22 +260,12 @@ def visualPic(PicCode):
 
 # 拆分回傳的結果，分為Code及敘述部分。
 def splitThreePic(ThreePic):
-    try:
-        split_result = []
+    # 使用正則表達式提取程式碼和描述
+    pattern = re.compile(r'(\S.*?)[ \t]*```python(.*?)```', re.DOTALL)
+    matches = pattern.findall(ThreePic)
         
-        sr1 = '''```'''
-        zc = ThreePic.split(sr1)
-        split_result.append(zc[0])
-        split_result.append((zc[1].split('python'))[1])
-        split_result.append(zc[2])
-        split_result.append((zc[3].split('python'))[1])
-        split_result.append(zc[4])
-        split_result.append((zc[5].split('python'))[1])
-        
-        return split_result
-    except:
-        split_result = ["找無論述1","找無圖1","找無論述2","找無圖2","找無論述3","找無圖3"]
-        return split_result
+    return matches
+
     
 # 資料集呈現
 def DataFrame():
