@@ -86,6 +86,7 @@ def main():
                 # 若user有更動資料集，點選以重新生成報告
                 if st.button("生成報告"):
                     st.session_state.fullReport = None
+                    reRunEDAfullreport()
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
@@ -114,6 +115,7 @@ def main():
                 # 若user有更動資料集，點選以重新生成報告
                 if st.button("重新生成報告"):
                     st.session_state.minReport = None
+                    reRunEDAminreport()
                     
             # 建議操作頁籤:呈現建議使用者的操作  
             with tab2_2:
@@ -149,11 +151,11 @@ def upload():
             st.error(f"讀取檔案時發生錯誤: {e}")
 
 # 重整code頁籤     
-def refreshCode(cp):
+def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
         st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ""
-        cp.code(st.session_state.outputCode, language="python", line_numbers=True)
+        code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
 
 # 完整EDA報告
 def reRunEDAfullreport():
@@ -234,13 +236,8 @@ def DataFrame():
         if st.session_state.selectCol is not None:
             st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)+1
         
-        edited_df = st.data_editor(st.session_state.df,on_change=resetReport())
+        edited_df = st.data_editor(st.session_state.df)
         st.session_state.df = edited_df
-
-# 重新生成EDA Report
-def resetReport():
-    st.session_state.fullReport = None
-    st.session_state.minReport = None
         
 @st.cache_resource
 def convert_df(df):
