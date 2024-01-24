@@ -105,12 +105,9 @@ def main():
             with tab1_3:
                 rel = predictThreePic(str(st.session_state.colList),key)
                 rel = splitThreePic(rel)
-                st.text(rel[0][0])
-                visualPic(rel[0][1])
-                st.text(rel[1][0])
-                visualPic(rel[1][1])
-                st.text(rel[2][0])
-                visualPic(rel[2][1])
+                for item in rel:
+                    st.text(item[0])
+                    visualPic(item[1])
                 Visualization()
                 
                 
@@ -253,7 +250,7 @@ def visualPic(PicCode):
         exec(PicCode)
         plt.savefig('temp_chart.png')
         im = plt.imread('temp_chart.png')
-        st.image(im)
+        st.image(im,width=600)
         os.remove('temp_chart.png')
         plt.clf()
         
