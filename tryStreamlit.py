@@ -246,6 +246,7 @@ def predictThreePic(text,key):
     result = ThreePic
     return result
 
+# 執行產圖的程式碼，並顯示於前端
 def visualPic(PicCode):
     st.code(PicCode)
     try:
@@ -254,11 +255,12 @@ def visualPic(PicCode):
         im = plt.imread('temp_chart.png')
         st.image(im)
         os.remove('temp_chart.png')
+        plt.clf()
         
     except:
         st.text("no pic")
 
-# 拆分回傳的結果，分為Code及敘述部分。
+# 透過正則化拆分回傳的結果，分為Code及敘述部分。
 def splitThreePic(ThreePic):
     # 使用正則表達式提取程式碼和描述
     pattern = re.compile(r'(\S.*?)[ \t]*```python(.*?)```', re.DOTALL)
