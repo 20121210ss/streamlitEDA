@@ -127,13 +127,7 @@ def main():
                 
         tab1_4, tab1_5= st.tabs(['code','Prompt'])
         with tab1_4:
-            # 创建一个空的占位符
-            code_placeholder = st.empty()   
-            # 显示代码内容
-            code_placeholder.text("code內容")
-            code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-            st.session_state.inputCode = st.text_area("輸入自行撰寫python code")
-            st.button("送出",on_click=refreshCode(code_placeholder))
+            codePage()
                 
         with tab1_5:
             st.text("Prompt頁籤")
@@ -149,6 +143,15 @@ def upload():
             
         except Exception as e:
             st.error(f"讀取檔案時發生錯誤: {e}")
+
+def codePage():
+    # 创建一个空的占位符
+    code_placeholder = st.empty()   
+    # 显示代码内容
+    code_placeholder.text("code內容")
+    code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
+    st.session_state.inputCode = st.text_area("輸入自行撰寫python code")
+    st.button("送出",on_click=refreshCode(code_placeholder))
 
 # 重整code頁籤     
 def refreshCode(code_placeholder):
