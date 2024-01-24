@@ -69,7 +69,7 @@ def main():
         upload()
     
     # 若使用者有上傳資料集
-    if st.session_state.df and key is not None: 
+    if st.session_state.df is not None and key is not None: 
         
         # 整個頁面拆成7:3的分布   
         col1, col2 = st.columns(spec=[0.7,0.3])
