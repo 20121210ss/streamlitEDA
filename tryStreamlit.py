@@ -134,12 +134,11 @@ def main():
                     st.write(predictOneCol(test,key))
 
                 
-        tab1_4, tab1_5= st.tabs(['code','Prompt'])
+        tab1_4= st.tabs(['code'])
         with tab1_4:
             codePage()
-                
-        with tab1_5:
-            st.text('Prompt')
+            
+    st.text('Prompt')
     chat(key)        
             
             
@@ -277,7 +276,7 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
     # When you need to publish your app to the public, you should set the debug parameter to False to prevent other users from writing to your chart configuration file.
     return StreamlitRenderer(df, spec="./gw_config.json", debug=False)   
 
-# 尚未完善的聊天功能
+# 聊天功能
 def chat(key):      
     # 在應用程式重新運行時顯示歷史記錄中的聊天訊息
     for message in st.session_state.messages:
@@ -306,13 +305,13 @@ def chat(key):
                     os.remove('temp_chart.png')
                 
                 if response is not None:
-                    st.write(response)
-                    st.session_state.messages.append({"role": "assistant", "content": response})
+                    st.write(str(response))
+                    st.session_state.messages.append({"role": "assistant", "content": str(response)})
                 else:
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
     
-    display_messages(st.session_state.messages)
+    #display_messages(st.session_state.messages)
  
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
