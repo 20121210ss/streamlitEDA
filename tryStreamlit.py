@@ -319,11 +319,6 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
 
 # 聊天功能
 def chat(key):      
-    # 在應用程式重新運行時顯示歷史記錄中的聊天訊息
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-    
     if st.session_state.df is not None:
         user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
         # 接收使用者輸入
