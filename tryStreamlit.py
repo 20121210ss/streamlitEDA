@@ -8,8 +8,10 @@ from streamlit.components.v1 import html
 from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
 from langchain.chat_models import ChatOpenAI
 from pandasai import SmartDataframe
-import matplotlib.pyplot as plt
 import seaborn as sns 
+
+import matplotlib
+matplotlib.use('Agg')
 
 # 初始化變數-資料集
 if 'df' not in st.session_state:
@@ -102,9 +104,6 @@ def main():
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
                 rel = predictThreePic(str(st.session_state.colList),key)
-                # st.write(rel)
-                # for line in rel:
-                #     st.write(line.strip())
                 st.text(rel[0])
                 visualPic(rel[1])
                 st.text(rel[2])
@@ -247,10 +246,9 @@ def predictThreePic(text,key):
     return result
 
 def visualPic(PicCode):
-    st.code(PicCode)
     try:
         exec(PicCode)
-        os.path.isfile('temp_chart.png')
+        plt.savefig('temp_chart.png')
         im = plt.imread('temp_chart.png')
         st.image(im)
         os.remove('temp_chart.png')
