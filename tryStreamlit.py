@@ -156,7 +156,7 @@ def codePage():
     # 创建一个空的占位符
     code_placeholder = st.empty()   
     # 显示代码内容
-    code_placeholder.text("code內容\n")
+    code_placeholder.text("code內容")
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
     st.session_state.inputCode = st.text_area("輸入自行撰寫python code",value='')
     st.button("送出",on_click=refreshCode(code_placeholder))
@@ -166,7 +166,6 @@ def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
         st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ""
-        code_placeholder.text("code內容\n")
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
 
 # 完整EDA報告
@@ -305,7 +304,7 @@ def chat(key):
                 
                 if response is not None:
                     st.write(str(response))
-                    st.session_state.messages.append({"role": "assistant", "content": str(response)})
+                    st.session_state.messages.append({"role": "assistant", "content": response})
                 else:
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
