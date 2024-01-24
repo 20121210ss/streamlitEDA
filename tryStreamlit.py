@@ -131,7 +131,8 @@ def main():
             code_placeholder.text("code內容")
             code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
             st.session_state.inputCode = st.text_area("輸入自行撰寫python code")
-            st.button("送出",on_click=refreshCode())
+            if st.button("送出"):
+                refreshCode(code_placeholder)
                 
         with tab1_5:
             st.text("Prompt頁籤")
