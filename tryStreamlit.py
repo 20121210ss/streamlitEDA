@@ -22,11 +22,11 @@ if 'minReport' not in st.session_state:
     
 # 初始化變數-輸出呈現的程式碼
 if 'outputCode' not in st.session_state:
-    st.session_state.outputCode = None
+    st.session_state.outputCode = ""
     
 # 初始化變數-使用者輸入的程式碼
 if 'inputCode' not in st.session_state:
-    st.session_state.inputCode = None
+    st.session_state.inputCode = ""
     
 # 初始化變數-資料集的所有特徵欄位
 if 'colList ' not in st.session_state:
@@ -154,7 +154,7 @@ def refreshCode(cp):
     if st.session_state.inputCode is not None:
         st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ''
-        # cp.code(st.session_state.outputCode, language="python", line_numbers=True)
+        cp.code(st.session_state.outputCode, language="python", line_numbers=True)
 
 # 完整EDA報告
 def reRunEDAfullreport():
