@@ -140,7 +140,7 @@ def main():
                 with st.expander("建議操作如下", expanded=True):
                     test = splitOneCol(st.session_state.selectCol)
                     test = remove_html_tags(test)
-                    test = predictOneCol(test,key)
+                    test = predictOneCol(st.session_state.selectCol,test,key)
                     st.write(test)
                     test = regularResponse(test)
                     st.write(test)
@@ -231,25 +231,26 @@ def splitOneCol(selindex):
     return result
 
 # 預測單一特徵欄位要進行那些前處理動作
-def predictOneCol(text,key):
+def predictOneCol(selindex,text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-
-    prompt1 = "Here is the analysis report of a feature column from dataset st.session_state.df:\n"+ text + "\nBased on the analysis of this feature field, list the data preprocessing operations and their Python codes."
+    sel = st.session_state.colList[selindex]
+    prompt1 = "Here is the analysis report of a feature:" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, Based on the analysis of" + sel + ", list the data preprocessing operations and their Python codes."
     schema = """reply like this schema :
         1. # describe data processing operation1
 
-        ## data processing code 1 ##
+        ### data processing code 1 ###
 
         2. # describe data processing operation2
 
-        ## data processing code 2 ##
+        ### data processing code 2 ###
         
         3. # describe data processing operation3
 
-        ## data processing code 3 ##
+        ### data processing code 3 ###
         ....
     """
+
     translate = "\nReply in Traditional Chinese."
     result = llm.predict(prompt1+schema)
     return result
@@ -355,6 +356,7 @@ def chat(key):
                 
                 if genCode is not None:
                     st.code(genCode)
+
 # 詢問資料集
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
