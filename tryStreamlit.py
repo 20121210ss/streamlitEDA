@@ -234,7 +234,7 @@ def splitOneCol(selindex):
 def predictOneCol(selindex,text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    sel = st.session_state.colList[selindex]
+    sel = st.session_state.colList[selindex-1]
     prompt1 = "Here is the analysis report of a feature:" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, Based on the analysis of" + sel + ", list the data preprocessing operations and their Python codes."
     schema = """reply like this schema :
         1. # describe data processing operation1
