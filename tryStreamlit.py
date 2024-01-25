@@ -104,7 +104,7 @@ def main():
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
                 rel = predictThreePic(str(st.session_state.colList),key)
-                rel = splitThreePic(rel)
+                rel = regularResponse(rel)
                 for item in rel:
                     st.text(item[0])
                     visualPic(item[1])
@@ -140,15 +140,17 @@ def main():
                 with st.expander("建議操作如下", expanded=True):
                     test = splitOneCol(st.session_state.selectCol)
                     test = remove_html_tags(test)
-                    st.write(predictOneCol(test,key))
+                    test = predictOneCol(test,key)
+                    st.write(test)
+                    test = regularResponse(test)
+                    st.write(test)
     
         st.tabs(['Code'])
         codePage()
             
         st.tabs(['Prompt'])
         chat(key)        
-            
-            
+                
 # 上傳檔案
 def upload():
    
@@ -232,15 +234,14 @@ def splitOneCol(selindex):
 def predictOneCol(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("以下是我的資料集中其中一個特徵欄位的分析\n"+text+"\n可以幫我列點這個欄位可能可以做哪些資料前處理的操作嗎，若不需要進行的操作則不用列出")
+    result = llm.predict("以下是我的資料集st.session_state.df的其中一個特徵欄位的分析\n"+text+"\n根據這個分析內容，你身為一個資料科學家，可以幫我列出該欄位可以做哪些資料前處理的操作嗎，每列一點也附上他的code")
     return result
 
 # 預測前三個使用者可能會想看的資料視覺化圖
 def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    ThreePic = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code")
-    result = ThreePic
+    result = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code")
     return result
 
 # 執行產圖的程式碼，並顯示於前端
@@ -258,13 +259,12 @@ def visualPic(PicCode):
         st.text("no pic")
 
 # 透過正則化拆分回傳的結果，分為Code及敘述部分。
-def splitThreePic(ThreePic):
+def regularResponse(ThreePic):
     # 使用正則表達式提取程式碼和描述
     pattern = re.compile(r'(\S.*?)[ \t]*```python(.*?)```', re.DOTALL)
     matches = pattern.findall(ThreePic)
         
     return matches
-
     
 # 資料集呈現
 def DataFrame():
@@ -287,11 +287,11 @@ def DataFrame():
 def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv().encode('utf-8')
-
         
 # Establish communication between pygwalker and streamlit
 init_streamlit_comm()
 
+# 圖示頁的呈現
 def Visualization():  
     if st.session_state.df is not None:
         # 顯示資料集的圖表
