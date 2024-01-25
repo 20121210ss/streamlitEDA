@@ -1,0 +1,35 @@
+# Translate
+    "\nReply to me in Traditional Chinese."
+
+
+#Schema
+    """reply like this schema :
+        1. # describe data processing operation1
+
+        ## data processing code 1 ##
+
+        2. # describe data processing operation2
+
+        ## data processing code 2 ##
+            
+        3. # describe data processing operation3
+
+        ## data processing code 3 ##
+        
+        ....
+    """
+
+# Prompt1 
+這是資料集st.session_state.df中的一個特徵欄位的分析報告，根據這個分析，列出資料前處理操作及其Python程式碼。
+"Here is the analysis report of one feature column from my dataset st.session_state.df:\n"
++ text 
++ "\nBased on the analysis of this feature field, list the data preprocessing operations and their Python codes."
+
+# 使用案例
+1. As a data scientist - 給予角色，並沒有提升回覆準確率，或許情境更適合？
+2. step by step - 不適用該prompt，因為是一個操作一個操作，並無步驟關係
+3. can be performed on - 減少冗餘的形容詞 ex:可以執行...
+4. Python code - 產出什麼語言的code，必須定義明確
+5. prompt 使用英文 - 但目前無特別體感重要?
+6. 看完 analysis report後，仍會出現不需要做的操作
+7. schema - 指定輸出格式非常有效

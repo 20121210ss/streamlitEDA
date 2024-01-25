@@ -69,7 +69,7 @@ def main():
     key = st.text_input('openAI key:')
     
     # 若使用者有輸入好key，才可以開始上傳資料集
-    if key is not None:
+    if key is not "":
         upload()
     
     # 若使用者有上傳資料集
@@ -234,7 +234,24 @@ def splitOneCol(selindex):
 def predictOneCol(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("以下是我的資料集st.session_state.df的其中一個特徵欄位的分析\n"+text+"\n根據這個分析內容，你身為一個資料科學家，可以幫我列出該欄位可以做哪些資料前處理的操作嗎，每列一點也附上他的code")
+
+    prompt1 = "Here is the analysis report of a feature column from dataset st.session_state.df:\n"+ text + "\nBased on the analysis of this feature field, list the data preprocessing operations and their Python codes."
+    schema = """reply like this schema :
+        1. # describe data processing operation1
+
+        ## data processing code 1 ##
+
+        2. # describe data processing operation2
+
+        ## data processing code 2 ##
+        
+        3. # describe data processing operation3
+
+        ## data processing code 3 ##
+        ....
+    """
+    translate = "\nReply in Traditional Chinese."
+    result = llm.predict(prompt1+schema)
     return result
 
 # 預測前三個使用者可能會想看的資料視覺化圖
