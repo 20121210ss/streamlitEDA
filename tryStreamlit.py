@@ -322,7 +322,7 @@ def chat(key):
             # Display assistant response
             with st.chat_message("assistant"):
                 
-                response = predictDF(user_input,key) 
+                response, genCode = predictDF(user_input,key) 
                 
                 if os.path.isfile('temp_chart.png'):
                     im = plt.imread('temp_chart.png')
@@ -335,14 +335,17 @@ def chat(key):
                 else:
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
- 
+                
+                if genCode is not None:
+                    st.code(genCode)
 # 詢問資料集
 def predictDF(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
     df = SmartDataframe(st.session_state.df, config={"llm": llm})
-    result = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
-    return result
+    result1 = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
+    result2 = df.last_code_executed
+    return result1,result2
 
 if __name__ == "__main__":
     main()
