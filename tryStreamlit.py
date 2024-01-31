@@ -295,14 +295,14 @@ def predictOneCol(selindex,text,key):
         Use the following step-by-step instructions to respond to user inputs.
         {CoT}
     """
-    prompt1 = "Here is the analysis report of feature :" + sel + ",\n"+ text + "\nlist the data preprocessing operations and their Python codes."
+    prompt = "Here is the analysis report of feature :" + sel + ",\n"+ text + "\nlist the data preprocessing operations and their Python codes."
     
     openai.api_key = key
     result = openai.ChatCompletion.create(
         model=OPENAI_MODEL,
         messages=[
             {"role": "system", "content": system},
-            {"role": "user", "content": prompt1+schema},
+            {"role": "user", "content": prompt},
         ],
         temperature=0,
     )
