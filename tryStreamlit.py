@@ -182,13 +182,15 @@ def upload():
             st.error(f"讀取檔案時發生錯誤: {e}")
 
 def codePage():
+    st.text("code內容")
+    
     # 创建一个空的占位符
     code_placeholder = st.empty()
     ans_placeholder = st.empty()
+    
     # 显示代码内容
-    st.text("code內容")
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-    ans_placeholder.write("測試")
+    ans_placeholder.write("")
     st.session_state.inputCode = st.text_area("輸入自行撰寫python code",value='')
     if st.button("送出"):
         refreshCode(code_placeholder,ans_placeholder)
