@@ -288,7 +288,7 @@ def predictOneCol(selindex,text,key):
         Step 1 - The user will provide you with a feature report of Exploratory Data Analysis, summarize this text.
         Step 2 - Based on the summary from Step 1, list the data preprocessing operations and their Python codes.
         Step 3 - Format the result from Step 2 like this schema:{schema}
-        Step 4 - Replace all 'df' with 'st.session_state.df'
+        Step 4 - The dataframe is not call 'df', is call 'st.session_state.df', Replace all 'df' with 'st.session_state.df'
         Step 5 - Translate the result from Step 4 into Traditional Chinese.
     """
     system = f"""You are a data scientist assistant. When given data write the data processing advice and the proper code.
