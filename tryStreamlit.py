@@ -196,11 +196,12 @@ def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
         try:
             ans = eval(st.session_state.inputCode)
-            st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode+"\n"+ans
+            st.write(ans)
+            ans = "#執行成功"
         except:
             ans = "#無法執行"
-            st.session_state.outputCode = st.session_state.outputCode+"\n"+ans+"\n"+st.session_state.inputCode
         
+        st.session_state.outputCode = st.session_state.outputCode+"\n"+ans+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
 
