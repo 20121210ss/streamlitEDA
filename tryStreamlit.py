@@ -197,6 +197,7 @@ def codePage():
     
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder):
+    ans = ""
     if st.session_state.inputCode is not None:
         try:
             ans = eval(st.session_state.inputCode)
