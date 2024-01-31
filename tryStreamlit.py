@@ -183,17 +183,18 @@ def upload():
 
 def codePage():
     # 创建一个空的占位符
-    code_placeholder = st.empty()   
+    code_placeholder = st.empty()
+    ans_placeholder = st.empty()
     # 显示代码内容
-    code_placeholder.text("code內容")
+    st.text("code內容")
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-    code_placeholder.write("測試")
+    ans_placeholder.write("測試")
     st.session_state.inputCode = st.text_area("輸入自行撰寫python code",value='')
     if st.button("送出"):
-        refreshCode(code_placeholder)
+        refreshCode(code_placeholder,ans_placeholder)
     
 # 重整code頁籤     
-def refreshCode(code_placeholder):
+def refreshCode(code_placeholder,ans_placeholder):
     if st.session_state.inputCode is not None:
         try:
             ans = eval(st.session_state.inputCode)
@@ -209,7 +210,7 @@ def refreshCode(code_placeholder):
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-        code_placeholder.write(ans)
+        ans_placeholder.write(ans)
         
 # 完整EDA報告
 def reRunEDAfullreport():
