@@ -271,15 +271,15 @@ def splitOneCol(selindex):
 def predictOneCol(selindex,text,key):
     sel = st.session_state.colList[selindex-1]
     schema = """
-        1. {describe data processing operation1}
+        1. {description of data processing operation1}
 
         {data processing code 1}
 
-        2. {describe data processing operation2}
+        2. {description of data processing operation2}
 
         {data processing code 2}
         
-        3. {describe data processing operation3}
+        3. {description of data processing operation3}
 
         {data processing code 3}
         ....
@@ -289,7 +289,7 @@ def predictOneCol(selindex,text,key):
         Step 2 - Based on the summary from Step 1, list the data preprocessing operations and their Python codes.
         Step 3 - Format the result from Step 2 like this schema:{schema}
         Step 4 - The dataframe is not call 'df', is call 'st.session_state.df', Replace all 'df' with 'st.session_state.df'
-        Step 5 - Translate the result from Step 4 into Traditional Chinese.
+        Step 5 - Translate the description in the results of step 4 into Traditional Chinese.
     """
     system = f"""You are a data scientist assistant. When given data write the data processing advice and the proper code.
         Use the following step-by-step instructions to respond to user inputs.
