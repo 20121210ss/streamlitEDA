@@ -205,6 +205,7 @@ def refreshCode(code_placeholder,ans_placeholder):
         except:
             try:
                 exec(st.session_state.inputCode)
+                ans = st.session_state.df.head(5)
                 tip = "# 多行code執行成功"
             except:
                 ans=""
