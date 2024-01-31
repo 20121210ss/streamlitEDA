@@ -270,8 +270,7 @@ def splitOneCol(selindex):
 # 預測單一特徵欄位要進行那些前處理動作
 def predictOneCol(selindex,text,key):
     sel = st.session_state.colList[selindex-1]
-    prompt1 = "Here is the analysis report of a feature:" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, based on this analysis report of" + sel + ", list the data preprocessing operations and their Python codes."
-    schema = """reply like this schema :
+    schema = """
         1. # describe data processing operation1
 
         ### data processing code 1 ###
@@ -285,15 +284,22 @@ def predictOneCol(selindex,text,key):
         ### data processing code 3 ###
         ....
     """
-    CoT = """Please follow these steps to respond to user input:
-    step1:Learn about the report
+    system = f"""You are a data scientist assistant. When given data write the data processing advice and the proper code.
+        Use the following step-by-step instructions to respond to user inputs.
+        Step 1 - The user will provide you with report of Exploratory Data Analysis, summarize this text.
+        Step 2 - Based on the summary from Step 1, list the data preprocessing operations and their Python codes.
+        Step 3 - Format the result from Step 2 like this schema:{schema}
+        Step 4 - Translate the result from Step 3 into Tradionnal Chinese."""
+    prompt1 = "Here is the analysis report of a feature:" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, based on this analysis report of" + sel + ", list the data preprocessing operations and their Python codes."
+    # CoT = """Please follow these steps to respond to user input:
+    # step1:Learn about the report
     
-    """
+    # """
     openai.api_key = key
     result = openai.ChatCompletion.create(
         model=OPENAI_MODEL,
         messages=[
-            {"role": "system", "content": "You are a helpful assistant of Exploratory Data Analysis."},
+            {"role": "system", "content": system},
             {"role": "user", "content": prompt1+schema},
         ],
         temperature=0,
@@ -307,9 +313,10 @@ def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     openai.api_key = key
     result = openai.ChatCompletion.create(
+        instruction = {},
         model=OPENAI_MODEL,
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
             {"role": "user", "content": "我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
         ],
         temperature=0,
