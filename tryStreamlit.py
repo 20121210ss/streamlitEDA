@@ -211,7 +211,7 @@ def refreshCode(code_placeholder,ans_placeholder):
                 ans=""
                 tip = "# 無法執行"
         
-        st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode
+        st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
         ans_placeholder.write(ans)
