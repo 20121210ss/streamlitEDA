@@ -272,15 +272,12 @@ def predictOneCol(selindex,text,key):
     sel = st.session_state.colList[selindex-1]
     schema = """
         1. {describe data processing operation1}
-
         {data processing code 1}
 
         2. {describe of data processing operation2}
-        
         {data processing code 2}
         
         3. {describe of data processing operation3}
-
         {data processing code 3}
         ....
     """
