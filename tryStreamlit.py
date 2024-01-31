@@ -193,6 +193,10 @@ def codePage():
 # 重整code頁籤     
 def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
+        try:
+            exec(st.session_state.inputCode)
+        except:
+            st.session_state.inputCode = "#無法執行"
         st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
@@ -360,7 +364,7 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
     # When you need to publish your app to the public, you should set the debug parameter to False to prevent other users from writing to your chart configuration file.
     return StreamlitRenderer(df, spec="./gw_config.json", debug=False)   
 
-# 聊天功能
+# prompt頁聊天功能
 def chat(key):      
     if st.session_state.df is not None:
         user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
@@ -392,7 +396,7 @@ def chat(key):
                 if genCode is not None:
                     st.code(genCode)
 
-# 詢問資料集
+# prompt頁詢問資料集
 def predictDF(text,key):
     openai.api_key = key
     llm = OpenAI(api_token=key) 
