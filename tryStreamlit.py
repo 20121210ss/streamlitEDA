@@ -271,17 +271,17 @@ def splitOneCol(selindex):
 def predictOneCol(selindex,text,key):
     sel = st.session_state.colList[selindex-1]
     schema = """
-        1. # describe data processing operation1
+        1. {describe data processing operation1}
 
-        ### data processing code 1 ###
+        {data processing code 1}
 
-        2. # describe data processing operation2
+        2. {describe data processing operation2}
 
-        ### data processing code 2 ###
+        {data processing code 2}
         
-        3. # describe data processing operation3
+        3. {describe data processing operation3}
 
-        ### data processing code 3 ###
+        {data processing code 3}
         ....
     """
     system = f"""You are a data scientist assistant. When given data write the data processing advice and the proper code.
