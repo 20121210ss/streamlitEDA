@@ -6,12 +6,14 @@ from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 from streamlit.components.v1 import html
 from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
-from langchain.chat_models import ChatOpenAI
+import openai
+from pandasai.llm import OpenAI
 from pandasai import SmartDataframe
 import re
 import geopandas as gpd
 import seaborn as sns 
 
+OPENAI_MODEL = "gpt-3.5-turbo"
 
 # 初始化變數-資料集
 if 'df' not in st.session_state:
@@ -48,6 +50,10 @@ if 'OneColReport' not in st.session_state:
 # 初始化變數-單一欄位的預測結果
 if 'OneColresult' not in st.session_state:
     st.session_state.OneColresult = None
+    
+# 初始化變數-三張圖片的預測結果
+if 'ThreePicResult' not in st.session_state:
+    st.session_state.ThreePicResult = None
     
 # 初始化對話session
 if "messages" not in st.session_state:
@@ -103,11 +109,14 @@ def main():
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
-                rel = predictThreePic(str(st.session_state.colList),key)
-                rel = regularResponse(rel)
-                for item in rel:
+                if st.session_state.ThreePicResult is None: 
+                    rel = predictThreePic(str(st.session_state.colList),key)
+                    st.session_state.ThreePicResult = regularResponse(rel)
+                    
+                for item in st.session_state.ThreePicResult:
                     st.text(item[0])
                     visualPic(item[1])
+                    
                 Visualization()
                 
                 
@@ -138,13 +147,22 @@ def main():
             # 建議操作頁籤:呈現建議使用者的操作  
             with tab2_2:
                 with st.expander("建議操作如下", expanded=True):
-                    test = splitOneCol(st.session_state.selectCol)
-                    test = remove_html_tags(test)
-                    test = predictOneCol(st.session_state.selectCol,test,key)
-                    st.write(test)
-                    test = regularResponse(test)
-                    st.write(test)
-    
+                    
+                    if st.session_state.OneColresult is not None:
+                        st.write(st.session_state.OneColresult)
+                    else:
+                        if st.session_state.selectCol is not None:
+                            test = splitOneCol(st.session_state.selectCol)
+                            test = remove_html_tags(test)
+                            st.session_state.OneColresult = str(predictOneCol(st.session_state.selectCol,test,key))
+                            st.session_state.OneColresult += str(regularResponse(st.session_state.OneColresult))
+                            st.write(st.session_state.OneColresult)
+                        else:
+                            st.write("請選擇欲分析的欄位")
+                            
+                    if st.button("重新建議"):
+                        st.session_state.OneColresult = None
+                        
         st.tabs(['Code'])
         codePage()
             
@@ -232,10 +250,8 @@ def splitOneCol(selindex):
 
 # 預測單一特徵欄位要進行那些前處理動作
 def predictOneCol(selindex,text,key):
-    OPENAI_MODEL = "gpt-3.5-turbo"
-    llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
     sel = st.session_state.colList[selindex-1]
-    prompt1 = "Here is the analysis report of a feature:" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, Based on the analysis of" + sel + ", list the data preprocessing operations and their Python codes."
+    prompt1 = "Here is the analysis report of a feature:" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, based on this analysis report of" + sel + ", list the data preprocessing operations and their Python codes."
     schema = """reply like this schema :
         1. # describe data processing operation1
 
@@ -250,17 +266,36 @@ def predictOneCol(selindex,text,key):
         ### data processing code 3 ###
         ....
     """
-
-    translate = "\nReply in Traditional Chinese."
-    result = llm.predict(prompt1+schema)
-    return result
+    CoT = """Please follow these steps to respond to user input:
+    step1:Learn about the report
+    
+    """
+    openai.api_key = key
+    result = openai.ChatCompletion.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant of Exploratory Data Analysis."},
+            {"role": "user", "content": prompt1+schema},
+        ],
+        temperature=0,
+    )
+    
+    # translate = "\nReply in Traditional Chinese."
+    return str(result.choices[0].message.content)
 
 # 預測前三個使用者可能會想看的資料視覺化圖
 def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
-    llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
-    result = llm.predict("我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code")
-    return result
+    openai.api_key = key
+    result = openai.ChatCompletion.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "我的資料集為st.session_state.df，以下是我的資料集中的所有特徵欄位名稱\n"+text+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
+        ],
+        temperature=0,
+    )
+    return result.choices[0].message.content
 
 # 執行產圖的程式碼，並顯示於前端
 def visualPic(PicCode):
@@ -359,8 +394,8 @@ def chat(key):
 
 # 詢問資料集
 def predictDF(text,key):
-    OPENAI_MODEL = "gpt-3.5-turbo"
-    llm = ChatOpenAI(openai_api_key=key,model=OPENAI_MODEL)
+    openai.api_key = key
+    llm = OpenAI(api_token=key) 
     df = SmartDataframe(st.session_state.df, config={"llm": llm})
     result1 = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
     result2 = df.last_code_executed
