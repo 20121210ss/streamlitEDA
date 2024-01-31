@@ -187,7 +187,7 @@ def codePage():
     # 显示代码内容
     code_placeholder.text("code內容")
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-    code_placeholder.write("")
+    code_placeholder.write("測試")
     st.session_state.inputCode = st.text_area("輸入自行撰寫python code",value='')
     if st.button("送出"):
         refreshCode(code_placeholder)
