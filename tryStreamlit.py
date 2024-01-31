@@ -188,14 +188,15 @@ def codePage():
     code_placeholder.text("code內容")
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
     st.session_state.inputCode = st.text_area("輸入自行撰寫python code",value='')
-    st.button("送出",on_click=refreshCode(code_placeholder))
+    if st.button("送出"):
+        refreshCode(code_placeholder)
     
 # 重整code頁籤     
 def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
         try:
             exec(f"""{ans} = {st.session_state.inputCode}""")
-            st.write(ans)
+            st.write("test:"+ans)
             st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode+"\n"+ans
         except:
             ans = "#無法執行"
