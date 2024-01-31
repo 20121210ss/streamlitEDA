@@ -195,8 +195,7 @@ def codePage():
 def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
         try:
-            ans=""
-            exec(f"""ans = {st.session_state.inputCode}""")
+            ans=f"{st.session_state.inputCode}"
             st.write("test:\n")
             st.write(ans)
             st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode+"\n"+ans
