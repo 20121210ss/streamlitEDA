@@ -194,8 +194,9 @@ def codePage():
 def refreshCode(code_placeholder):
     if st.session_state.inputCode is not None:
         try:
-            ans = exec(st.session_state.inputCode)
-            st.session_state.outputCode = st.session_state.outputCode+"\n"+ans+"\n"+st.session_state.inputCode
+            exec(st.session_state.inputCode)
+            ans = st.write(st.session_state.inputCode)
+            st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode+"\n"+ans
         except:
             ans = "#無法執行"
             st.session_state.outputCode = ans+"\n"+st.session_state.outputCode+"\n"+st.session_state.inputCode
