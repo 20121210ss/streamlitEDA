@@ -285,16 +285,16 @@ def predictOneCol(selindex,text,key):
         ....
     """
     CoT = f"""
-        Step 1 - The user will provide you with a feature report of Exploratory Data Analysis,from dataset st.session_state.df, summarize this text.
-        Step 2 - Based on the summary from Step 1, list the data preprocessing operations and their Python codes.
+        Step 1 - The user will provide you with a feature report of Exploratory Data Analysis, summarize this text.
+        Step 2 - Based on the summary from Step 1,the dataset is st.session_state.df, list the data preprocessing operations and their Python codes.
         Step 3 - Format the result from Step 2 like this schema:{schema}
-        Step 4 - Translate the result from Step 3 into Tradionnal Chinese.
+        Step 4 - Translate the result from Step 3 into Traditional Chinese.
     """
     system = f"""You are a data scientist assistant. When given data write the data processing advice and the proper code.
         Use the following step-by-step instructions to respond to user inputs.
         {CoT}
     """
-    prompt1 = "Here is the analysis report of :" + sel + ",from dataset st.session_state.df:\n"+ text + "\nLearn about this report, based on this analysis report of" + sel + ", list the data preprocessing operations and their Python codes."
+    prompt1 = "Here is the analysis report of feature :" + sel + ",\n"+ text + "\nBased on this analysis report of" + sel + ", list the data preprocessing operations and their Python codes."
     
     openai.api_key = key
     result = openai.ChatCompletion.create(
