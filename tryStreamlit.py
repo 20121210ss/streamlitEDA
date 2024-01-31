@@ -202,7 +202,7 @@ def refreshCode(code_placeholder):
             st.session_state.outputCode = st.session_state.outputCode+"\n"+st.session_state.inputCode+"\n"+ans
         except:
             ans = "#無法執行"
-            st.session_state.outputCode = ans+"\n"+st.session_state.outputCode+"\n"+st.session_state.inputCode
+            st.session_state.outputCode = st.session_state.outputCode+"\n"+ans+"\n"+st.session_state.inputCode
         
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
