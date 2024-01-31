@@ -154,8 +154,8 @@ def main():
                         if st.session_state.selectCol is not None:
                             test = splitOneCol(st.session_state.selectCol)
                             test = remove_html_tags(test)
-                            st.session_state.OneColresult = str(predictOneCol(st.session_state.selectCol,test,key))
-                            st.session_state.OneColresult += str(regularResponse(st.session_state.OneColresult))
+                            st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
+                            # st.session_state.OneColresult += str(regularResponse(st.session_state.OneColresult))
                             st.write(st.session_state.OneColresult)
                         else:
                             st.write("請選擇欲分析的欄位")
@@ -275,11 +275,11 @@ def predictOneCol(selindex,text,key):
         
         {data processing code 1}
 
-        2. {describe of data processing operation2}
+        2. {describe data processing operation2}
         
         {data processing code 2}
         
-        3. {describe of data processing operation3}
+        3. {describe data processing operation3}
         
         {data processing code 3}
         ....
@@ -306,8 +306,7 @@ def predictOneCol(selindex,text,key):
         ],
         temperature=0,
     )
-    
-    # translate = "\nReply in Traditional Chinese."
+
     return str(result.choices[0].message.content)
 
 # 預測前三個使用者可能會想看的資料視覺化圖
