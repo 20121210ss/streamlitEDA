@@ -314,7 +314,7 @@ def predictThreePic(text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     openai.api_key = key
     result = openai.ChatCompletion.create(
-        instruction = {},
+        instructions = {},
         model=OPENAI_MODEL,
         messages=[
             {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
