@@ -197,19 +197,18 @@ def codePage():
     
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder):
-    ans = ""
+    ans = {}
     if st.session_state.inputCode is not "":
         try:
-            ans1 = runCode(st.session_state.inputCode)
+            ans = runCode(st.session_state.inputCode)
             tip = "# 執行成功"
         except:
-            ans=""
             tip = "# 無法執行"
         
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-        ans_placeholder.write(ans1)
+        ans_placeholder.write(ans)
 
 def runCode(text):
     var = {}
