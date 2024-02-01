@@ -198,24 +198,25 @@ def codePage():
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder):
     ans = ""
-    if st.session_state.inputCode is not None:
+    if st.session_state.inputCode is not "":
         try:
-            ans = eval(st.session_state.inputCode)
+            ans = runCode(st.session_state.inputCode)
             tip = "# 執行成功"
         except:
-            try:
-                exec(st.session_state.inputCode)
-                ans = st.session_state.df.head(5)
-                tip = "# 多行code執行成功"
-            except:
-                ans=""
-                tip = "# 無法執行"
+            ans=""
+            tip = "# 無法執行"
         
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
         ans_placeholder.write(ans)
-        
+
+def runCode(text):
+    var = {}
+    exec(text,var)
+    return var
+    
+     
 # 完整EDA報告
 def reRunEDAfullreport():
     if st.session_state.df is not None:
