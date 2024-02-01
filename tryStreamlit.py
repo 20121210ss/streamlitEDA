@@ -200,10 +200,15 @@ def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
     if st.session_state.inputCode is not "":
         try:
-            ans = runCode(st.session_state.inputCode)
+            ans = eval(st.session_state.inputCode)
             tip = "# 執行成功"
         except:
-            tip = "# 無法執行"
+            try:
+                exec(st.session_state.inputCode)
+                tip = "# 多行code執行成功"
+            except:
+                ans=""
+                tip = "# 無法執行"
         
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
