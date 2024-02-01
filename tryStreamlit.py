@@ -212,7 +212,7 @@ def refreshCode(code_placeholder,ans_placeholder):
 
 def runCode(text):
     var = {}
-    exec(text,var)
+    exec(text,var,{})
     return var
     
      
