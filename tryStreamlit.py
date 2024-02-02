@@ -75,7 +75,7 @@ def main():
     key = st.text_input('openAI key:')
     
     # 若使用者有輸入好key，才可以開始上傳資料集
-    if key is not "":
+    if key != "":
         upload()
     
     # 若使用者有上傳資料集
