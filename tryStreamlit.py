@@ -112,13 +112,8 @@ def main():
                 if st.session_state.ThreePicResult is None: 
                     rel = predictThreePic(str(st.session_state.colList),key)
                     st.session_state.ThreePicResult = regularResponse(rel)
-                
-                vs = st.empty()
-                for item in st.session_state.ThreePicResult:
-                    vs.text(item[0])
-                    visualPic(item[1],vs)
-                    
-                if st.button("重整vs"):
+
+                if st.button("顯示預測產圖結果"):
                     vs = st.container()
                     for item in st.session_state.ThreePicResult:
                         vs.text(item[0])
