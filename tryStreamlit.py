@@ -112,11 +112,26 @@ def main():
                 if st.session_state.ThreePicResult is None: 
                     rel = predictThreePic(str(st.session_state.colList),key)
                     st.session_state.ThreePicResult = regularResponse(rel)
-                    
+                
+                vs = st.container()
                 for item in st.session_state.ThreePicResult:
-                    st.text(item[0])
-                    visualPic(item[1])
+                    vs.text(item[0])
+                    visualPic(item[1],vs)
                     
+                if st.button("重整vs"):
+                    vs = st.container()
+                    for item in st.session_state.ThreePicResult:
+                        vs.text(item[0])
+                        visualPic(item[1],vs)
+                
+                hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率")
+                if st.button("送出"):
+                    if hint is (not None or not ''):
+                        rel = repredictThreePic(str(st.session_state.colList),key,hint)
+                        st.session_state.ThreePicResult = regularResponse(rel)
+                    else:
+                        st.text("請輸入上方資料集用途，以提升預測結果")
+                        
                 Visualization()
                 
                 
@@ -215,10 +230,10 @@ def refreshCode(code_placeholder,ans_placeholder):
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
         ans_placeholder.write(ans)
 
-def runCode(text):
-    var = {}
-    exec(text,var,{})
-    return var
+# def runCode(text):
+#     var = {}
+#     exec(text,var,{})
+#     return var
     
      
 # 完整EDA報告
@@ -328,19 +343,32 @@ def predictThreePic(text,key):
     )
     return result.choices[0].message.content
 
+def repredictThreePic(colList,key,text):
+    OPENAI_MODEL = "gpt-3.5-turbo"
+    openai.api_key = key
+    result = openai.ChatCompletion.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
+            {"role": "user", "content": "我的資料集為st.session_state.df，我的資料集簡介:"+text+"\n以下是我的資料集中的所有特徵欄位名稱\n"+colList+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
+        ],
+        temperature=0,
+    )
+    return result.choices[0].message.content
+
 # 執行產圖的程式碼，並顯示於前端
-def visualPic(PicCode):
-    st.code(PicCode)
+def visualPic(PicCode,vs):
+    vs.code(PicCode)
     try:
         exec(PicCode)
         plt.savefig('temp_chart.png')
         im = plt.imread('temp_chart.png')
-        st.image(im,width=600)
+        vs.image(im,width=600)
         os.remove('temp_chart.png')
         plt.clf()
         
     except:
-        st.text("no pic")
+        vs.text("no pic")
 
 # 透過正則化拆分回傳的結果，分為Code及敘述部分。
 def regularResponse(ThreePic):
@@ -378,8 +406,9 @@ init_streamlit_comm()
 # 圖示頁的呈現
 def Visualization():  
     if st.session_state.df is not None:
+        
         # 顯示資料集的圖表
-        st.subheader("資料集分佈圖")
+        st.subheader("手動呈現資料集分佈")
         renderer = get_pyg_renderer(st.session_state.df)
         # Render your data exploration interface. Developers can use it to build charts by drag and drop.
         renderer.render_explore(width=700,height=900)
