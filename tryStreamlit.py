@@ -79,7 +79,7 @@ def main():
         upload()
     
     # 若使用者有上傳資料集
-    if st.session_state.df is not None and key is not None: 
+    if st.session_state.df != None and key != None: 
         
         # 整個頁面拆成7:3的分布   
         col1, col2 = st.columns(spec=[0.7,0.3])
@@ -97,7 +97,7 @@ def main():
             # EDA report頁籤，呈現完整report
             with tab1_2:
                 # 若以生成過報告，則調用生成好的報告
-                if st.session_state.fullReport is not None:
+                if st.session_state.fullReport != None:
                     html(st.session_state.fullReport,height=Height,scrolling=True)
                 # 否則生成報告
                 else:
@@ -109,7 +109,7 @@ def main():
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
-                if st.session_state.ThreePicResult is None: 
+                if st.session_state.ThreePicResult == None: 
                     rel = predictThreePic(str(st.session_state.colList),key)
                     st.session_state.ThreePicResult = regularResponse(rel)
 
@@ -121,7 +121,7 @@ def main():
                 
                 hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率",value=None)
                 if st.button("重新產圖"):
-                    if hint is not None:
+                    if hint != None:
                         rel = repredictThreePic(str(st.session_state.colList),key,hint)
                         st.session_state.ThreePicResult = regularResponse(rel)
                     else:
@@ -137,9 +137,9 @@ def main():
             # 各特徵的分析:呈現各特徵欄位的EDA
             with tab2_1:
                 # 若已有各特徵的分析報告
-                if st.session_state.minReport is not None:
+                if st.session_state.minReport != None:
                     # 已有各特徵的分析報告有點選單一欄位，則顯示該特徵欄位的EDA
-                    if st.session_state.selectCol is not None:
+                    if st.session_state.selectCol != None:
                         reRunOneColEDAreport(st.session_state.selectCol)
                     # 已有報告未選欄位，則調用已有的分析報告
                     else:
@@ -158,10 +158,10 @@ def main():
             with tab2_2:
                 with st.expander("建議操作如下", expanded=True):
                     
-                    if st.session_state.OneColresult is not None:
+                    if st.session_state.OneColresult != None:
                         st.write(st.session_state.OneColresult)
                     else:
-                        if st.session_state.selectCol is not None:
+                        if st.session_state.selectCol != None:
                             test = splitOneCol(st.session_state.selectCol)
                             test = remove_html_tags(test)
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
@@ -183,7 +183,7 @@ def main():
 def upload():
    
     uploaded_file = st.file_uploader("上傳檔案", type=["csv", "xlsx", "json"])
-    if uploaded_file is not None:
+    if uploaded_file != None:
         try:
             # 自動推斷檔案格式
             st.session_state.df = pd.read_csv(uploaded_file, encoding='utf-8') 
@@ -208,7 +208,7 @@ def codePage():
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
-    if st.session_state.inputCode is not "":
+    if st.session_state.inputCode != "":
         try:
             ans = eval(st.session_state.inputCode)
             tip = "# 執行成功"
@@ -233,7 +233,7 @@ def refreshCode(code_placeholder,ans_placeholder):
      
 # 完整EDA報告
 def reRunEDAfullreport():
-    if st.session_state.df is not None:
+    if st.session_state.df != None:
         try:
         # 創建 Profile 報告
             profile = ProfileReport(st.session_state.df)
@@ -245,7 +245,7 @@ def reRunEDAfullreport():
 # 各特徵欄位的EDA報告            
 def reRunEDAminreport():
     try:
-        if st.session_state.df is not None:    
+        if st.session_state.df != None:    
             # 創建 Profile 報告
             profile = ProfileReport(st.session_state.df,minimal=True)
             st.session_state.minReport = profile.to_html()
@@ -261,7 +261,7 @@ def reRunEDAminreport():
 
 # 單一欄位的EDA報告，欲輸入值為選擇第幾個特徵欄位
 def reRunOneColEDAreport(selindex):
-    if st.session_state.df is not None:
+    if st.session_state.df != None:
         # 使用split方法切割字串，以拆出單一特徵欄位的報告
         sr12 = '''<div class="row spacing">'''
         sr2 = '''<div class=variable>'''
@@ -280,7 +280,7 @@ def remove_html_tags(input_text):
 
 # 清除不需要資料的單一欄位EDA，防止EDA進入prompt時文件過大
 def splitOneCol(selindex):
-    if selindex is not None:
+    if selindex != None:
         sr2 = '''<div class=variable>'''
         split_result = st.session_state.minReport.split(sr2)
         result = remove_html_tags(split_result[1])
@@ -381,7 +381,7 @@ def regularResponse(ThreePic):
     
 # 資料集呈現
 def DataFrame():
-    if st.session_state.df is not None:
+    if st.session_state.df != None:
         st.session_state.colList = list(st.session_state.df.columns)
         col = st.selectbox(
             "想了解哪個欄位",
@@ -390,7 +390,7 @@ def DataFrame():
             placeholder="選擇欲分析的特徵欄位"
         )
         st.session_state.selectCol = col
-        if st.session_state.selectCol is not None:
+        if st.session_state.selectCol != None:
             st.session_state.selectCol = st.session_state.colList.index(st.session_state.selectCol)+1
         
         edited_df = st.data_editor(st.session_state.df)
@@ -406,7 +406,7 @@ init_streamlit_comm()
 
 # 圖示頁的呈現
 def Visualization():  
-    if st.session_state.df is not None:
+    if st.session_state.df != None:
         
         # 顯示資料集的圖表
         st.subheader("手動呈現資料集分佈")
@@ -423,10 +423,10 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
 
 # prompt頁聊天功能
 def chat(key):      
-    if st.session_state.df is not None:
+    if st.session_state.df != None:
         user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
         # 接收使用者輸入
-        if user_input is not None:
+        if user_input != None:
             # 將使用者的輸入加入紀錄
             st.session_state.messages.append({"role": "user", "content": user_input})
             # Display user message in chat message container
@@ -443,14 +443,14 @@ def chat(key):
                     st.image(im)
                     os.remove('temp_chart.png')
                 
-                if response is not None:
+                if response != None:
                     st.write(response)
                     st.session_state.messages.append({"role": "assistant", "content": response})
                 else:
                     st.write("No response from the assistant.")
                     st.session_state.messages.append({"role": "assistant", "content": "No response from the assistant."})           
                 
-                if genCode is not None:
+                if genCode != None:
                     st.code(genCode)
 
 # prompt頁詢問資料集
