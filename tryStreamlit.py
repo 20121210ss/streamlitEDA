@@ -119,10 +119,10 @@ def main():
                         vs.text(item[0])
                         visualPic(item[1],vs)
                 
-                hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率")
-
+                hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率",value=None)
+                st.write(hint)
                 if st.button("重新產圖"):
-                    if hint is not '':
+                    if hint is not None:
                         rel = repredictThreePic(str(st.session_state.colList),key,hint)
                         st.session_state.ThreePicResult = regularResponse(rel)
                     else:
