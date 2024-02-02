@@ -96,17 +96,16 @@ def main():
             
             # EDA report頁籤，呈現完整report
             with tab1_2:
-                fullRePo = st.empty()
                 # 若以生成過報告，則調用生成好的報告
                 if st.session_state.fullReport is not None:
-                    fullRePo.markdown(st.session_state.fullReport,unsafe_allow_html=True)
+                    html(st.session_state.fullReport,height=Height,scrolling=True)
                 # 否則生成報告
                 else:
-                    reRunEDAfullreport(fullRePo)
+                    reRunEDAfullreport()
                 # 若user有更動資料集，點選以重新生成報告
                 if st.button("生成報告"):
                     st.session_state.fullReport = None
-                    reRunEDAfullreport(fullRePo)
+                    reRunEDAfullreport()
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
@@ -121,6 +120,7 @@ def main():
                         visualPic(item[1],vs)
                 
                 hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率",value=None)
+
                 if st.button("重新產圖"):
                     if hint is not None:
                         rel = repredictThreePic(str(st.session_state.colList),key,hint)
@@ -137,24 +137,23 @@ def main():
             
             # 各特徵的分析:呈現各特徵欄位的EDA
             with tab2_1:
-                minRePo = st.empty()
                 # 若已有各特徵的分析報告
                 if st.session_state.minReport is not None:
                     # 已有各特徵的分析報告有點選單一欄位，則顯示該特徵欄位的EDA
                     if st.session_state.selectCol is not None:
-                        reRunOneColEDAreport(st.session_state.selectCol,minRePo)
+                        reRunOneColEDAreport(st.session_state.selectCol)
                     # 已有報告未選欄位，則調用已有的分析報告
                     else:
-                        minRePo.maekdown(st.session_state.minReport,unsafe_allow_html=True)
+                        html(st.session_state.minReport,height=Height,scrolling=True)
                         
                 # 若沒有各特徵的分析報告，生成報告    
                 else:
-                    reRunEDAminreport(minRePo)
+                    reRunEDAminreport()
                     
                 # 若user有更動資料集，點選以重新生成報告
                 if st.button("重新生成報告"):
                     st.session_state.minReport = None
-                    reRunEDAminreport(minRePo)
+                    reRunEDAminreport()
                     
             # 建議操作頁籤:呈現建議使用者的操作  
             with tab2_2:
@@ -234,18 +233,18 @@ def refreshCode(code_placeholder,ans_placeholder):
     
      
 # 完整EDA報告
-def reRunEDAfullreport(fullRePo):
+def reRunEDAfullreport():
     if st.session_state.df is not None:
         try:
             # 創建 Profile 報告
             profile = ProfileReport(st.session_state.df)
             st.session_state.fullReport = profile.to_html()
-            fullRePo.markdown(st.session_state.fullReport,unsafe_allow_html=True)
+            html(st.session_state.fullReport,height=Height,scrolling=True)
         except:
-            fullRePo.text("完整報告出錯")
+            st.text("完整報告出錯")
 
 # 各特徵欄位的EDA報告            
-def reRunEDAminreport(minRePo):
+def reRunEDAminreport():
     try:
         if st.session_state.df is not None:    
             # 創建 Profile 報告
@@ -257,12 +256,12 @@ def reRunEDAminreport(minRePo):
             split_result = st.session_state.minReport.split(sr)
             result = split_result[0]+sr+split_result[2]
             st.session_state.minReport = result
-            minRePo.markdown(result,unsafe_allow_html=True)
+            html(result,height=Height,scrolling=True)
     except:
         st.text("EDA簡略報告生成有誤")
 
 # 單一欄位的EDA報告，欲輸入值為選擇第幾個特徵欄位
-def reRunOneColEDAreport(selindex,minRePo):
+def reRunOneColEDAreport(selindex):
     if st.session_state.df is not None:
         # 使用split方法切割字串，以拆出單一特徵欄位的報告
         sr12 = '''<div class="row spacing">'''
@@ -272,7 +271,7 @@ def reRunOneColEDAreport(selindex,minRePo):
         split_result = result.split(sr2)
         result = split_result[0]+sr2+split_result[selindex]+sr2+split_result[-1]
         st.session_state.OneColReport = result
-        minRePo.markdown(result,unsafe_allow_html=True)
+        html(result,height=Height,scrolling=True)
 
 # 移除HTML標籤，防止EDA進入prompt時文件過大           
 def remove_html_tags(input_text):
