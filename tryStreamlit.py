@@ -235,10 +235,12 @@ def refreshCode(code_placeholder,ans_placeholder):
 def reRunEDAfullreport():
     if st.session_state.df is not None:
         try:
-        # 創建 Profile 報告
-        profile = ProfileReport(st.session_state.df)
-        st.session_state.fullReport = profile.to_html()
-        html(st.session_state.fullReport,height=Height,scrolling=True)
+            # 創建 Profile 報告
+            profile = ProfileReport(st.session_state.df)
+            st.session_state.fullReport = profile.to_html()
+            html(st.session_state.fullReport,height=Height,scrolling=True)
+        except:
+            st.text("完整報告出錯")
 
 # 各特徵欄位的EDA報告            
 def reRunEDAminreport():
