@@ -234,24 +234,30 @@ def refreshCode(code_placeholder,ans_placeholder):
 # 完整EDA報告
 def reRunEDAfullreport():
     if st.session_state.df is not None:
+        try:
         # 創建 Profile 報告
-        profile = ProfileReport(st.session_state.df)
-        st.session_state.fullReport = profile.to_html()
-        html(st.session_state.fullReport,height=Height,scrolling=True)
+            profile = ProfileReport(st.session_state.df)
+            st.session_state.fullReport = profile.to_html()
+            html(st.session_state.fullReport,height=Height,scrolling=True)
+        except:
+            st.text("EDA完整報告有誤，無法生成")
 
 # 各特徵欄位的EDA報告            
 def reRunEDAminreport():
-    if st.session_state.df is not None:    
-        # 創建 Profile 報告
-        profile = ProfileReport(st.session_state.df,minimal=True)
-        st.session_state.minReport = profile.to_html()
-        
-        # 使用split方法切割字串，僅保留顯示各變數分析的部分
-        sr = '''<div class="row header">'''
-        split_result = st.session_state.minReport.split(sr)
-        result = split_result[0]+sr+split_result[2]
-        st.session_state.minReport = result
-        html(result,height=Height,scrolling=True)
+    try:
+        if st.session_state.df is not None:    
+            # 創建 Profile 報告
+            profile = ProfileReport(st.session_state.df,minimal=True)
+            st.session_state.minReport = profile.to_html()
+            
+            # 使用split方法切割字串，僅保留顯示各變數分析的部分
+            sr = '''<div class="row header">'''
+            split_result = st.session_state.minReport.split(sr)
+            result = split_result[0]+sr+split_result[2]
+            st.session_state.minReport = result
+            html(result,height=Height,scrolling=True)
+    except:
+        st.text("EDA簡略報告生成有誤")
 
 # 單一欄位的EDA報告，欲輸入值為選擇第幾個特徵欄位
 def reRunOneColEDAreport(selindex):
