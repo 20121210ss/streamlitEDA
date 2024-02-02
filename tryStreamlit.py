@@ -113,7 +113,7 @@ def main():
                     rel = predictThreePic(str(st.session_state.colList),key)
                     st.session_state.ThreePicResult = regularResponse(rel)
                 
-                vs = st.container()
+                vs = st.empty()
                 for item in st.session_state.ThreePicResult:
                     vs.text(item[0])
                     visualPic(item[1],vs)
