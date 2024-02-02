@@ -233,19 +233,17 @@ def refreshCode(code_placeholder,ans_placeholder):
      
 # 完整EDA報告
 def reRunEDAfullreport():
-    if st.session_state.df != None:
+    if st.session_state.df is not None:
         try:
         # 創建 Profile 報告
-            profile = ProfileReport(st.session_state.df)
-            st.session_state.fullReport = profile.to_html()
-            html(st.session_state.fullReport,height=Height,scrolling=True)
-        except:
-            st.text("EDA完整報告有誤，無法生成")
+        profile = ProfileReport(st.session_state.df)
+        st.session_state.fullReport = profile.to_html()
+        html(st.session_state.fullReport,height=Height,scrolling=True)
 
 # 各特徵欄位的EDA報告            
 def reRunEDAminreport():
     try:
-        if st.session_state.df != None:    
+        if st.session_state.df is not None:    
             # 創建 Profile 報告
             profile = ProfileReport(st.session_state.df,minimal=True)
             st.session_state.minReport = profile.to_html()
