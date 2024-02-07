@@ -119,14 +119,13 @@ def main():
                         vs.text(item[0])
                         visualPic(item[1],vs)
                 
-                hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率",value=None)
-
-                if st.button("重新產圖"):
-                    if hint is not None:
-                        rel = repredictThreePic(str(st.session_state.colList),key,hint)
-                        st.session_state.ThreePicResult = regularResponse(rel)
-                    else:
-                        st.text("請輸入上方資料集用途，以提升預測結果")
+                # hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率",value=None)
+                # if st.button("重新產圖"):
+                #     if hint is not None:
+                #         rel = repredictThreePic(str(st.session_state.colList),key,hint)
+                #         st.session_state.ThreePicResult = regularResponse(rel)
+                #     else:
+                #         st.text("請輸入上方資料集用途，以提升預測結果")
                         
                 Visualization()
                 
@@ -345,18 +344,19 @@ def predictThreePic(text,key):
     )
     return result.choices[0].message.content
 
-def repredictThreePic(colList,key,text):
-    OPENAI_MODEL = "gpt-3.5-turbo"
-    openai.api_key = key
-    result = openai.ChatCompletion.create(
-        model=OPENAI_MODEL,
-        messages=[
-            {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
-            {"role": "user", "content": "我的資料集為st.session_state.df，我的資料集簡介:"+text+"\n以下是我的資料集中的所有特徵欄位名稱\n"+colList+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
-        ],
-        temperature=0,
-    )
-    return result.choices[0].message.content
+# 若要更精準需修改prompt
+# def repredictThreePic(colList,key,text):
+#     OPENAI_MODEL = "gpt-3.5-turbo"
+#     openai.api_key = key
+#     result = openai.ChatCompletion.create(
+#         model=OPENAI_MODEL,
+#         messages=[
+#             {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
+#             {"role": "user", "content": "我的資料集為st.session_state.df，我的資料集簡介:"+text+"\n以下是我的資料集中的所有特徵欄位名稱\n"+colList+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
+#         ],
+#         temperature=0,
+#     )
+#     return result.choices[0].message.content
 
 # 執行產圖的程式碼，並顯示於前端
 def visualPic(PicCode,vs):
