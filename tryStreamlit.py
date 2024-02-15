@@ -224,6 +224,7 @@ def refreshCode(code_placeholder,ans_placeholder):
 
 def runCode(text):
     modified_text = text.replace("\n", "\n  ")
+    modified_text = "\n  " + modified_text
     var = f"""
     def inputCode():
         {modified_text}
