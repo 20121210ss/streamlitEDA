@@ -211,8 +211,7 @@ def refreshCode(code_placeholder,ans_placeholder):
     if st.session_state.inputCode is not "":
         www = runCode(st.session_state.inputCode)
         try:
-            ans = exec(www)
-            te = inputCode()
+            exec(www,globals(),ans)
             tip = "# code執行成功"
         except:
             ans = ""
@@ -229,6 +228,8 @@ def runCode(text):
     var = f"""
 def inputCode():
     {modified_text}
+
+inputCode()
 """ 
     return var
      
