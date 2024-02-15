@@ -202,13 +202,21 @@ def codePage():
     # 显示代码内容
     code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
     ans_placeholder.write("")
-
+    
+    # if st.button("新增資料集變數(若程式碼中需使用資料集時點選)"):
+    #     st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode+"df")
+    # elif st.button("新增結果變數(若希望程式碼回傳結果時點選，以儲存並顯示欲回傳的結果)"):
+    #     st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode+"result")
+    # else :
+    #     st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",)
+        
     if st.button("新增資料集變數(若程式碼中需使用資料集時點選)"):
-        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode+"df")
-    elif st.button("新增結果變數(若希望程式碼回傳結果時點選，以儲存並顯示欲回傳的結果)",disabled=False):
-        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode+"result")
-    else :
-        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",)
+        st.session_state.inputCode = st.session_state.inputCode + "df"
+    
+    if st.button("新增結果變數(若希望程式碼回傳結果時點選，以儲存並顯示欲回傳的結果)"):
+        st.session_state.inputCode = st.session_state.inputCode + "result"
+        
+    st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode)
     
     if st.button("送出"):
         refreshCode(code_placeholder,ans_placeholder)
