@@ -165,8 +165,13 @@ def main():
                             test = splitOneCol(st.session_state.selectCol)
                             test = remove_html_tags(test)
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
-                            st.session_state.OneColresult += str(regularResponse(st.session_state.OneColresult))
-                            st.write(st.session_state.OneColresult)
+                            st.write(st.session_state.OneColresult+"\n測試:+\n")
+                            regu = str(regularResponse(st.session_state.OneColresult))
+                            for i in range(len(regu)):
+                                if i % 2 == 0:
+                                    st.write(regu[i])
+                                else:
+                                    st.code(regu[i])
                         else:
                             st.write("請選擇欲分析的欄位")
                             
