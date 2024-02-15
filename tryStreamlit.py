@@ -223,7 +223,7 @@ def refreshCode(code_placeholder,ans_placeholder):
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-        ans_placeholder.write(ans)
+        ans_placeholder.text(ans)
 
 
 def runCode(text):
