@@ -211,28 +211,20 @@ def refreshCode(code_placeholder,ans_placeholder):
     if st.session_state.inputCode is not "":
         try:
             exec(st.session_state.inputCode,globals(),codeDict)
-            ans = codeDict['result']
             tip = "# code執行成功"
         except:
-            ans = ""
             tip = "# 無法執行"
         
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
+        
+        try:
+            ans = codeDict['result']
+        except:
+            ans = ""
         if ans is not "":
             ans_placeholder.write(ans)
-
-
-def runCode(text):
-    modified_text = text.replace("\n", "\n    ")
-    var = f"""
-def inputCode():
-    {modified_text}
-
-result = inputCode()
-""" 
-    return var
      
 # 完整EDA報告
 def reRunEDAfullreport():
