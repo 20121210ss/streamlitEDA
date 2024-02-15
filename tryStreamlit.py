@@ -209,11 +209,7 @@ def codePage():
 def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
     if st.session_state.inputCode is not "":
-        ans = """def in():
-        
-    st.session_state.df.head(10)
-        
-in()"""
+        ans = runCode(st.session_state.inputCode)
         try:
             exec(ans)
             tip = "# code執行成功"
@@ -223,20 +219,18 @@ in()"""
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-        ans_placeholder.text(ans)
+        ans_placeholder.write(ans)
 
 
 def runCode(text):
     modified_text = text.replace("\n", "\n    ")
-    modified_text = "\n    " + modified_text
     var = f"""
-    def inputCode():
-        {modified_text}
+def inputCode():
+    {modified_text}
 
-    inputCode()
-    """ 
+inputCode()
+""" 
     return var
-    
      
 # 完整EDA報告
 def reRunEDAfullreport():
