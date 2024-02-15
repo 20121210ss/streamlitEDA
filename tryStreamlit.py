@@ -226,10 +226,10 @@ a=0
 def runCode(text):
     modified_text = text.replace("\n", "\n  ")
     var = f"""
-    def inputCode{a}():
+    def inputCode{str(a)}():
         {modified_text}
 
-    inputCode{a}())
+    inputCode{str(a)}())
     """
     a=a+1
     
