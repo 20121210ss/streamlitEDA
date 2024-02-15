@@ -209,7 +209,10 @@ def codePage():
 def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
     if st.session_state.inputCode is not "":
-        ans = runCode(st.session_state.inputCode)
+        ans = """def in():
+            st.session_state.df.head(10)
+            
+        in()"""
         try:
             exec(ans)
             tip = "# code執行成功"
@@ -223,8 +226,8 @@ def refreshCode(code_placeholder,ans_placeholder):
 
 
 def runCode(text):
-    modified_text = text.replace("\n", "\n  ")
-    modified_text = "\n  " + modified_text
+    modified_text = text.replace("\n", "\n    ")
+    modified_text = "\n    " + modified_text
     var = f"""
     def inputCode():
         {modified_text}
