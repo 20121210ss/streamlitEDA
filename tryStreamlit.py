@@ -212,7 +212,7 @@ def refreshCode(code_placeholder,ans_placeholder):
         ans = """def in():
         
             st.session_state.df.head(10)
-            
+        
         in()"""
         try:
             exec(ans)
