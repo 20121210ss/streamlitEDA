@@ -209,11 +209,12 @@ def codePage():
 def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
     if st.session_state.inputCode is not "":
-        ans = runCode(st.session_state.inputCode)
+        www = runCode(st.session_state.inputCode)
         try:
-            exec(ans)
+            ans = exec(www)
             tip = "# code執行成功"
         except:
+            ans = ""
             tip = "# 無法執行"
         
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
