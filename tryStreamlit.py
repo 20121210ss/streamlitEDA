@@ -211,9 +211,9 @@ def refreshCode(code_placeholder,ans_placeholder):
     if st.session_state.inputCode is not "":
         ans = """def in():
         
-            st.session_state.df.head(10)
+    st.session_state.df.head(10)
         
-        in()"""
+in()"""
         try:
             exec(ans)
             tip = "# code執行成功"
