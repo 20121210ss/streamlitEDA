@@ -210,25 +210,30 @@ def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
     if st.session_state.inputCode is not "":
         try:
-            ans = eval(st.session_state.inputCode)
-            tip = "# 執行成功"
+            exec(runCode(st.session_state.inputCode))
+            tip = "# code執行成功"
         except:
-            try:
-                exec(st.session_state.inputCode)
-                tip = "# 多行code執行成功"
-            except:
-                ans=""
-                tip = "# 無法執行"
+            ans=""
+            tip = "# 無法執行"
         
         st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
         st.session_state.inputCode = ""
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
         ans_placeholder.write(ans)
 
-# def runCode(text):
-#     var = {}
-#     exec(text,var,{})
-#     return var
+a=0
+
+def runCode(text):
+    modified_text = text.replace("\n", "\n  ")
+    var = f"""
+    def inputCode{a}():
+        {modified_text}
+
+    inputCode{a}())
+    """
+    a=a+1
+    
+    return var
     
      
 # 完整EDA報告
@@ -344,7 +349,7 @@ def predictThreePic(text,key):
     )
     return result.choices[0].message.content
 
-# 若要更精準需修改prompt
+# 若有資料集或特徵解釋，則一併丟入prompt以預測前三個資料視覺化圖
 # def repredictThreePic(colList,key,text):
 #     OPENAI_MODEL = "gpt-3.5-turbo"
 #     openai.api_key = key
