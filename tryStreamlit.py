@@ -204,9 +204,9 @@ def codePage():
     ans_placeholder.write("")
 
     if st.button("新增資料集變數(若程式碼中需使用資料集時點選)"):
-        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode+"df")
+        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code","df")
     if st.button("新增結果變數(若希望程式碼回傳結果時點選，以儲存並顯示欲回傳的結果)"):
-        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode+"result")
+        st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code","result")
     
     st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",)
     
