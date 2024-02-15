@@ -166,7 +166,7 @@ def main():
                             test = remove_html_tags(test)
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             st.write(st.session_state.OneColresult+"\n測試:+\n")
-                            regu = str(regularResponse(st.session_state.OneColresult))
+                            regu = regularResponse(st.session_state.OneColresult)
                             for i in range(len(regu)):
                                 if i % 2 == 0:
                                     st.write(regu[i])
