@@ -212,7 +212,7 @@ def refreshCode(code_placeholder,ans_placeholder):
         www = runCode(st.session_state.inputCode)
         try:
             exec(www,globals(),ans)
-            ans = ans['result']
+            # ans = ans['result']
             tip = "# code執行成功"
         except:
             ans = ""
