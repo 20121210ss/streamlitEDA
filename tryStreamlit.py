@@ -209,10 +209,7 @@ def codePage():
 def refreshCode(code_placeholder,ans_placeholder):
     ans = {}
     if st.session_state.inputCode is not "":
-        ans = """def in():
-            st.session_state.df.head(10)
-            
-        in()"""
+        ans = """def in():\n    st.session_state.df.head(10)\nin()"""
         try:
             exec(ans)
             tip = "# code執行成功"
