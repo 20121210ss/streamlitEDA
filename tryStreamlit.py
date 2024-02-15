@@ -505,6 +505,7 @@ def predictDF(text,key):
     df = SmartDataframe(st.session_state.df, config={"llm": llm})
     result1 = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
     result2 = df.last_code_executed
+    st.session_state.df = df
     return result1,result2
 
 if __name__ == "__main__":
