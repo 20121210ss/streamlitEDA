@@ -350,18 +350,57 @@ def predictThreePic(text,key):
     return result.choices[0].message.content
 
 # 若有資料集或特徵解釋，則一併丟入prompt以預測前三個資料視覺化圖
-# def repredictThreePic(colList,key,text):
-#     OPENAI_MODEL = "gpt-3.5-turbo"
-#     openai.api_key = key
-#     result = openai.ChatCompletion.create(
-#         model=OPENAI_MODEL,
-#         messages=[
-#             {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
-#             {"role": "user", "content": "我的資料集為st.session_state.df，我的資料集簡介:"+text+"\n以下是我的資料集中的所有特徵欄位名稱\n"+colList+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
-#         ],
-#         temperature=0,
-#     )
-#     return result.choices[0].message.content
+def repredictThreePic(colList,key,text):
+    schema = """
+        {describe data visualizations image1}
+
+        {data visualizations image code1}
+
+        {describe data visualizations image2}
+
+        {data visualizations image code2}
+        
+        {describe data visualizations image3}
+
+        {data visualizations image code3}
+    """
+    CoT = f"""
+        Step 1 - The user will provide you with an introduction of dataset, learn from this introduction.
+        Step 2 - The user will provide you all of the feature in the dataset, combine the introduction from Step 1, Advice three data visualizations images that users most want to see
+        Step 3 - Based on the Step 3, attach the code for how to generate the images in Python.
+        Step 4 - Format the result from Step 2 like this schema:{schema}
+        Step 4 - The dataframe is not call 'df', is call 'st.session_state.df',from Step 3, Replace all 'df' with 'st.session_state.df'
+    """
+    # Step 5 - Translate the results of step 4 into Traditional Chinese.
+    system = f"""You are a data scientist assistant. When given data write the data visualization advice and the proper code.
+        Use the following step-by-step instructions to respond to user inputs.
+        {CoT}
+    """
+    prompt = "Introduction of my dataset: " + text + ",\n"+  "All of the feature:\n"+colList+"\nAdvice three data visualizations that users most want to see based on this dataset, and attach the code for how to generate the images in Python."
+    
+    openai.api_key = key
+    result = openai.ChatCompletion.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0,
+    )
+
+    return str(result.choices[0].message.content)
+
+    OPENAI_MODEL = "gpt-3.5-turbo"
+    openai.api_key = key
+    result = openai.ChatCompletion.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": "You are a data scientist assistant. When given data and a query, write the proper code and create the proper visualization"},
+            {"role": "user", "content": "我的資料集為st.session_state.df，我的資料集簡介:"+text+"\n以下是我的資料集中的所有特徵欄位名稱\n"+colList+"\n請列給我使用者根據這個資料集，最想看到的三個資料視覺化圖示，並且附上他該如何在python產圖的code"},
+        ],
+        temperature=0,
+    )
+    return result.choices[0].message.content
 
 # 執行產圖的程式碼，並顯示於前端
 def visualPic(PicCode,vs):
