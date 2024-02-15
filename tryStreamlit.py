@@ -221,18 +221,15 @@ def refreshCode(code_placeholder,ans_placeholder):
         code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
         ans_placeholder.write(ans)
 
-a=0
 
 def runCode(text):
     modified_text = text.replace("\n", "\n  ")
     var = f"""
-    def inputCode{str(a)}():
+    def inputCode():
         {modified_text}
 
-    inputCode{str(a)}())
-    """
-    a=a+1
-    
+    inputCode()
+    """ 
     return var
     
      
