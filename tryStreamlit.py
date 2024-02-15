@@ -229,7 +229,8 @@ def runCode(text):
 def inputCode():
     {modified_text}
 
-inputCode()
+result = inputCode()
+return result
 """ 
     return var
      
