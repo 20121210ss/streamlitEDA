@@ -165,7 +165,7 @@ def main():
                             test = splitOneCol(st.session_state.selectCol)
                             test = remove_html_tags(test)
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
-                            # st.session_state.OneColresult += str(regularResponse(st.session_state.OneColresult))
+                            st.session_state.OneColresult += str(regularResponse(st.session_state.OneColresult))
                             st.write(st.session_state.OneColresult)
                         else:
                             st.write("請選擇欲分析的欄位")
@@ -334,6 +334,7 @@ def predictOneCol(selindex,text,key):
     )
 
     return str(result.choices[0].message.content)
+    
 
 # 預測前三個使用者可能會想看的資料視覺化圖
 def predictThreePic(text,key):
