@@ -167,11 +167,12 @@ def main():
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             st.write(st.session_state.OneColresult+"\n測試:+\n")
                             regu = regularResponse(st.session_state.OneColresult)
+                            parts = regu[0][0].split(":", 1)
+                            regu[0][0] = parts[1]
+                            st.text(parts[0])
                             for item in regu:
-                                st.text("\n解釋:")
-                                st.text(item[0])
-                                st.text("\ncode:")
-                                st.write(item[1])
+                                st.text(item[0].replace(":",""))
+                                st.code(item[1])
                         else:
                             st.write("請選擇欲分析的欄位")
                             
