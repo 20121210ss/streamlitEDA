@@ -173,7 +173,7 @@ def main():
                             part[0] = str(part[0]).replace('"',"").replace('\\n',"")
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
-                                st.write(str(item[0]).replace(":"," "))
+                                st.button(str(item[0]).replace(":"," "))
                                 st.code(item[1])
                         else:
                             st.write("請選擇欲分析的欄位")
