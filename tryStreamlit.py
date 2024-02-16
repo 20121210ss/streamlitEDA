@@ -167,8 +167,8 @@ def main():
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             regu = regularResponse(st.session_state.OneColresult)
                             part = str(regu[0]).split(":",1)
-                            regu[0] = (str(part[1]), regu[0][1])
-                            st.text(part[0])
+                            regu[0] = (part[1], regu[0][1])
+                            st.write(part[0])
                             for item in regu:
                                 st.text(str(item[0]).replace(":"," "))
                                 st.code(item[1])
