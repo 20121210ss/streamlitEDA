@@ -171,7 +171,9 @@ def main():
                             part = str(st.session_state.OneColresult[0]).split(":",1)
                             part = str(part[1]).split(",",1)
                             tt = str(part[0]).split('"')
-                            part[0] = str(tt[0]).replace("\n","")
+                            aaa = str(tt[0]).split('\n')
+                            st.write(aaa)
+                            part[0] = aaa[2]
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
                                 st.write(str(item[0]).replace(":"," "))
