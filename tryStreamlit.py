@@ -235,7 +235,6 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
             except:
                 tip = "# 無法執行"
             st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
-            st.session_state.inputCode = ""
             code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
             try:
                 ans = codeDict['result']
@@ -247,6 +246,8 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
         else:
             ans_placeholder.write("請針對資料集進行操作")
             inputArea_placeholder.text_area("輸入自行撰寫python code")
+            
+        st.session_state.inputCode = ""
         
      
 # 完整EDA報告
