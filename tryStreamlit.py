@@ -167,9 +167,7 @@ def main():
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             st.write(st.session_state.OneColresult+"\n測試:+\n")
                             regu = regularResponse(st.session_state.OneColresult)
-                            part = [item[0] for item in regu]
-                            st.code(part)
-                            part = part.split(",",1)
+                            part = str(regu[0]).split(",",1)
                             st.code(part)
                             regu[0] = (str(part[1]), regu[0][1])
                             st.text(part[0])
