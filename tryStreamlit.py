@@ -168,7 +168,7 @@ def main():
                             st.write(st.session_state.OneColresult+"\n測試:+\n")
                             regu = regularResponse(st.session_state.OneColresult)
                             parts = regu[0][0].split(":", 1)
-                            regu[0][0] = parts[1]
+                            regu[0][0:] = parts[1]
                             st.text(parts[0])
                             for item in regu:
                                 st.text(item[0].replace(":",""))
