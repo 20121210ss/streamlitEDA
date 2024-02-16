@@ -168,7 +168,8 @@ def main():
                             test = remove_html_tags(test)
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             st.session_state.OneColresult = regularResponse(st.session_state.OneColresult)
-                            part = (st.session_state.OneColresult[0]).split(":",1)
+                            part = str(st.session_state.OneColresult[0]).split(":",1)
+                            part[1] = (str(part[1]).replace("\n","")).replace(")","")
                             st.write(part)
                             st.session_state.OneColresult[0] = (part[1],st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
