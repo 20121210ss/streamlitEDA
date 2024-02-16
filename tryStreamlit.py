@@ -170,10 +170,7 @@ def main():
                             st.session_state.OneColresult = regularResponse(st.session_state.OneColresult)
                             part = str(st.session_state.OneColresult[0]).split(":",1)
                             part = str(part[1]).split(",",1)
-                            tt = str(part[0]).replace('"',"")
-                            aaa = tt.replace('\\n',"")
-                            st.write(aaa)
-                            part[0] = aaa
+                            part[0] = str(part[0]).replace('"',"").replace('\\n',"")
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
                                 st.write(str(item[0]).replace(":"," "))
