@@ -220,29 +220,34 @@ def codePage():
     st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode)
     
     if st.button("送出"):
-        refreshCode(code_placeholder,ans_placeholder)
+        refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder)
     
 # 重整code頁籤     
-def refreshCode(code_placeholder,ans_placeholder):
+def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
     codeDict = {}
     if st.session_state.inputCode is not "":
-        try:
-            cc = st.session_state.inputCode.replace("df","st.session_state.df")
-            exec(cc,globals(),codeDict)
-            tip = "# code執行成功"
-        except:
-            tip = "# 無法執行"
+        index = str(st.session_state.inputCode).find("df")
+        if index != -1:
+            try:
+                cc = st.session_state.inputCode.replace("df","st.session_state.df")
+                exec(cc,globals(),codeDict)
+                tip = "# code執行成功"
+            except:
+                tip = "# 無法執行"
+            st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
+            st.session_state.inputCode = ""
+            code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
+            try:
+                ans = codeDict['result']
+            except:
+                ans = ""
+            if ans is not "":
+                ans_placeholder.write(ans)
+            inputArea_placeholder.text_area("輸入自行撰寫python code")
+        else:
+            ans_placeholder.write("請針對資料集進行操作")
+            inputArea_placeholder.text_area("輸入自行撰寫python code")
         
-        st.session_state.outputCode = st.session_state.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
-        st.session_state.inputCode = ""
-        code_placeholder.code(st.session_state.outputCode, language="python", line_numbers=True)
-        
-        try:
-            ans = codeDict['result']
-        except:
-            ans = ""
-        if ans is not "":
-            ans_placeholder.write(ans)
      
 # 完整EDA報告
 def reRunEDAfullreport():
