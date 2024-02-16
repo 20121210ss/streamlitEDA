@@ -169,9 +169,9 @@ def main():
                             regu = regularResponse(st.session_state.OneColresult)
                             for i in range(len(regu)):
                                 if i % 2 == 0:
-                                    st.write(regu[i])
+                                    st.write("\n解釋:"+regu[i])
                                 else:
-                                    st.code(regu[i])
+                                    st.code("\ncode:"+regu[i])
                         else:
                             st.write("請選擇欲分析的欄位")
                             
