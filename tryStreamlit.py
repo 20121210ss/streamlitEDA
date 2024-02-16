@@ -169,9 +169,9 @@ def main():
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             st.session_state.OneColresult = regularResponse(st.session_state.OneColresult)
                             part = str(st.session_state.OneColresult[0]).split(":",1)
-                            part[1] = (str(part[1]).replace("\n","")).replace(")","")
+                            part[1] = str(part[1]).replace("\n"," ")
                             st.write(part)
-                            st.session_state.OneColresult[0] = (part[1],st.session_state.OneColresult[0][1])
+                            st.session_state.OneColresult[0] = (f"{part[1]}+",st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
                                 st.text(str(item[0]).replace(":"," "))
                                 st.code(item[1])
