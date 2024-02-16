@@ -119,7 +119,7 @@ def main():
                         vs.text(item[0])
                         visualPic(item[1],vs)
                 
-                # hint = st.text_area("若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率",value=None)
+                # 若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率
                 # if st.button("重新產圖"):
                 #     if hint is not None:
                 #         rel = repredictThreePic(str(st.session_state.colList),key,hint)
@@ -167,13 +167,11 @@ def main():
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
                             st.write(st.session_state.OneColresult+"\n測試:+\n")
                             regu = regularResponse(st.session_state.OneColresult)
-                            for i in range(len(regu)):
-                                if i % 2 == 0:
-                                    st.text("\n解釋:")
-                                    st.write(regu[i])
-                                else:
-                                    st.text("\ncode:")
-                                    st.code(regu[i])
+                            for item in regu:
+                                st.text("\n解釋:")
+                                st.text(item[0])
+                                st.text("\ncode:")
+                                st.write(item[1])
                         else:
                             st.write("請選擇欲分析的欄位")
                             
