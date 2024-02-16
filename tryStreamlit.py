@@ -160,7 +160,7 @@ def main():
                     
                     if st.session_state.OneColresult is not None:
                         for item in st.session_state.OneColresult:
-                            st.text(str(item[0]).replace(":"," "))
+                            st.button(str(item[0]).replace(":"," "))
                             st.code(item[1])
                     else:
                         if st.session_state.selectCol is not None:
