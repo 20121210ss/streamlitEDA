@@ -242,10 +242,12 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
                 ans = ""
             if ans is not "":
                 ans_placeholder.write(ans)
-            st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code")
+            st.session_state.inputCode = ""
+            st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode)
         else:
             ans_placeholder.write("請針對資料集進行操作")
-            st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code")
+            st.session_state.inputCode = ""
+            st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode)
             
         
         
