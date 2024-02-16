@@ -159,17 +159,18 @@ def main():
                 with st.expander("建議操作如下", expanded=True):
                     
                     if st.session_state.OneColresult is not None:
-                        st.write(st.session_state.OneColresult)
+                        for item in st.session_state.OneColresult:
+                            st.text(str(item[0]).replace(":"," "))
+                            st.code(item[1])
                     else:
                         if st.session_state.selectCol is not None:
                             test = splitOneCol(st.session_state.selectCol)
                             test = remove_html_tags(test)
                             st.session_state.OneColresult = predictOneCol(st.session_state.selectCol,test,key)
-                            regu = regularResponse(st.session_state.OneColresult)
-                            part = str(regu[0]).split(":",1)
-                            regu[0] = (part[1], regu[0][1])
-                            st.write(part[0])
-                            for item in regu:
+                            st.session_state.OneColresult = regularResponse(st.session_state.OneColresult)
+                            part = str(st.session_state.OneColresult[0]).split(":",1)
+                            st.session_state.OneColresultregu[0] = (part[1])
+                            for item in st.session_state.OneColresult:
                                 st.text(str(item[0]).replace(":"," "))
                                 st.code(item[1])
                         else:
