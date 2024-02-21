@@ -183,6 +183,7 @@ def main():
                                     except: 
                                         alert.text("無法執行code")
                                 st.code(item[1])
+                                alert.text("到底有木有")
                         
                         else:
                             st.write("請選擇欲分析的欄位")
