@@ -186,9 +186,6 @@ def main():
                                         st.success("code執行成功ㄌ")
                                     except Exception as e:
                                         st.error("無法執行code：" + str(e))
-
-                                # 仅在相应的按钮被点击时才显示代码
-                                if button_clicked:
                                     st.code(code_to_execute)
                             
                         #     alert = st.empty()
