@@ -173,11 +173,34 @@ def main():
                             part = str(part[1]).split(",",1)
                             part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
-                            alert = st.empty()
                             for item in st.session_state.OneColresult:
-                                if st.button(str(item[0]).replace(":"," ")):
-                                    TT(item[1],alert)
-                                st.code(item[1])
+                                button_label = str(item[0]).replace(":", " ")
+                                code_to_execute = item[1]
+                                
+                                # 使用lambda表达式创建一个匿名函数来传递参数
+                                button_clicked = st.button(button_label, key=button_label)
+
+                                if button_clicked:
+                                    try:
+                                        exec(code_to_execute)
+                                        st.success("code執行成功ㄌ")
+                                    except Exception as e:
+                                        st.error("無法執行code：" + str(e))
+
+                                # 仅在相应的按钮被点击时才显示代码
+                                if button_clicked:
+                                    st.code(code_to_execute)
+                            
+                        #     alert = st.empty()
+                        #     for item in st.session_state.OneColresult:
+                        #         if st.button(str(item[0]).replace(":"," ")):
+                        #             try:
+                        #                 exec(str(item[1]))
+                        #                 alert.success("code執行成功ㄌ")
+                        #             except: 
+                        #                 alert.error("無法執行code")
+                        #         st.code(item[1])
+                        #         alert.warning("到底有木有")
                         
                         else:
                             st.write("請選擇欲分析的欄位")
@@ -190,15 +213,7 @@ def main():
             
         st.tabs(['Prompt'])
         chat(key)        
-
-# 44
-def TT(text,alert):
-    try:
-        exec(text)
-        alert.success("code執行成功ㄌ")
-    except: 
-        alert.error("無法執行code")
-              
+                
 # 上傳檔案
 def upload():
    
