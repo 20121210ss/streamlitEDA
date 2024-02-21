@@ -176,8 +176,12 @@ def main():
                             alert = st.empty()
                             for item in st.session_state.OneColresult:
                                 if st.button(str(item[0]).replace(":"," ")):
-                                    exec(str(item[1]))
-                                    alert.success("code執行成功ㄌ")
+                                    alert = st.empty()
+                                    try:
+                                        exec(str(item[1]))
+                                        alert.text("code執行成功ㄌ")
+                                    except: 
+                                        alert.text("無法執行code")
                                 st.code(item[1])
                         
                         else:
