@@ -172,13 +172,14 @@ def main():
                             part = str(part[1]).split(",",1)
                             part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
+                            alert = st.empty()
                             for item in st.session_state.OneColresult:
                                 if st.button(str(item[0]).replace(":"," ")):
                                     try:
                                         exec(item[1])
-                                        st.success("執行成功")
+                                        alert.success("code執行成功ㄌ")
                                     except:
-                                        st.warning("無法執行該code")
+                                        alert.warning("無法執行該code")
                                 st.code(item[1])
                         else:
                             st.write("請選擇欲分析的欄位")
