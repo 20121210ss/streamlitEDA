@@ -176,16 +176,9 @@ def main():
                             alert = st.empty()
                             for item in st.session_state.OneColresult:
                                 if st.button(str(item[0]).replace(":"," ")):
-                                    try:
-                                        exec(str(item[1]))
-                                        alert.toast("code執行成功ㄌ")
-                                        time.sleep(.5)
-                                    except:
-                                        alert.toast("無法執行該code")
-                                        time.sleep(.5)
+                                    exec(str(item[1]))
+                                    alert.success("code執行成功ㄌ")
                                 st.code(item[1])
-                                alert.toast("成功顯示")
-                                time.sleep(.5)
                         
                         else:
                             st.write("請選擇欲分析的欄位")
