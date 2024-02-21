@@ -174,13 +174,12 @@ def main():
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
                                 if st.button(str(item[0]).replace(":"," ")):
-                                    st.code(item[1])
                                     try:
-                                        
                                         exec(item[1])
                                         st.success("執行成功")
                                     except:
                                         st.warning("無法執行該code")
+                                st.code(item[1])
                         else:
                             st.write("請選擇欲分析的欄位")
                             
