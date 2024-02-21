@@ -68,6 +68,7 @@ Height=450
     
 # 在主頁面上顯示的內容
 def main():
+    alert = st.empty()
     
     # 大標
     st.subheader("測試EDA程式")
@@ -173,17 +174,15 @@ def main():
                             part = str(part[1]).split(",",1)
                             part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
-                            alert = st.empty()
                             for item in st.session_state.OneColresult:
-                                alert = st.empty()
                                 if st.button(str(item[0]).replace(":"," ")):
                                     try:
                                         exec(str(item[1]))
-                                        alert.text("code執行成功ㄌ")
+                                        alert.success("code執行成功ㄌ")
                                     except: 
-                                        alert.text("無法執行code")
+                                        alert.error("無法執行code")
                                 st.code(item[1])
-                                alert.text("到底有木有")
+                                alert.warning("到底有木有")
                         
                         else:
                             st.write("請選擇欲分析的欄位")
