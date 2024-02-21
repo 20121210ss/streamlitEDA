@@ -12,6 +12,7 @@ from pandasai import SmartDataframe
 import re
 import geopandas as gpd
 import seaborn as sns 
+import time
 
 OPENAI_MODEL = "gpt-3.5-turbo"
 
@@ -178,10 +179,13 @@ def main():
                                     try:
                                         exec(str(item[1]))
                                         alert.toast("code執行成功ㄌ")
+                                        time.sleep(.5)
                                     except:
                                         alert.toast("無法執行該code")
+                                        time.sleep(.5)
                                 st.code(item[1])
                                 alert.toast("成功顯示")
+                                time.sleep(.5)
                         
                         else:
                             st.write("請選擇欲分析的欄位")
