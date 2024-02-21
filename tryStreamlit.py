@@ -173,8 +173,14 @@ def main():
                             part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
                             st.session_state.OneColresult[0] = (f"{part[0]}",st.session_state.OneColresult[0][1])
                             for item in st.session_state.OneColresult:
-                                st.button(str(item[0]).replace(":"," "))
-                                st.code(item[1])
+                                if st.button(str(item[0]).replace(":"," ")):
+                                    st.code(item[1])
+                                    try:
+                                        
+                                        exec(item[1])
+                                        st.success("執行成功")
+                                    except:
+                                        st.warning("無法執行該code")
                         else:
                             st.write("請選擇欲分析的欄位")
                             
@@ -249,9 +255,6 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
             st.session_state.inputCode = ""
             st.session_state.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",st.session_state.inputCode)
             
-        
-        
-     
 # 完整EDA報告
 def reRunEDAfullreport():
     if st.session_state.df is not None:
