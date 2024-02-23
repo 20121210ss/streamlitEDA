@@ -6,23 +6,29 @@ import allVariable
 
 def advice():
     st.text("建議操作如下")
-                        
-    if allVariable.OneColresult is not None:
-        for item in allVariable.OneColresult:
-            st.button(str(item[0]).replace(":"," "))
-            st.code(item[1])
-    else:
-        if allVariable.selectCol is not None:
-            reAdvice()
+    advice = st.container()   
+    with advice:
+        if allVariable.OneColresult is not None:
             for item in allVariable.OneColresult:
                 st.button(str(item[0]).replace(":"," "))
                 st.code(item[1])
-                            
         else:
-            st.write("請選擇欲分析的欄位")
-                
-    if st.button("重新建議"):
-        reAdvice()
+            if allVariable.selectCol is not None:
+                reAdvice()
+                for item in allVariable.OneColresult:
+                    st.button(str(item[0]).replace(":"," "))
+                    st.code(item[1])
+                                
+            else:
+                st.write("請選擇欲分析的欄位")
+                    
+        if st.button("重新建議"):
+            advice.empty()
+            with advice:
+                reAdvice()
+                for item in allVariable.OneColresult:
+                    st.button(str(item[0]).replace(":"," "))
+                    st.code(item[1])
 
 def reAdvice():
     test = splitOneCol(allVariable.selectCol)

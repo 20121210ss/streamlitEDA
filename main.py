@@ -50,7 +50,6 @@ def main():
             with tab1_3:
                 Visualization()
                 
-                
         # 右半部分col1(佔30%)   
         with col2:
             tab2_1, tab2_2 = st.tabs(['各特徵的分析','建議操作'])

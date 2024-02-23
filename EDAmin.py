@@ -2,7 +2,10 @@ import streamlit as st
 from streamlit.components.v1 import html
 from ydata_profiling import ProfileReport
 import re
+from wordcloud import WordCloud
 import allVariable
+
+wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
 def EDAmin():
     
@@ -22,9 +25,10 @@ def EDAmin():
         else:
             reRunEDAminreport()
                         
-        # 若user有更動資料集，點選以重新生成報告
-        if st.button("重新生成報告"):
-            allVariable.minReport = None
+    # 若user有更動資料集，點選以重新生成報告
+    if st.button("重新生成報告"):
+        allVariable.minReport = None
+        with minreport :
             reRunEDAminreport()
         
 # 單一欄位的EDA報告，欲輸入值為選擇第幾個特徵欄位

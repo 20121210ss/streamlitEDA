@@ -10,15 +10,20 @@ import re
 import allVariable
 
 def Visualization():
+    threePic = st.container()
     if allVariable.ThreePicResult == None: 
         rel = predictThreePic(str(allVariable.colList),allVariable.key)
         allVariable.ThreePicResult = regularResponse(rel)
-
-    if st.button("顯示預測產圖結果"):
-        vs = st.container()
-        for item in allVariable.ThreePicResult:
-            vs.text(item[0])
-            visualPic(item[1],vs)
+        with threePic:
+            for item in allVariable.ThreePicResult:
+                st.text(item[0])
+                visualPic(item[1])
+    else:
+        with threePic:
+            for item in allVariable.ThreePicResult:
+                st.text(item[0])
+                visualPic(item[1])
+    
             
     # 若覺得產圖不準確，可以輸入資料集的用途及特徵意義等，便於提升預測準確率
     # if st.button("重新產圖"):
@@ -107,18 +112,18 @@ def repredictThreePic(colList,key,text):
     return str(result.choices[0].message.content)
 
 # 執行產圖的程式碼，並顯示於前端
-def visualPic(PicCode,vs):
-    vs.code(PicCode)
+def visualPic(PicCode):
+    st.code(PicCode)
     try:
         exec(PicCode)
         plt.savefig('temp_chart.png')
         im = plt.imread('temp_chart.png')
-        vs.image(im,width=600)
+        st.image(im,width=600)
         os.remove('temp_chart.png')
         plt.clf()
         
     except:
-        vs.text("no pic")
+        st.text("no pic")
 
 # 透過正則化拆分回傳的結果，分為Code及敘述部分。
 def regularResponse(ThreePic):
