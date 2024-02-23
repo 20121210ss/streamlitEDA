@@ -6,32 +6,36 @@ import allVariable
 
 def advice():
     st.text("建議操作如下")
-    advice = st.container()   
-    with advice:
+    advice = st.empty()
+    
+    with advice.container(): 
         if allVariable.OneColresult is not None:
-            selected_item = st.radio("選擇欲執行的操作", [item[0] for item in allVariable.OneColresult])
-            index = [item[0] for item in allVariable.OneColresult].index(selected_item)
+            arr = [item[0] for item in allVariable.OneColresult]
+            selected_item = st.radio("選擇欲執行的操作",arr)
             if st.button("執行code"):
-                tryCode(allVariable.OneColresult[index][1])
-                
+                index = arr.index(selected_item)
+                tryCode(selected_item,allVariable.OneColresult[index][1])   
+
         else:
             if allVariable.selectCol is not None:
                 reAdvice()
-                selected_item = st.radio("選擇欲執行的操作", [item[0] for item in allVariable.OneColresult])
-                index = [item[0] for item in allVariable.OneColresult].index(selected_item)
+                arr = [item[0] for item in allVariable.OneColresult]
+                selected_item = st.radio("選擇欲執行的操作",arr)
                 if st.button("執行code"):
-                    tryCode(allVariable.OneColresult[index][1])
-         
+                    index = arr.index(selected_item)
+                    tryCode(selected_item,allVariable.OneColresult[index][1])   
             else:
-                st.write("請選擇欲分析的欄位")
+                advice.write("請選擇欲分析的欄位")
                     
-    # if st.button("重新建議"):
-    #     advice.empty()
-    #     with advice:
-    #         reAdvice()
-    #         for item in allVariable.OneColresult:
-    #             advice.button(str(item[0]).replace(":"," "))
-    #             advice.code(item[1])
+    if st.button("重新建議"):
+        advice.empty()
+        with advice.container():
+            reAdvice()
+            arr = [item[0] for item in allVariable.OneColresult]
+            selected_item = st.radio("選擇欲執行的操作",arr)
+            if st.button("執行code"):
+                index = arr.index(selected_item)
+                tryCode(selected_item,allVariable.OneColresult[index][1])   
 
 
 def reAdvice():
@@ -66,15 +70,15 @@ def predictOneCol(selindex,text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     sel = allVariable.colList[selindex-1]
     schema = """
-        {describe data processing operation1}
+        {#describe data processing operation1}
 
         {data processing code 1}
 
-        {describe data processing operation2}
+        {#describe data processing operation2}
         
         {data processing code 2}
         
-        {describe data processing operation3}
+        {#describe data processing operation3}
         
         {data processing code 3}
         ....
@@ -113,7 +117,7 @@ def regularResponse(ad):
     return matches
 
 # 執行code     
-def tryCode(cc):
+def tryCode(aa,cc):
     try:
         exec(cc)
         tip = "# code執行成功"
@@ -121,5 +125,7 @@ def tryCode(cc):
     except:
         tip = "# 無法執行"
         st.warning("no")
-    cc = allVariable.inputCode.replace("allVariable.df","df")
-    allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+cc
+        
+    cc = cc.replace("allVariable.df","df")
+    aa = aa.replace("\n"," ")
+    allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+aa+cc

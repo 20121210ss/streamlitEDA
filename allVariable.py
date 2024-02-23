@@ -1,5 +1,6 @@
+
 # 初始化變數-OpenAI key
-key = None
+key = ""
 
 # 設定固定高度(圖、表格、report皆可用)
 Height=450

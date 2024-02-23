@@ -24,10 +24,15 @@ def codePage():
         allVariable.inputCode = allVariable.inputCode + "result"
     
     inputArea_placeholder = st.empty()
-    allVariable.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
+    
+    with inputArea_placeholder.empty():
+        allVariable.inputCode = st.text_area("輸入自行撰寫python code",allVariable.inputCode)
     
     if st.button("送出"):
         refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder)
+        allVariable.inputCode = ""
+        with inputArea_placeholder.empty():
+            allVariable.inputCode = st.text_area("輸入自行撰寫python code",allVariable.inputCode)
     
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
@@ -43,16 +48,14 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
                 tip = "# 無法執行"
             allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+allVariable.inputCode+"\n"
             code_placeholder.code(allVariable.outputCode, language="python", line_numbers=True)
+            
             try:
                 ans = codeDict['result']
             except:
                 ans = ""
             if ans is not "":
                 ans_placeholder.write(ans)
-            allVariable.inputCode = ""
-            allVariable.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
+            
         else:
-            ans_placeholder.write("請針對資料集進行操作")
-            allVariable.inputCode = ""
-            allVariable.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
-     
+            ans_placeholder.error("請針對資料集進行操作")
+            

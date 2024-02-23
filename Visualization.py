@@ -140,7 +140,7 @@ def Pyg():
         st.subheader("手動呈現資料集分佈")
         renderer = get_pyg_renderer(allVariable.df)
         # Render your data exploration interface. Developers can use it to build charts by drag and drop.
-        renderer.render_explore(width=700,height=900)
+        renderer.render_explore(width=800,height=900)
 
 # Establish communication between pygwalker and streamlit
 init_streamlit_comm()

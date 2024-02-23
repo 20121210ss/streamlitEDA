@@ -13,6 +13,61 @@ from advice import advice
 from codePage import codePage
 from chat import chat
 
+# 初始化變數-資料集
+if 'df' not in st.session_state:
+    st.session_state.df = None
+    allVariable.df = st.session_state.df
+    
+# 初始化變數-完整EDA報告
+if 'fullReport' not in st.session_state:
+    st.session_state.fullReport = None
+    allVariable.fullReport = st.session_state.fullReport
+    
+# 初始化變數-簡短EDA報告  
+if 'minReport' not in st.session_state:
+    st.session_state.minReport = None
+    allVariable.minReport = st.session_state.minReport
+    
+# 初始化變數-輸出呈現的程式碼
+if 'outputCode' not in st.session_state:
+    st.session_state.outputCode = ""
+    allVariable.outputCode = st.session_state.outputCode
+    
+# 初始化變數-使用者輸入的程式碼
+if 'inputCode' not in st.session_state:
+    st.session_state.inputCode = ""
+    allVariable.inputCode = st.session_state.inputCode
+    
+# 初始化變數-資料集的所有特徵欄位
+if 'colList ' not in st.session_state:
+    st.session_state.colList  = None
+    allVariable.colList = st.session_state.colList
+    
+# 初始化變數-使用者選擇要了解的一個欄位
+if 'selectCol' not in st.session_state:
+    st.session_state.selectCol = None
+    allVariable.selectCol = st.session_state.selectCol
+    
+# 初始化變數-使用者選擇要了解的一個欄位的Report
+if 'OneColReport' not in st.session_state:
+    st.session_state.OneColReport = None
+    allVariable.OneColReport = st.session_state.OneColReport
+    
+# 初始化變數-單一欄位的預測結果
+if 'OneColresult' not in st.session_state:
+    st.session_state.OneColresult = None
+    allVariable.OneColresult = st.session_state.OneColresult
+    
+# 初始化變數-三張圖片的預測結果
+if 'ThreePicResult' not in st.session_state:
+    st.session_state.ThreePicResult = None
+    allVariable.ThreePicResult  = st.session_state.ThreePicResult 
+    
+# 初始化對話session
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+    allVariable.messages = st.session_state.messages
+    
 # 在主頁面上顯示的內容
 def main():
 

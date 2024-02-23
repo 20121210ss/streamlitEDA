@@ -29,7 +29,7 @@ def reRunEDAfullreport():
     if allVariable.df is not None:
         try:
             # 創建 Profile 報告
-            profile = ProfileReport(allVariable.df)
+            profile = ProfileReport(allVariable.df,)
             allVariable.fullReport = profile.to_html()
             html(allVariable.fullReport,height=allVariable.Height,scrolling=True)
         except:
