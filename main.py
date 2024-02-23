@@ -89,5 +89,5 @@ def convert_df(df):
 if __name__ == "__main__":
     main()
     
+# 虛擬環境 .\.env\Scripts\Activate  
 # streamlit run main.py
-# 虛擬環境 .\.env\Scripts\Activate

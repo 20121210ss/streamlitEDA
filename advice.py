@@ -9,26 +9,30 @@ def advice():
     advice = st.container()   
     with advice:
         if allVariable.OneColresult is not None:
-            for item in allVariable.OneColresult:
-                st.button(str(item[0]).replace(":"," "))
-                st.code(item[1])
+            selected_item = st.radio("選擇欲執行的操作", [item[0] for item in allVariable.OneColresult])
+            index = [item[0] for item in allVariable.OneColresult].index(selected_item)
+            if st.button("執行code"):
+                tryCode(allVariable.OneColresult[index][1])
+                
         else:
             if allVariable.selectCol is not None:
                 reAdvice()
-                for item in allVariable.OneColresult:
-                    st.button(str(item[0]).replace(":"," "))
-                    st.code(item[1])
-                                
+                selected_item = st.radio("選擇欲執行的操作", [item[0] for item in allVariable.OneColresult])
+                index = [item[0] for item in allVariable.OneColresult].index(selected_item)
+                if st.button("執行code"):
+                    tryCode(allVariable.OneColresult[index][1])
+         
             else:
                 st.write("請選擇欲分析的欄位")
                     
-        if st.button("重新建議"):
-            advice.empty()
-            with advice:
-                reAdvice()
-                for item in allVariable.OneColresult:
-                    st.button(str(item[0]).replace(":"," "))
-                    st.code(item[1])
+    # if st.button("重新建議"):
+    #     advice.empty()
+    #     with advice:
+    #         reAdvice()
+    #         for item in allVariable.OneColresult:
+    #             advice.button(str(item[0]).replace(":"," "))
+    #             advice.code(item[1])
+
 
 def reAdvice():
     test = splitOneCol(allVariable.selectCol)
@@ -39,6 +43,7 @@ def reAdvice():
     part = str(part[1]).split(",",1)
     part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
     allVariable.OneColresult[0] = (f"{part[0]}",allVariable.OneColresult[0][1])
+    
     
 # 移除HTML標籤，防止EDA進入prompt時文件過大           
 def remove_html_tags(input_text):
@@ -106,3 +111,15 @@ def regularResponse(ad):
     matches = pattern.findall(ad)
         
     return matches
+
+# 執行code     
+def tryCode(cc):
+    try:
+        exec(cc)
+        tip = "# code執行成功"
+        st.warning("ok")
+    except:
+        tip = "# 無法執行"
+        st.warning("no")
+    cc = allVariable.inputCode.replace("allVariable.df","df")
+    allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+cc
