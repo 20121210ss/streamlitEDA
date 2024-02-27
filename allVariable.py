@@ -37,3 +37,5 @@ ThreePicResult = None
     
 # 初始化對話session
 messages = []
+
+test = None

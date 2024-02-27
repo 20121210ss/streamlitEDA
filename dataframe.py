@@ -1,12 +1,13 @@
 import streamlit as st
 import allVariable
 
-def DataFrame():
+def DataFrame(df):
     
     featureChoice = st.empty()
     showData = st.empty()
-
-    allVariable.colList = list(allVariable.df.columns)
+    showData.dataframe(df)
+    
+    allVariable.colList = list(df.columns)
     
     col = featureChoice.selectbox(
         "想了解哪個欄位",
@@ -17,8 +18,5 @@ def DataFrame():
     allVariable.selectCol = col
     if allVariable.selectCol is not None:
         allVariable.selectCol = allVariable.colList.index(allVariable.selectCol)+1
-    
-    edited_df = showData.data_editor(allVariable.df)
-    allVariable.df = edited_df
     
     

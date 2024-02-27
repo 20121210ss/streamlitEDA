@@ -72,17 +72,17 @@ def predictThreePic(text,key):
 # 若有資料集或特徵解釋，則一併丟入prompt以預測前三個資料視覺化圖
 def repredictThreePic(colList,key,text):
     schema = """
-        {describe data visualizations image1}
+        <Insert description of first data visualization>
 
-        {data visualizations image code1}
+        <Insert the code of first data visualization to generate image>
 
-        {describe data visualizations image2}
+        <Insert description of second data visualization>
 
-        {data visualizations image code2}
+        <Insert the code of second data visualization to generate image>
         
-        {describe data visualizations image3}
+        <Insert description of third data visualization>
 
-        {data visualizations image code3}
+        <Insert the code of third data visualization to generate image>
     """
     CoT = f"""
         Step 1 - The user will provide you with an introduction of dataset, learn from this introduction.

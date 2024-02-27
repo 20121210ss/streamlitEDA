@@ -1,5 +1,6 @@
 import streamlit as st
-import allVariable
+import allVariable 
+from dataframe import DataFrame
 import os
 import matplotlib.pyplot as plt
 import geopandas as gpd
@@ -24,15 +25,11 @@ def codePage():
         allVariable.inputCode = allVariable.inputCode + "result"
     
     inputArea_placeholder = st.empty()
-    
-    with inputArea_placeholder.empty():
-        allVariable.inputCode = st.text_area("輸入自行撰寫python code",allVariable.inputCode)
+    allVariable.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
     
     if st.button("送出"):
         refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder)
-        allVariable.inputCode = ""
-        with inputArea_placeholder.empty():
-            allVariable.inputCode = st.text_area("輸入自行撰寫python code",allVariable.inputCode)
+    
     
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
@@ -42,7 +39,9 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
         if index != -1:
             try:
                 cc = allVariable.inputCode.replace("df","allVariable.df")
-                exec(cc,globals(),codeDict)
+                exec(cc+"""\naa = allVariable.df""",globals(),codeDict)
+                allVariable.test = codeDict['aa']
+                st.write(codeDict)
                 tip = "# code執行成功"
             except:
                 tip = "# 無法執行"
@@ -58,4 +57,6 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
             
         else:
             ans_placeholder.error("請針對資料集進行操作")
+
+    allVariable.inputCode = ""
             

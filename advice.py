@@ -3,6 +3,11 @@ from bs4 import BeautifulSoup
 import openai
 import re
 import allVariable
+import os
+import matplotlib.pyplot as plt
+import geopandas as gpd
+import seaborn as sns
+import pandas as pd
 
 def advice():
     st.text("建議操作如下")
@@ -70,19 +75,25 @@ def predictOneCol(selindex,text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     sel = allVariable.colList[selindex-1]
     schema = """
-        {#describe data processing operation1}
+        <#Insert description of data processing operation1>
 
-        {data processing code 1}
+        <Insert the code of data processing operation1>
 
-        {#describe data processing operation2}
+        <#Insert description of data processing operation2>
         
-        {data processing code 2}
-        
-        {#describe data processing operation3}
-        
-        {data processing code 3}
+        <Insert the code of data processing operation2>
         ....
-    """
+    """+"""
+for example:
+
+#Remove missing value
+
+```python(.*?)```
+import pandas as pd
+
+df = df.dropna()
+...
+"""
     CoT = f"""
         Step 1 - The user will provide you with a feature report of Exploratory Data Analysis, summarize this text.
         Step 2 - Based on the summary from Step 1, list the data preprocessing operations and their Python codes.
@@ -118,8 +129,10 @@ def regularResponse(ad):
 
 # 執行code     
 def tryCode(aa,cc):
+    codeDict = {}
     try:
-        exec(cc)
+        exec(cc,globals(),codeDict)
+        allVariable.df = codeDict['allVariable.df']
         tip = "# code執行成功"
         st.warning("ok")
     except:

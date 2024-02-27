@@ -82,7 +82,7 @@ def main():
         upload()
     
     # 若使用者有上傳資料集
-    if (allVariable.df is not None) and (allVariable.key is not None): 
+    if allVariable.df is not None: 
         
         # 整個頁面拆成7:3的分布   
         col1, col2 = st.columns(spec=[0.7,0.3])
@@ -96,7 +96,9 @@ def main():
                 DataFrame()
                 # 提供下載資料的按鈕
                 st.download_button(label="Download data as CSV", data=convert_df(allVariable.df), file_name='edited_df.csv', mime='text/csv')
-            
+                if allVariable.test is not None:
+                    st.write(allVariable.test)
+                
             # EDA report頁籤，呈現完整report
             with tab1_2:
                 EDAfull()
@@ -121,11 +123,10 @@ def main():
         codePage()
             
         st.tabs(['Prompt'])
-        chat(allVariable.key)        
+        chat(allVariable.key)     
                 
 # 上傳檔案
 def upload():
-   
     uploaded_file = st.file_uploader("上傳檔案", type=["csv", "xlsx", "json"])
     if uploaded_file is not None:
         try:
@@ -134,6 +135,7 @@ def upload():
             
         except Exception as e:
             st.error(f"讀取檔案時發生錯誤: {e}")
+    
 
 @st.cache_resource
 def convert_df(df):
