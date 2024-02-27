@@ -96,16 +96,14 @@ def main():
                 DataFrame()
                 # 提供下載資料的按鈕
                 st.download_button(label="Download data as CSV", data=convert_df(allVariable.df), file_name='edited_df.csv', mime='text/csv')
-                if allVariable.test is not None:
-                    st.write(allVariable.test)
                 
             # EDA report頁籤，呈現完整report
             with tab1_2:
-                EDAfull()
+                st.text("EDAfull()")
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
-                Visualization()
+                st.text("Visualization()")
                 
         # 右半部分col1(佔30%)   
         with col2:
@@ -113,11 +111,11 @@ def main():
             
             # 各特徵的分析:呈現各特徵欄位的EDA
             with tab2_1:
-                EDAmin()
+                st.text("EDAmin()")
                     
             # 建議操作頁籤:呈現建議使用者的操作  
             with tab2_2:
-                advice()
+                st.text("advice()")
                         
         st.tabs(['Code'])
         codePage()

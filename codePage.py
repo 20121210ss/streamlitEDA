@@ -40,7 +40,7 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
             try:
                 cc = allVariable.inputCode.replace("df","allVariable.df")
                 exec(cc+"""\naa = allVariable.df""",globals(),codeDict)
-                allVariable.test = codeDict['aa']
+                allVariable.df = codeDict['aa']
                 st.write(codeDict)
                 tip = "# code執行成功"
             except:
