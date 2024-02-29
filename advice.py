@@ -142,3 +142,6 @@ def tryCode(aa,cc):
     cc = cc.replace("allVariable.df","df")
     aa = aa.replace("\n"," ")
     allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+aa+cc
+    
+    st.text(codeDict['dt'])
+    

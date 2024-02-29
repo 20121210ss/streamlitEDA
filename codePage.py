@@ -25,7 +25,7 @@ def codePage():
         allVariable.inputCode = allVariable.inputCode + "result"
     
     inputArea_placeholder = st.empty()
-    allVariable.inputCode = inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
+    inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
     
     if st.button("送出"):
         refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder)

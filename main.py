@@ -13,10 +13,10 @@ from advice import advice
 from codePage import codePage
 from chat import chat
 
-# 初始化變數-資料集
-if 'df' not in st.session_state:
-    st.session_state.df = None
-    allVariable.df = st.session_state.df
+# # 初始化變數-資料集
+# if 'df' not in st.session_state:
+#     st.session_state.df = None
+#     allVariable.df = st.session_state.df
     
 # 初始化變數-完整EDA報告
 if 'fullReport' not in st.session_state:
@@ -42,11 +42,6 @@ if 'inputCode' not in st.session_state:
 if 'colList ' not in st.session_state:
     st.session_state.colList  = None
     allVariable.colList = st.session_state.colList
-    
-# 初始化變數-使用者選擇要了解的一個欄位
-if 'selectCol' not in st.session_state:
-    st.session_state.selectCol = None
-    allVariable.selectCol = st.session_state.selectCol
     
 # 初始化變數-使用者選擇要了解的一個欄位的Report
 if 'OneColReport' not in st.session_state:
@@ -125,11 +120,11 @@ def main():
                 
 # 上傳檔案
 def upload():
-    uploaded_file = st.file_uploader("上傳檔案", type=["csv", "xlsx", "json"])
-    if uploaded_file is not None:
+    st.file_uploader("上傳檔案", type=["csv", "xlsx", "json"],key='df')
+    if st.session_state.df is not None:
         try:
             # 自動推斷檔案格式
-            allVariable.df = pd.read_csv(uploaded_file, encoding='utf-8') 
+            allVariable.df = pd.read_csv(st.session_state.df, encoding='utf-8') 
             
         except Exception as e:
             st.error(f"讀取檔案時發生錯誤: {e}")
