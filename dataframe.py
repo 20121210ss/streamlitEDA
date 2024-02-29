@@ -5,7 +5,9 @@ def DataFrame():
     
     featureChoice = st.empty()
     showData = st.empty()
-
+    with showData.empty():
+        st.data_editor(allVariable.df)
+    
     allVariable.colList = list(allVariable.df.columns)
     
     col = featureChoice.selectbox(
@@ -17,8 +19,5 @@ def DataFrame():
     allVariable.selectCol = col
     if allVariable.selectCol is not None:
         allVariable.selectCol = allVariable.colList.index(allVariable.selectCol)+1
-    
-    showData.data_editor(allVariable.df)
-    # allVariable.df = edited_df
     
     

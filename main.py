@@ -99,11 +99,11 @@ def main():
                 
             # EDA report頁籤，呈現完整report
             with tab1_2:
-                st.text("EDAfull()")
+                EDAfull()
                     
             # Visualization頁籤，呈現可能會用到的三張圖，以及提供使用者自行拖拉產圖的介面
             with tab1_3:
-                st.text("Visualization()")
+                Visualization()
                 
         # 右半部分col1(佔30%)   
         with col2:
@@ -111,11 +111,11 @@ def main():
             
             # 各特徵的分析:呈現各特徵欄位的EDA
             with tab2_1:
-                st.text("EDAmin()")
+                EDAmin()
                     
             # 建議操作頁籤:呈現建議使用者的操作  
             with tab2_2:
-                st.text("advice()")
+                advice()
                         
         st.tabs(['Code'])
         codePage()

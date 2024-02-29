@@ -48,10 +48,10 @@ def reAdvice():
     test = remove_html_tags(test)
     allVariable.OneColresult = predictOneCol(allVariable.selectCol,test,allVariable.key)
     allVariable.OneColresult = regularResponse(allVariable.OneColresult)
-    part = str(allVariable.OneColresult[0]).split(":",1)
-    part = str(part[1]).split(",",1)
-    part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
-    allVariable.OneColresult[0] = (f"{part[0]}",allVariable.OneColresult[0][1])
+    # part = str(allVariable.OneColresult[0]).split(":",1)
+    # part = str(part[1]).split(",",1)
+    # part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
+    # allVariable.OneColresult[0] = (f"{part[0]}",allVariable.OneColresult[0][1])
     
     
 # 移除HTML標籤，防止EDA進入prompt時文件過大           
@@ -131,13 +131,13 @@ def regularResponse(ad):
 def tryCode(aa,cc):
     codeDict = {}
     try:
-        exec(cc,globals(),codeDict)
-        allVariable.df = codeDict['allVariable.df']
+        exec(cc+"""\ndt = allVariable.df""",globals(),codeDict)
+        allVariable.df = codeDict['dt']
         tip = "# code執行成功"
         st.warning("ok")
-    except:
+    except Exception:
         tip = "# 無法執行"
-        st.warning("no")
+        st.warning("no\n"+Exception)
         
     cc = cc.replace("allVariable.df","df")
     aa = aa.replace("\n"," ")

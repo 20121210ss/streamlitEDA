@@ -2,9 +2,8 @@ import streamlit as st
 from streamlit.components.v1 import html
 from ydata_profiling import ProfileReport 
 import allVariable
-from wordcloud import WordCloud
-
-wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
+# from wordcloud import WordCloud
+# wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
 def EDAfull():
     
