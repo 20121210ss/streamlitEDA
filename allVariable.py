@@ -38,4 +38,5 @@ ThreePicResult = None
 # 初始化對話session
 messages = []
 
-test = None
+# 此次上傳過資料了嗎
+isUpload = False
