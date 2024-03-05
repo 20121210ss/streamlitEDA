@@ -1,6 +1,7 @@
 import streamlit as st
+st.set_page_config(page_title="EDA App",layout="wide")
+
 import allVariable 
-from dataframe import DataFrame
 import os
 import matplotlib.pyplot as plt
 import geopandas as gpd
@@ -60,3 +61,7 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
 
     allVariable.inputCode = ""
             
+if allVariable.df is not None:
+    codePage()
+else:
+    st.error("請匯入資料集")

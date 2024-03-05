@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(page_title="EDA App",layout="wide")
+
 from bs4 import BeautifulSoup
 import openai
 import re
@@ -48,10 +50,6 @@ def reAdvice():
     test = remove_html_tags(test)
     allVariable.OneColresult = predictOneCol(allVariable.selectCol,test,allVariable.key)
     allVariable.OneColresult = regularResponse(allVariable.OneColresult)
-    # part = str(allVariable.OneColresult[0]).split(":",1)
-    # part = str(part[1]).split(",",1)
-    # part[0] = str(part[0]).replace('"',"").replace('\\n',"").replace("'","")
-    # allVariable.OneColresult[0] = (f"{part[0]}",allVariable.OneColresult[0][1])
     
     
 # 移除HTML標籤，防止EDA進入prompt時文件過大           
@@ -144,4 +142,10 @@ def tryCode(aa,cc):
     allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+aa+cc
     
     st.text(codeDict['dt'])
+    
+if allVariable.df is not None:
+    advice()
+else:
+    st.error("請匯入資料集")
+    
     

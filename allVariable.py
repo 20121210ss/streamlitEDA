@@ -3,7 +3,7 @@
 key = ""
 
 # 設定固定高度(圖、表格、report皆可用)
-Height=450
+Height=1200
 
 # 初始化變數-資料集
 df = None

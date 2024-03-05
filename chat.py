@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(page_title="EDA App",layout="wide")
+
 import openai
 from pandasai.llm import OpenAI
 from pandasai import SmartDataframe
@@ -7,7 +9,7 @@ import matplotlib.pyplot as plt
 import allVariable
 
 # prompt頁聊天功能
-def chat(key):      
+def chat():      
     if allVariable.df is not None:
         user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
         # 接收使用者輸入
@@ -21,7 +23,7 @@ def chat(key):
             # Display assistant response
             with st.chat_message("assistant"):
                 
-                response, genCode = predictDF(user_input,key) 
+                response, genCode = predictDF(user_input,allVariable.key) 
                 
                 if os.path.isfile('temp_chart.png'):
                     im = plt.imread('temp_chart.png')
@@ -47,3 +49,8 @@ def predictDF(text,key):
     result2 = df.last_code_executed
     allVariable.df = df
     return result1,result2
+
+if allVariable.df is not None:
+    chat()
+else:
+    st.error("請匯入資料集")

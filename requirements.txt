@@ -16,3 +16,4 @@ openai == 0.27.8
 pandasai == 1.4.8
 duckdb == 0.8.1
 geopandas == 0.14.2
+st-pages == 0.4.5
