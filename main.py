@@ -4,6 +4,11 @@ import allVariable
 from st_pages import Page, show_pages, add_page_title
 
 # 初始化變數-完整EDA報告
+if 'df' not in st.session_state:
+    st.session_state.df = None
+    allVariable.df = st.session_state.df
+
+# 初始化變數-完整EDA報告
 if 'fullReport' not in st.session_state:
     st.session_state.fullReport = None
     allVariable.fullReport = st.session_state.fullReport
