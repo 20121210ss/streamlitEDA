@@ -168,7 +168,7 @@ def visualPic(PicCode):
         exec(PicCode)
         plt.savefig('temp_chart.png')
         im = plt.imread('temp_chart.png')
-        st.image(im,width=600)
+        st.image(im,width=500)
         os.remove('temp_chart.png')
         plt.clf()
         
@@ -190,7 +190,7 @@ def Pyg():
         st.subheader("手動呈現資料集分佈")
         renderer = get_pyg_renderer(allVariable.df)
         # Render your data exploration interface. Developers can use it to build charts by drag and drop.
-        renderer.render_explore()
+        renderer.render_explore(width=900)
 
 # Establish communication between pygwalker and streamlit
 init_streamlit_comm()
