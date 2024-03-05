@@ -17,6 +17,8 @@ from chat import chat
 # if 'df' not in st.session_state:
 #     st.session_state.df = None
 #     allVariable.df = st.session_state.df
+
+
     
 # 初始化變數-完整EDA報告
 if 'fullReport' not in st.session_state:

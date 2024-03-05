@@ -21,9 +21,12 @@ def DataFrame():
         )
         
 def reCol():
-    allVariable.selectCol = st.session_state.selectCol
-    if allVariable.selectCol is not None:
-        allVariable.selectCol = allVariable.colList.index(allVariable.selectCol)+1
+    try:
+        allVariable.selectCol = st.session_state.selectCol
+        if allVariable.selectCol is not None:
+            allVariable.selectCol = allVariable.colList.index(allVariable.selectCol)+1
+    except:
+        pass
     
     
     

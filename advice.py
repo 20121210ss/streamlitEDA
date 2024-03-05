@@ -75,18 +75,18 @@ def predictOneCol(selindex,text,key):
     OPENAI_MODEL = "gpt-3.5-turbo"
     sel = allVariable.colList[selindex-1]
     schema = """
-        <#Insert description of data processing operation1>
+        #Insert description of data processing operation1
 
-        <Insert the code of data processing operation1>
+        Insert the code of data processing operation1
 
-        <#Insert description of data processing operation2>
+        #Insert description of data processing operation2
         
-        <Insert the code of data processing operation2>
+        Insert the code of data processing operation2
         ....
     """+"""
 for example:
 
-#Remove missing value
+#1. Remove missing value
 
 ```python(.*?)```
 import pandas as pd
@@ -135,9 +135,9 @@ def tryCode(aa,cc):
         allVariable.df = codeDict['dt']
         tip = "# code執行成功"
         st.warning("ok")
-    except Exception:
+    except Exception as e:
         tip = "# 無法執行"
-        st.warning("no\n"+Exception)
+        st.warning("no\n"+e)
         
     cc = cc.replace("allVariable.df","df")
     aa = aa.replace("\n"," ")
