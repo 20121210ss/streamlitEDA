@@ -40,3 +40,6 @@ messages = []
 
 # 此次上傳過資料了嗎
 isUpload = False
+
+# 此次輸入過key了嗎
+isKey = False

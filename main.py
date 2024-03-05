@@ -71,14 +71,16 @@ add_page_title(page_title="EDA App", layout="wide")
 # 在主頁面上顯示的內容
 def main():
 
-    # 大標
-    st.subheader("測試EDA程式")
+    # # 大標
+    # st.subheader("測試EDA程式")
     
     # 請使用者輸入openAI api key
-    allVariable.key = st.text_input('openAI key:')
+    if allVariable.isKey == False:
+        allVariable.key = st.text_input('openAI key:')
     
     # 若使用者有輸入好key，才可以開始上傳資料集
     if allVariable.key != "":
+        allVariable.isKey = True
         if allVariable.isUpload == False:
             upload()
     
