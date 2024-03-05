@@ -14,12 +14,14 @@ def EDAmin():
     with minreport :
         # 若已有各特徵的分析報告
         if allVariable.minReport is not None:
+            if allVariable.OneColReport is not None:
+                html(allVariable.OneColReport,height=allVariable.Height,scrolling=True)
             # 已有各特徵的分析報告有點選單一欄位，則顯示該特徵欄位的EDA
-            if allVariable.selectCol is not None:
-                reRunOneColEDAreport(allVariable.selectCol)
-            # 已有報告未選欄位，則調用已有的分析報告
-            else:
-                html(allVariable.minReport,height=allVariable.Height,scrolling=True)
+                if allVariable.selectCol is not None:
+                    reRunOneColEDAreport(allVariable.selectCol)
+                # 已有報告未選欄位，則調用已有的分析報告
+                else:
+                    html(allVariable.minReport,height=allVariable.Height,scrolling=True)
                             
         # 若沒有各特徵的分析報告，生成報告    
         else:
@@ -33,7 +35,7 @@ def EDAmin():
         
 # 單一欄位的EDA報告，欲輸入值為選擇第幾個特徵欄位
 def reRunOneColEDAreport(selindex):
-    if allVariable.df is not None:
+    if allVariable.minReport is not None:
         # 使用split方法切割字串，以拆出單一特徵欄位的報告
         sr12 = '''<div class="row spacing">'''
         sr2 = '''<div class=variable>'''
