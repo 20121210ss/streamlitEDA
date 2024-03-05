@@ -3,7 +3,7 @@ import pandas as pd
 import allVariable
 from st_pages import Page, show_pages, add_page_title
 
-# 初始化變數-完整EDA報告
+# 初始化變數-資料集
 if 'df' not in st.session_state:
     st.session_state.df = None
     allVariable.df = st.session_state.df
