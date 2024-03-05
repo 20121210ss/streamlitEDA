@@ -17,7 +17,7 @@ def DataFrame():
             index=None,
             placeholder="選擇欲分析的特徵欄位",
             key='selectCol',
-            on_change=reCol()
+            on_change=reCol(),
         )
         
 def reCol():
