@@ -224,7 +224,7 @@ def tryCode(aa,cc):
         st.warning("ok")
     except Exception as e:
         tip = "# 無法執行"
-        st.warning("no\n"+str(e))
+        st.error("無法執行,因:"+str(e))
         st.code(cc)
         
         
