@@ -5,6 +5,10 @@ import pandas as pd
 import allVariable
 
 def preprocessing():
+    
+    # 大標
+    st.subheader("簡易資料處理☑️")
+    
     col1, col2 = st.columns(spec=[0.7,0.3])
     with col1:
         st.tabs(['資料集'])

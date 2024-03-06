@@ -16,6 +16,9 @@ import re
 
 def EDAfull():
     
+    # 大標
+    st.subheader("完整分析報告📖")
+    
     # 整個頁面拆成5:5的分布   
     col1, col2 = st.columns(spec=[0.5,0.5])
     with col1:

@@ -8,6 +8,21 @@ if 'df' not in st.session_state:
     st.session_state.df = None
     allVariable.df = st.session_state.df
 
+# 初始化變數-是否已上傳過資料
+if 'isUpload' not in st.session_state:
+    st.session_state.isUpload = False
+    allVariable.isUpload = st.session_state.isUpload
+
+# 初始化變數-OpenAI API Key
+if 'key' not in st.session_state:
+    st.session_state.key = None
+    allVariable.key = st.session_state.key
+
+# 初始化變數-是否輸入過OpenAI API Key
+if 'isKey' not in st.session_state:
+    st.session_state.isKey = False
+    allVariable.isKey = st.session_state.isKey
+
 # 初始化變數-完整EDA報告
 if 'fullReport' not in st.session_state:
     st.session_state.fullReport = None
@@ -29,9 +44,14 @@ if 'inputCode' not in st.session_state:
     allVariable.inputCode = st.session_state.inputCode
     
 # 初始化變數-資料集的所有特徵欄位
-if 'colList ' not in st.session_state:
-    st.session_state.colList  = None
+if 'colList' not in st.session_state:
+    st.session_state.colList = None
     allVariable.colList = st.session_state.colList
+    
+# 初始化變數-資料集的所有特徵欄位
+if 'selectCol' not in st.session_state:
+    st.session_state.selectCol = None
+    allVariable.selectCol = st.session_state.selectCol
     
 # 初始化變數-使用者選擇要了解的一個欄位的Report
 if 'OneColReport' not in st.session_state:
@@ -70,9 +90,6 @@ add_page_title(page_title="EDA App", layout="wide")
 
 # 在主頁面上顯示的內容
 def main():
-
-    # # 大標
-    # st.subheader("測試EDA程式")
     
     # 請使用者輸入openAI api key
     if allVariable.isKey == False:

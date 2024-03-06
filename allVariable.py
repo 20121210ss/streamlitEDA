@@ -1,12 +1,18 @@
 
-# 初始化變數-OpenAI key
-key = ""
-
 # 設定固定高度(圖、表格、report皆可用)
-Height=1200
+Height=1100
 
 # 初始化變數-資料集
 df = None
+
+# 此次上傳過資料了嗎
+isUpload = False
+
+# 初始化變數-OpenAI key
+key = ""
+
+# 此次輸入過key了嗎
+isKey = False
     
 # 初始化變數-完整EDA報告
 fullReport = None
@@ -38,8 +44,5 @@ ThreePicResult = None
 # 初始化對話session
 messages = []
 
-# 此次上傳過資料了嗎
-isUpload = False
 
-# 此次輸入過key了嗎
-isKey = False
+

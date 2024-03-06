@@ -18,6 +18,10 @@ import pandas as pd
 wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
 def EDAmin():
+    
+    # 大標
+    st.subheader("單一欄位處理🖋️")
+    
     chooseCol()
     
     col1, col2 = st.columns(spec=[0.5,0.5])

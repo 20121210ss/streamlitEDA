@@ -10,7 +10,11 @@ import matplotlib.pyplot as plt
 import allVariable
 
 # prompt頁聊天功能
-def chat():      
+def chat():    
+    
+    # 大標
+    st.subheader("AI對話🗨️")
+      
     if allVariable.df is not None:
         # 显示对话记录
         for message in allVariable.messages:

@@ -9,8 +9,11 @@ import seaborn as sns
 import pandas as pd
 
 def codePage():
-    st.text("code內容")
     
+    # 大標
+    st.subheader("自行編譯code🖥️")
+    
+    st.tabs("code內容")
     # 创建一个空的占位符
     code_placeholder = st.empty()
     ans_placeholder = st.empty()

@@ -4,6 +4,10 @@ st.set_page_config(page_title="EDA App",layout="wide")
 import allVariable
 
 def download():
+    
+    # 大標
+    st.subheader("匯出🗳️")
+    
     showData = st.empty()
     showData.data_editor(allVariable.df)
     
