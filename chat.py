@@ -37,9 +37,8 @@ def chat():
             # Display assistant response
             with st.chat_message("assistant"):
                 response, genCode = predictDF(user_input,allVariable.key) 
-                
                 if isinstance(response,pandasai.smart_dataframe.SmartDataframe):
-                    allVariable.df = pd.DataFrame(response)
+                    allVariable.df = pd.DataFrame(response.to_dict())
                     joinAllCode(user_input,"為資料集所示",genCode)
                 else:
                     joinAllCode(user_input,response,genCode)
