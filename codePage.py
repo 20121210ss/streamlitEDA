@@ -13,7 +13,7 @@ def codePage():
     # 大標
     st.subheader("自行編譯code🖥️")
     
-    st.tabs("code內容")
+    st.tabs(['code內容'])
     # 创建一个空的占位符
     code_placeholder = st.empty()
     ans_placeholder = st.empty()
