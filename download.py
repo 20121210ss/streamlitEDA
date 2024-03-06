@@ -8,11 +8,22 @@ def download():
     # 大標
     st.subheader("匯出🗳️")
     
-    showData = st.empty()
-    showData.data_editor(allVariable.df)
+    # 整個頁面拆成5:5的分布   
+    col1, col2 = st.columns(spec=[0.6,0.5])
     
-    # 提供下載資料的按鈕
-    st.download_button(label="Download data as CSV", data=convert_df(allVariable.df), file_name='edited_df.csv', mime='text/csv')
+    with col1:
+        st.tabs(['目前資料集'])
+        showData = st.empty()
+        showData.data_editor(allVariable.df)
+        # 提供下載資料的按鈕
+        st.download_button(label="Download data as CSV", data=convert_df(allVariable.df), file_name='edited_df.csv', mime='text/csv')
+    
+    with col2:
+        st.tabs(['目前code彙整'])
+        code_placeholder = st.empty()    
+        code_placeholder.code(allVariable.outputCode, language="python", line_numbers=True)
+        st.download_button(label="Download code as Python", data=allVariable.outputCode, file_name='edited_df_code.py')
+   
          
 def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
