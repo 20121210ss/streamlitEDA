@@ -29,7 +29,7 @@ def codePage():
         allVariable.inputCode = allVariable.inputCode + "result"
     
     inputArea_placeholder = st.empty()
-    inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode)
+    inputArea_placeholder.text_area("輸入自行撰寫python code",allVariable.inputCode,key='inputCode')
     
     if st.button("送出"):
         refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder)
@@ -38,18 +38,18 @@ def codePage():
 # 重整code頁籤     
 def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
     codeDict = {}
-    if allVariable.inputCode is not "":
-        index = str(allVariable.inputCode).find("df")
+    if st.session_state.inputCode is not "":
+        index = str(st.session_state.inputCode).find("df")
         if index != -1:
             try:
-                cc = allVariable.inputCode.replace("df","allVariable.df")
+                cc = st.session_state.inputCode.replace("df","allVariable.df")
                 exec(cc+"""\naa = allVariable.df""",globals(),codeDict)
                 allVariable.df = codeDict['aa']
                 st.write(codeDict)
                 tip = "# code執行成功"
-            except:
-                tip = "# 無法執行"
-            allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+allVariable.inputCode+"\n"
+            except Exception as e:
+                tip = "無法執行,因:"+str(e)
+            allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
             code_placeholder.code(allVariable.outputCode, language="python", line_numbers=True)
             
             try:

@@ -175,8 +175,8 @@ def visualPic(PicCode):
         os.remove('temp_chart.png')
         plt.clf()
         
-    except:
-        st.text("no pic")
+    except Exception as e:
+        st.text("無法執行,因:"+str(e))
 
 # 透過正則化拆分回傳的結果，分為Code及敘述部分。
 def regularResponse(ThreePic):

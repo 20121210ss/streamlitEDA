@@ -111,19 +111,19 @@ def advice():
     with advice.container(): 
         if allVariable.OneColresult is not None:
             arr = [item[0] for item in allVariable.OneColresult]
-            selected_item = st.radio("選擇欲執行的操作",arr)
+            st.radio("選擇欲執行的操作",arr,key='radio_item')
             if st.button("執行code"):
-                index = arr.index(selected_item)
-                tryCode(selected_item,allVariable.OneColresult[index][1])   
+                index = arr.index(st.session_state.radio_item)
+                tryCode(st.session_state.radio_item,allVariable.OneColresult[index][1])   
 
         else:
             if allVariable.selectCol is not None:
                 reAdvice()
                 arr = [item[0] for item in allVariable.OneColresult]
-                selected_item = st.radio("選擇欲執行的操作",arr)
+                st.radio("選擇欲執行的操作",arr,key='radio_item')
                 if st.button("執行code"):
-                    index = arr.index(selected_item)
-                    tryCode(selected_item,allVariable.OneColresult[index][1])   
+                    index = arr.index(st.session_state.radio_item)
+                    tryCode(st.session_state.radio_item,allVariable.OneColresult[index][1])   
             else:
                 advice.write("請選擇欲分析的欄位")
                     
@@ -132,10 +132,10 @@ def advice():
         with advice.container():
             reAdvice()
             arr = [item[0] for item in allVariable.OneColresult]
-            selected_item = st.radio("選擇欲執行的操作",arr)
+            st.radio("選擇欲執行的操作",arr,key='radio_item')
             if st.button("執行code"):
-                index = arr.index(selected_item)
-                tryCode(selected_item,allVariable.OneColresult[index][1])   
+                index = arr.index(st.session_state.radio_item)
+                tryCode(st.session_state.radio_item,allVariable.OneColresult[index][1])   
 
 
 def reAdvice():
@@ -227,16 +227,13 @@ def tryCode(aa,cc):
         tip = "# code執行成功"
         st.warning("ok")
     except Exception as e:
-        tip = "# 無法執行"
-        st.error("無法執行,因:"+str(e))
+        tip = "無法執行,因:"+str(e)
+        st.error(tip)
         st.code(cc)
-        
         
     cc = cc.replace("allVariable.df","df")
     aa = aa.replace("\n"," ")
-    allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+aa+cc
-    
-    st.text(codeDict['dt'])
+    allVariable.outputCode = allVariable.outputCode+"\n# "+tip+"\n"+aa+cc
 
 
 if allVariable.df is not None:
