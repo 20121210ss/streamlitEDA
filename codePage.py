@@ -48,7 +48,7 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
                 st.write(codeDict)
                 tip = "# code執行成功"
             except Exception as e:
-                tip = "無法執行,因:"+str(e)
+                tip = "# 無法執行,因:"+str(e)
             allVariable.outputCode = allVariable.outputCode+"\n"+tip+"\n"+st.session_state.inputCode+"\n"
             code_placeholder.code(allVariable.outputCode, language="python", line_numbers=True)
             

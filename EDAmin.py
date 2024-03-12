@@ -224,8 +224,8 @@ def tryCode(aa,cc):
     try:
         exec(cc+"""\ndt = allVariable.df""",globals(),codeDict)
         allVariable.df = codeDict['dt']
-        tip = "# code執行成功"
-        st.warning("ok")
+        tip = "code執行成功"
+        st.warning(tip)
     except Exception as e:
         tip = "無法執行,因:"+str(e)
         st.error(tip)
