@@ -3,10 +3,10 @@ import pandas as pd
 import allVariable
 from st_pages import Page, show_pages, add_page_title
 
-# # 初始化變數-資料集
-# if 'df' not in st.session_state:
-#     st.session_state.df = None
-#     allVariable.df = st.session_state.df
+# 初始化變數-資料集
+if 'df' not in st.session_state:
+    st.session_state.df = None
+    allVariable.df = st.session_state.df
 
 # 初始化變數-是否已上傳過資料
 if 'isUpload' not in st.session_state:
@@ -102,7 +102,7 @@ def main():
             upload()
     
     # 若使用者有上傳資料集
-    if allVariable.df is not None: 
+    if allVariable.isUpload == True: 
         showData = st.empty()
         showData.data_editor(allVariable.df) 
         allVariable.colList = list(allVariable.df.columns)         
