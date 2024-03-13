@@ -44,5 +44,8 @@ ThreePicResult = None
 # 初始化對話session
 messages = []
 
+# 初始化開關，是否進行過刪除遺漏值
+deleteRun = False
+
 
 

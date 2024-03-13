@@ -3,10 +3,10 @@ import pandas as pd
 import allVariable
 from st_pages import Page, show_pages, add_page_title
 
-# 初始化變數-資料集
-if 'df' not in st.session_state:
-    st.session_state.df = None
-    allVariable.df = st.session_state.df
+# # 初始化變數-資料集
+# if 'df' not in st.session_state:
+#     st.session_state.df = None
+#     allVariable.df = st.session_state.df
 
 # 初始化變數-是否已上傳過資料
 if 'isUpload' not in st.session_state:
@@ -16,6 +16,7 @@ if 'isUpload' not in st.session_state:
 # 初始化變數-OpenAI API Key
 if 'key' not in st.session_state:
     st.session_state.key = None
+    allVariable.df = None
     allVariable.key = st.session_state.key
 
 # 初始化變數-是否輸入過OpenAI API Key
@@ -72,6 +73,11 @@ if 'ThreePicResult' not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
     allVariable.messages = st.session_state.messages
+
+# 初始化開關，是否進行過刪除遺漏值
+if 'deleteRun' not in st.session_state:
+    st.session_state.deleteRun = False
+    allVariable.deleteRun = False
 
 show_pages(
     [

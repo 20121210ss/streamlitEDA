@@ -226,15 +226,13 @@ def tryCode(aa,cc):
         allVariable.df = codeDict['dt']
         tip = "code執行成功"
         st.warning(tip)
+        cc = cc.replace("allVariable.df","df")
+        aa = aa.replace("\n"," ")
+        allVariable.outputCode = allVariable.outputCode+"\n# "+tip+"\n"+aa+cc
     except Exception as e:
         tip = "無法執行,因:"+str(e)
         st.error(tip)
         st.code(cc)
-        
-    cc = cc.replace("allVariable.df","df")
-    aa = aa.replace("\n"," ")
-    allVariable.outputCode = allVariable.outputCode+"\n# "+tip+"\n"+aa+cc
-
 
 if allVariable.df is not None:
     EDAmin()
