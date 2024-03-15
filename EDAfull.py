@@ -15,7 +15,7 @@ import os
 import re
 from main import getDataframe
 
-
+df = None
 
 def EDAfull():
     

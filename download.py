@@ -4,6 +4,8 @@ st.set_page_config(page_title="EDA App",layout="wide")
 import allVariable
 from main import getDataframe
 
+df = None
+
 def download():
     
     # 大標
