@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 import allVariable
 from main import getDataframe
 
-df = getDataframe()
-
 # prompt頁聊天功能
 def chat():    
     
@@ -83,7 +81,8 @@ def joinAllCode(question,result,code):
     
     
 
-if df is not None:
+if allVariable.df is not None:
+    df = getDataframe()
     chat()
 else:
     st.error("請匯入資料集")

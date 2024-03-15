@@ -2,6 +2,7 @@ import streamlit as st
 st.set_page_config(page_title="EDA App",layout="wide")
 
 import allVariable
+from main import getDataframe
 
 def download():
     
@@ -14,9 +15,9 @@ def download():
     with col1:
         st.tabs(['目前資料集'])
         showData = st.empty()
-        showData.data_editor(allVariable.df)
+        showData.data_editor(df)
         # 提供下載資料的按鈕
-        st.download_button(label="Download data as CSV", data=convert_df(allVariable.df), file_name='edited_df.csv', mime='text/csv')
+        st.download_button(label="Download data as CSV", data=convert_df(df), file_name='edited_df.csv', mime='text/csv')
     
     with col2:
         st.tabs(['目前code彙整'])
@@ -30,6 +31,7 @@ def convert_df(df):
     return df.to_csv().encode('utf-8')
         
 if allVariable.df is not None:
+    df = getDataframe()
     download()
 else:
     st.error("請匯入資料集")

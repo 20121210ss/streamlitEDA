@@ -16,7 +16,7 @@ import seaborn as sns
 import pandas as pd
 from main import getDataframe
 
-df = getDataframe()
+
 
 wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
@@ -237,7 +237,8 @@ def tryCode(aa,cc):
         st.error(tip)
         st.code(cc)
 
-if df is not None:
+if allVariable.df is not None:
+    df = getDataframe()
     EDAmin()
 else:
     st.error("請匯入資料集")

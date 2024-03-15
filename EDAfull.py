@@ -15,7 +15,7 @@ import os
 import re
 from main import getDataframe
 
-df = getDataframe()
+
 
 def EDAfull():
     
@@ -208,7 +208,8 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
     # When you need to publish your app to the public, you should set the debug parameter to False to prevent other users from writing to your chart configuration file.
     return StreamlitRenderer(df, spec="./gw_config.json", debug=False) 
             
-if df is not None:
+if allVariable.df is not None:
+    df = getDataframe()
     EDAfull()
 else:
     st.error("請匯入資料集")
