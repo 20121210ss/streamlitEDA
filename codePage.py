@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
+from main import getDataframe
+
+df = getDataframe()
 
 def codePage():
     
@@ -63,7 +66,7 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
 
     allVariable.inputCode = ""
             
-if allVariable.df is not None:
+if df is not None:
     codePage()
 else:
     st.error("請匯入資料集")

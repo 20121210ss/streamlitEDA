@@ -3,6 +3,9 @@ st.set_page_config(layout="wide")
 
 import pandas as pd
 import allVariable
+from main import getDataframe
+
+df = getDataframe()
 
 def preprocessing():
     
@@ -13,13 +16,13 @@ def preprocessing():
     with col1:
         st.tabs(['資料集'])
         show = st.empty()
-        show.data_editor(allVariable.df)
+        show.data_editor(df)
 
     with col2:
         st.tabs(['前處理動作'])
                 
         with st.expander("填補遺漏值"):
-            missingList = allVariable.df.isnull().any()
+            missingList = df.isnull().any()
             missingList = missingList[missingList].index.tolist()
             st.selectbox(
                 "選擇欲填補遺漏值的特徵欄位",
@@ -38,7 +41,7 @@ def preprocessing():
                 allVariable.deleteRun = True
                 
         with st.expander("處理離群值"):
-            outlierList = allVariable.df.select_dtypes(include=['int', 'float']).columns.tolist()
+            outlierList = df.select_dtypes(include=['int', 'float']).columns.tolist()
             st.selectbox(
                 "選擇欲處理離群值的特徵欄位",
                 outlierList,
@@ -49,7 +52,13 @@ def preprocessing():
             st.radio("請選擇透過何種方式修改離群值",["平均值","中位數","眾數","向前填充","向後填充"],key="change")
             if st.button("透過"+str(st.session_state.change)+"來修改離群值"):
                 change_outlier(st.session_state.outlierCol,st.session_state.change)
-                
+        
+        with st.expander("新增欄位"):
+            st.selectbox(
+                "選擇新欄位的來源欄位",
+                allVariable.colList,
+                index=None,
+            )                
                 
 def delete_MissingValue():
     codeDict = {}
@@ -151,7 +160,7 @@ df = allVariable.df
     except Exception as e:
         st.error("無法執行，因:"+str(e))
 
-if allVariable.df is not None:
+if df is not None:
     preprocessing()
 else:
     st.error("請匯入資料集")

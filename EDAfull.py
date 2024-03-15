@@ -13,6 +13,9 @@ import seaborn as sns
 import pandas as pd
 import os
 import re
+from main import getDataframe
+
+df = getDataframe()
 
 def EDAfull():
     
@@ -50,10 +53,10 @@ def EDAfull():
         
 # 完整EDA報告
 def reRunEDAfullreport():
-    if allVariable.df is not None:
+    if df is not None:
         try:
             # 創建 Profile 報告
-            profile = ProfileReport(allVariable.df,)
+            profile = ProfileReport(df)
             allVariable.fullReport = profile.to_html()
             html(allVariable.fullReport,height=allVariable.Height,scrolling=True)
         except:
@@ -188,10 +191,10 @@ def regularResponse(ThreePic):
 
 
 def Pyg():  
-    if allVariable.df is not None:
+    if df is not None:
         # 顯示資料集的圖表
         st.subheader("手動呈現資料集分佈")
-        renderer = get_pyg_renderer(allVariable.df)
+        renderer = get_pyg_renderer(df)
         # Render your data exploration interface. Developers can use it to build charts by drag and drop.
         renderer.render_explore(width=900)
 
@@ -205,7 +208,7 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
     # When you need to publish your app to the public, you should set the debug parameter to False to prevent other users from writing to your chart configuration file.
     return StreamlitRenderer(df, spec="./gw_config.json", debug=False) 
             
-if allVariable.df is not None:
+if df is not None:
     EDAfull()
 else:
     st.error("請匯入資料集")

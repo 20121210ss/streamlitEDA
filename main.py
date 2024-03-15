@@ -110,8 +110,9 @@ def main():
     # 若使用者有上傳資料集
     if allVariable.isUpload == True: 
         showData = st.empty()
-        showData.data_editor(allVariable.df) 
-        allVariable.colList = list(allVariable.df.columns)         
+        df = getDataframe()
+        showData.data_editor(df)
+        allVariable.colList = list(df.columns)         
           
 # 上傳檔案
 def upload():
@@ -124,6 +125,11 @@ def upload():
             
         except Exception as e:
             st.error(f"讀取檔案時發生錯誤: {e}")
+            
+@st.cache_resource
+def getDataframe():
+    return allVariable.df
+    
     
 if __name__ == "__main__":
     main()

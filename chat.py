@@ -8,14 +8,17 @@ from pandasai import SmartDataframe
 import os
 import matplotlib.pyplot as plt
 import allVariable
+from main import getDataframe
+
+df = getDataframe()
 
 # prompt頁聊天功能
 def chat():    
     
     # 大標
     st.subheader("AI對話🗨️")
-      
-    if allVariable.df is not None:
+    
+    if df is not None:
         # 显示对话记录
         for message in allVariable.messages:
             if message["role"] == "user":
@@ -36,9 +39,9 @@ def chat():
             
             # Display assistant response
             with st.chat_message("assistant"):
-                response, genCode = predictDF(user_input,allVariable.key) 
+                response, genCode = predictDF(df,user_input,allVariable.key) 
                 if isinstance(response,pandasai.smart_dataframe.SmartDataframe):
-                    allVariable.df = pd.DataFrame(response.to_dict())
+                    df = pd.DataFrame(response.to_dict())
                     joinAllCode(user_input,"為資料集所示",genCode)
                 else:
                     joinAllCode(user_input,response,genCode)
@@ -59,10 +62,10 @@ def chat():
                     st.code(genCode)
 
 # prompt頁詢問資料集
-def predictDF(text,key):
+def predictDF(data,text,key):
     openai.api_key = key
     llm = OpenAI(api_token=key) 
-    df = SmartDataframe(allVariable.df, config={"llm": llm})
+    df = SmartDataframe(data, config={"llm": llm})
     result1 = df.chat("我的問題是:"+text+"\n可以幫我解答並給我對應操作的code嗎")
     result2 = splitCode(df.last_code_executed)
     return result1,result2
@@ -80,7 +83,7 @@ def joinAllCode(question,result,code):
     
     
 
-if allVariable.df is not None:
+if df is not None:
     chat()
 else:
     st.error("請匯入資料集")

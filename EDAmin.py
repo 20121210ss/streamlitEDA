@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
+from main import getDataframe
+
+df = getDataframe()
 
 wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
@@ -91,9 +94,9 @@ def reRunOneColEDAreport(selindex):
 # 各特徵欄位的EDA報告            
 def reRunEDAminreport():
     try:
-        if allVariable.df is not None:    
+        if df is not None:    
             # 創建 Profile 報告
-            profile = ProfileReport(allVariable.df,minimal=True)
+            profile = ProfileReport(df,minimal=True)
             allVariable.minReport = profile.to_html()
             
             # 使用split方法切割字串，僅保留顯示各變數分析的部分
@@ -234,7 +237,7 @@ def tryCode(aa,cc):
         st.error(tip)
         st.code(cc)
 
-if allVariable.df is not None:
+if df is not None:
     EDAmin()
 else:
     st.error("請匯入資料集")
