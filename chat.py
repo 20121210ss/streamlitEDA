@@ -8,13 +8,12 @@ from pandasai import SmartDataframe
 import os
 import matplotlib.pyplot as plt
 import allVariable
-from main import getDataframe
 
 
 # prompt頁聊天功能
 def chat():    
     
-    df = getDataframe()
+    df = allVariable.getDataframe()
     
     # 大標
     st.subheader("AI對話🗨️")

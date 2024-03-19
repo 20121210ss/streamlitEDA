@@ -7,10 +7,9 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
-from main import getDataframe
 
 def codePage():
-    df = getDataframe()
+    df = allVariable.getDataframe()
     
     # 大標
     st.subheader("自行編譯code🖥️")

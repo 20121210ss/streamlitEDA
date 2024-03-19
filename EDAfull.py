@@ -13,12 +13,12 @@ import seaborn as sns
 import pandas as pd
 import os
 import re
-from main import getDataframe
 
 def EDAfull():
     
-    df = getDataframe()
+    df = allVariable.getDataframe()
     st.write(df)
+    
     # 大標
     st.subheader("完整分析報告📖")
     

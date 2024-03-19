@@ -1,3 +1,4 @@
+import streamlit as st
 
 # 設定固定高度(圖、表格、report皆可用)
 Height=1100
@@ -46,6 +47,17 @@ messages = []
 
 # 初始化開關，是否進行過刪除遺漏值
 deleteRun = False
+
+
+def setDataframe(new_df):
+   global df 
+   df = new_df
+    
+@st.cache_resource
+def getDataframe():
+    return df
+
+
 
 
 

@@ -3,11 +3,10 @@ st.set_page_config(layout="wide")
 
 import pandas as pd
 import allVariable
-from main import getDataframe
 
 def preprocessing():
     
-    df = getDataframe()
+    df = allVariable.getDataframe()
     
     # 大標
     st.subheader("簡易資料處理☑️")

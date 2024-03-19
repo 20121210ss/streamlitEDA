@@ -110,7 +110,7 @@ def main():
     # 若使用者有上傳資料集
     if allVariable.isUpload == True: 
         showData = st.empty()
-        df = getDataframe()
+        df = allVariable.getDataframe()
         showData.data_editor(df)
         allVariable.colList = list(df.columns)         
           
@@ -120,15 +120,12 @@ def upload():
     if st.session_state.df is not None:
         try:
             # 自動推斷檔案格式
-            allVariable.df = pd.read_csv(st.session_state.df, encoding='utf-8')
+            allVariable.setDataframe(pd.read_csv(st.session_state.df, encoding='utf-8'))
             allVariable.isUpload = True
             
         except Exception as e:
             st.error(f"讀取檔案時發生錯誤: {e}")
             
-@st.cache_resource
-def getDataframe():
-    return allVariable.df
 
     
     
