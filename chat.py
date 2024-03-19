@@ -8,7 +8,7 @@ from pandasai import SmartDataframe
 import os
 import matplotlib.pyplot as plt
 import allVariable
-from main import getDataframe,setDataframe
+from main import getDataframe
 
 df = None
 
@@ -41,7 +41,7 @@ def chat():
         with st.chat_message("assistant"):
             response, genCode = predictDF(df,user_input,allVariable.key) 
             if isinstance(response,pandasai.smart_dataframe.SmartDataframe):
-                setDataframe(pd.DataFrame(response.to_dict()))
+                allVariable.df = pd.DataFrame(response.to_dict())
                 joinAllCode(user_input,"為資料集所示",genCode)
             else:
                 joinAllCode(user_input,response,genCode)
