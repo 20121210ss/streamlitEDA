@@ -17,49 +17,47 @@ def chat():
     
     # 大標
     st.subheader("AI對話🗨️")
-    
-    if df is not None:
-        # 显示对话记录
-        for message in allVariable.messages:
-            if message["role"] == "user":
-                with st.chat_message("user"):
-                    st.markdown(message["content"])
-            elif message["role"] == "assistant":
-                with st.chat_message("assistant"):
-                    st.markdown(message["content"])
-                    
-        user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
-        # 接收使用者輸入
-        if user_input is not None:
-            # 將使用者的輸入加入紀錄
-            allVariable.messages.append({"role": "user", "content": user_input})
-            # Display user message in chat message container
+    # 显示对话记录
+    for message in allVariable.messages:
+        if message["role"] == "user":
             with st.chat_message("user"):
-                st.markdown(user_input)
-            
-            # Display assistant response
+                st.markdown(message["content"])
+        elif message["role"] == "assistant":
             with st.chat_message("assistant"):
-                response, genCode = predictDF(df,user_input,allVariable.key) 
-                if isinstance(response,pandasai.smart_dataframe.SmartDataframe):
-                    df = pd.DataFrame(response.to_dict())
-                    joinAllCode(user_input,"為資料集所示",genCode)
-                else:
-                    joinAllCode(user_input,response,genCode)
+                st.markdown(message["content"])
+                    
+    user_input = st.chat_input("請輸入欲對資料集執行的操作...",)
+    # 接收使用者輸入
+    if user_input is not None:
+        # 將使用者的輸入加入紀錄
+        allVariable.messages.append({"role": "user", "content": user_input})
+        # Display user message in chat message container
+        with st.chat_message("user"):
+            st.markdown(user_input)
+            
+        # Display assistant response
+        with st.chat_message("assistant"):
+            response, genCode = predictDF(df,user_input,allVariable.key) 
+            if isinstance(response,pandasai.smart_dataframe.SmartDataframe):
+                df = pd.DataFrame(response.to_dict())
+                joinAllCode(user_input,"為資料集所示",genCode)
+            else:
+                joinAllCode(user_input,response,genCode)
                 
-                if os.path.isfile('temp_chart.png'):
-                    im = plt.imread('temp_chart.png')
-                    st.image(im)
-                    os.remove('temp_chart.png')
+            if os.path.isfile('temp_chart.png'):
+                im = plt.imread('temp_chart.png')
+                st.image(im)
+                os.remove('temp_chart.png')
                 
-                if response is not None:
-                    st.write(response)
-                    allVariable.messages.append({"role": "assistant", "content": response})
-                else:
-                    st.write("No response from the assistant.")
-                    allVariable.messages.append({"role": "assistant", "content": "No response from the assistant."})           
+            if response is not None:
+                st.write(response)
+                allVariable.messages.append({"role": "assistant", "content": response})
+            else:
+                st.write("No response from the assistant.")
+                allVariable.messages.append({"role": "assistant", "content": "No response from the assistant."})           
                 
-                if genCode is not None:
-                    st.code(genCode)
+            if genCode is not None:
+                st.code(genCode)
 
 # prompt頁詢問資料集
 def predictDF(data,text,key):

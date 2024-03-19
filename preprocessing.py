@@ -160,7 +160,8 @@ df = allVariable.df
     except Exception as e:
         st.error("無法執行，因:"+str(e))
 
-if df is not None:
+if allVariable.df is not None:
+    df = getDataframe()
     preprocessing()
 else:
     st.error("請匯入資料集")
