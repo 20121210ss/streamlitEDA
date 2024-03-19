@@ -3,8 +3,7 @@ st.set_page_config(layout="wide")
 
 import pandas as pd
 import allVariable
-from main import getDataframe
-from main import setDataframe
+from main import getDataframe,setMyDataframe
 
 df = None
 
@@ -68,7 +67,7 @@ def delete_MissingValue():
     code = """df = allVariable.df.dropna(axis=0)"""
     try:
         exec(code,globals(),codeDict)
-        setDataframe(codeDict['df'])
+        setMyDataframe(codeDict['df'])
         st.success("已成功刪除遺漏值")
         code = code.replace("allVariable.df","df")
         allVariable.outputCode += "\n"+"# 刪除遺漏值"+"\n"+code
@@ -156,7 +155,7 @@ df = allVariable.df
     codeDict = {}
     try:
         exec(code,globals(),codeDict)
-        setDataframe(codeDict['df'])
+        setMyDataframe(codeDict['df'])
         st.success("已成功修改離群值")
         code = code.replace("allVariable.df","df")
         allVariable.outputCode += "\n"+f"# 透過{str(howto)}修改特徵{column}的離群值"+"\n"+code

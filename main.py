@@ -120,7 +120,7 @@ def upload():
     if st.session_state.df is not None:
         try:
             # 自動推斷檔案格式
-            setDataframe(pd.read_csv(st.session_state.df, encoding='utf-8'))
+            setMyDataframe(pd.read_csv(st.session_state.df, encoding='utf-8'))
             allVariable.isUpload = True
             
         except Exception as e:
@@ -131,7 +131,7 @@ def getDataframe():
     return allVariable.df
 
 @st.cache_resource
-def setDataframe(df):
+def setMyDataframe(df):
     allVariable.df = df
     
     

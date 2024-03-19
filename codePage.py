@@ -7,8 +7,7 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
-from main import getDataframe
-from main import setDataframe
+from main import getDataframe,setMyDataframe
 
 df = None
 
@@ -49,7 +48,7 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
             try:
                 cc = st.session_state.inputCode.replace("df","allVariable.df")
                 exec(cc+"""\naa = allVariable.df""",globals(),codeDict)
-                setDataframe(codeDict['aa'])
+                setMyDataframe(codeDict['aa'])
                 tip = "# code執行成功"
             except Exception as e:
                 tip = "# 無法執行,因:"+str(e)

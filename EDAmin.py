@@ -14,8 +14,7 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
-from main import getDataframe
-from main import setDataframe
+from main import getDataframe,setMyDataframe
 
 df = None
 
@@ -228,7 +227,7 @@ def tryCode(aa,cc):
     codeDict = {}
     try:
         exec(cc+"""\ndt = allVariable.df""",globals(),codeDict)
-        setDataframe(codeDict['dt'])
+        setMyDataframe(codeDict['dt'])
         tip = "code執行成功"
         st.warning(tip)
         cc = cc.replace("allVariable.df","df")
