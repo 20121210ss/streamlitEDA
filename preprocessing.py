@@ -3,7 +3,8 @@ st.set_page_config(layout="wide")
 
 import pandas as pd
 import allVariable
-from main import getDataframe,setDataframe
+from main import getDataframe
+from main import setDataframe
 
 df = None
 
@@ -163,7 +164,6 @@ df = allVariable.df
         st.error("無法執行，因:"+str(e))
 
 if allVariable.df is not None:
-    df = getDataframe()
     preprocessing()
 else:
     st.error("請匯入資料集")

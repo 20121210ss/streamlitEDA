@@ -35,7 +35,6 @@ def convert_df(df):
     return df.to_csv().encode('utf-8')
         
 if allVariable.df is not None:
-    df = getDataframe()
     download()
 else:
     st.error("請匯入資料集")

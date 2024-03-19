@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
-from main import getDataframe,setDataframe
+from main import getDataframe
+from main import setDataframe
 
 df = None
 
@@ -239,7 +240,6 @@ def tryCode(aa,cc):
         st.code(cc)
 
 if allVariable.df is not None:
-    df = getDataframe()
     EDAmin()
 else:
     st.error("請匯入資料集")

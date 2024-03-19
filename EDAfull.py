@@ -211,7 +211,6 @@ def get_pyg_renderer(daf) -> "StreamlitRenderer":
     return StreamlitRenderer(df, spec="./gw_config.json", debug=False) 
             
 if allVariable.df is not None:
-    df = getDataframe()
     EDAfull()
 else:
     st.error("請匯入資料集")

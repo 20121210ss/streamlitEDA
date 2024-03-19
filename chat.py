@@ -8,7 +8,8 @@ from pandasai import SmartDataframe
 import os
 import matplotlib.pyplot as plt
 import allVariable
-from main import getDataframe,setDataframe
+from main import getDataframe
+from main import setDataframe
 
 df = None
 
@@ -84,7 +85,6 @@ def joinAllCode(question,result,code):
     
 
 if allVariable.df is not None:
-    df = getDataframe()
     chat()
 else:
     st.error("請匯入資料集")
