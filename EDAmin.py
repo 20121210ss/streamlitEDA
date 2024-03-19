@@ -16,8 +16,6 @@ import seaborn as sns
 import pandas as pd
 from main import getDataframe
 
-df = None
-
 wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
 def EDAmin():

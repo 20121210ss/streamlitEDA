@@ -5,8 +5,6 @@ import pandas as pd
 import allVariable
 from main import getDataframe
 
-df = None
-
 def preprocessing():
     
     df = getDataframe()

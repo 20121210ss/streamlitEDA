@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import allVariable
 from main import getDataframe
 
-df = None
 
 # prompt頁聊天功能
 def chat():    

@@ -15,12 +15,10 @@ import os
 import re
 from main import getDataframe
 
-df = None
-
 def EDAfull():
     
     df = getDataframe()
-    
+    st.write(df)
     # 大標
     st.subheader("完整分析報告📖")
     
@@ -55,14 +53,13 @@ def EDAfull():
         
 # 完整EDA報告
 def reRunEDAfullreport(df):
-    if df is not None:
-        try:
-            # 創建 Profile 報告
-            profile = ProfileReport(df)
-            allVariable.fullReport = profile.to_html()
-            html(allVariable.fullReport,height=allVariable.Height,scrolling=True)
-        except:
-            st.text("完整報告出錯")
+    try:
+        # 創建 Profile 報告
+        profile = ProfileReport(df)
+        allVariable.fullReport = profile.to_html()
+        html(allVariable.fullReport,height=allVariable.Height,scrolling=True)
+    except Exception as e:
+        st.text("完整報告出錯"+str(e))
 
 def Visualization():
     
@@ -193,12 +190,14 @@ def regularResponse(ThreePic):
 
 
 def Pyg(df):  
-    if df is not None:
+    try:
         # 顯示資料集的圖表
         st.subheader("手動呈現資料集分佈")
         renderer = get_pyg_renderer(df)
         # Render your data exploration interface. Developers can use it to build charts by drag and drop.
         renderer.render_explore(width=900)
+    except Exception as e:
+        st.text("視覺化編輯區出錯"+str(e))
 
 # Establish communication between pygwalker and streamlit
 init_streamlit_comm()
