@@ -8,6 +8,8 @@ df = None
 
 def download():
     
+    df = getDataframe()
+    
     # 大標
     st.subheader("匯出🗳️")
     

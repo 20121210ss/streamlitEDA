@@ -19,6 +19,8 @@ df = None
 
 def EDAfull():
     
+    df = getDataframe()
+    
     # 大標
     st.subheader("完整分析報告📖")
     
@@ -35,24 +37,24 @@ def EDAfull():
                 html(allVariable.fullReport,height=allVariable.Height,scrolling=True)
             # 否則生成報告
             else:
-                reRunEDAfullreport()
+                reRunEDAfullreport(df)
                 
             # 若user有更動資料集，點選以重新生成報告
         if st.button("生成報告"):
             allVariable.fullReport = None
             with fullreport:
-                reRunEDAfullreport()
+                reRunEDAfullreport(df)
             
     with col2:      
         st.tabs(['分析圖表'])
         Visualization()
         
     st.tabs(['自行產出分析圖表'])                
-    Pyg()
+    Pyg(df)
 
         
 # 完整EDA報告
-def reRunEDAfullreport():
+def reRunEDAfullreport(df):
     if df is not None:
         try:
             # 創建 Profile 報告
@@ -190,7 +192,7 @@ def regularResponse(ThreePic):
     return matches
 
 
-def Pyg():  
+def Pyg(df):  
     if df is not None:
         # 顯示資料集的圖表
         st.subheader("手動呈現資料集分佈")

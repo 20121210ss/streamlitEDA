@@ -8,12 +8,14 @@ from pandasai import SmartDataframe
 import os
 import matplotlib.pyplot as plt
 import allVariable
-from main import getDataframe
+from main import getDataframe,setDataframe
 
 df = None
 
 # prompt頁聊天功能
 def chat():    
+    
+    df = getDataframe()
     
     # 大標
     st.subheader("AI對話🗨️")
@@ -39,7 +41,7 @@ def chat():
         with st.chat_message("assistant"):
             response, genCode = predictDF(df,user_input,allVariable.key) 
             if isinstance(response,pandasai.smart_dataframe.SmartDataframe):
-                df = pd.DataFrame(response.to_dict())
+                setDataframe(pd.DataFrame(response.to_dict()))
                 joinAllCode(user_input,"為資料集所示",genCode)
             else:
                 joinAllCode(user_input,response,genCode)

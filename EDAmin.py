@@ -14,13 +14,14 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import seaborn as sns
 import pandas as pd
-from main import getDataframe
+from main import getDataframe,setDataframe
 
 df = None
 
 wordcloud = WordCloud("C:\\Windows\\Fonts\\msyh.ttc")
 
 def EDAmin():
+    df = getDataframe()
     
     # 大標
     st.subheader("單一欄位處理🖋️")
@@ -47,7 +48,7 @@ def EDAmin():
                                 
             # 若沒有各特徵的分析報告，生成報告    
             else:
-                reRunEDAminreport()
+                reRunEDAminreport(df)
                             
         # 若user有更動資料集，點選以重新生成報告
         if st.button("重新生成報告"):
@@ -92,7 +93,7 @@ def reRunOneColEDAreport(selindex):
         allVariable.OneColReport = result
         
 # 各特徵欄位的EDA報告            
-def reRunEDAminreport():
+def reRunEDAminreport(df):
     try:
         if df is not None:    
             # 創建 Profile 報告
@@ -226,7 +227,7 @@ def tryCode(aa,cc):
     codeDict = {}
     try:
         exec(cc+"""\ndt = allVariable.df""",globals(),codeDict)
-        allVariable.df = codeDict['dt']
+        setDataframe(codeDict['dt'])
         tip = "code執行成功"
         st.warning(tip)
         cc = cc.replace("allVariable.df","df")
