@@ -130,6 +130,7 @@ def upload():
 def getDataframe():
     return allVariable.df
 
+@st.cache_resource
 def setDataframe(df):
     allVariable.df = df
     
