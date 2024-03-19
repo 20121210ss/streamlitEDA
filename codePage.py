@@ -45,7 +45,7 @@ def refreshCode(code_placeholder,ans_placeholder,inputArea_placeholder):
             try:
                 cc = st.session_state.inputCode.replace("df","allVariable.df")
                 exec(cc+"""\naa = allVariable.df""",globals(),codeDict)
-                allVariable.df = codeDict['aa']
+                allVariable.setDataframe(codeDict['aa'])
                 tip = "# code執行成功"
             except Exception as e:
                 tip = "# 無法執行,因:"+str(e)

@@ -224,7 +224,7 @@ def tryCode(aa,cc):
     codeDict = {}
     try:
         exec(cc+"""\ndt = allVariable.df""",globals(),codeDict)
-        allVariable.df = codeDict['dt']
+        allVariable.setDataframe(codeDict['dt'])
         tip = "code執行成功"
         st.warning(tip)
         cc = cc.replace("allVariable.df","df")

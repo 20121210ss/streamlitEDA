@@ -64,7 +64,7 @@ def delete_MissingValue():
     code = """df = allVariable.df.dropna(axis=0)"""
     try:
         exec(code,globals(),codeDict)
-        allVariable.df = codeDict['df']
+        allVariable.setDataframe(codeDict['df'])
         st.success("已成功刪除遺漏值")
         code = code.replace("allVariable.df","df")
         allVariable.outputCode += "\n"+"# 刪除遺漏值"+"\n"+code
@@ -91,7 +91,7 @@ def fill_MissingValue(column):
     codeDict = {}
     try:
         exec(code,globals(),codeDict)
-        allVariable.df[column] = codeDict['df']
+        allVariable.setOneCol(codeDict['df'],column)
         st.success("已成功填補遺漏值")
         code = code.replace("allVariable.df","df")
         allVariable.outputCode += "\n"+f"# 透過{str(st.session_state.fill)}填補特徵{column}的遺漏值"+"\n"+code
@@ -152,7 +152,7 @@ df = allVariable.df
     codeDict = {}
     try:
         exec(code,globals(),codeDict)
-        allVariable.df = codeDict['df']
+        allVariable.setOneCol(codeDict['df'],column)
         st.success("已成功修改離群值")
         code = code.replace("allVariable.df","df")
         allVariable.outputCode += "\n"+f"# 透過{str(howto)}修改特徵{column}的離群值"+"\n"+code

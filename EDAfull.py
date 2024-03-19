@@ -17,7 +17,6 @@ import re
 def EDAfull():
     
     df = allVariable.getDataframe()
-    st.write(df)
     
     # 大標
     st.subheader("完整分析報告📖")

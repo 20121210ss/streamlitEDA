@@ -52,6 +52,10 @@ deleteRun = False
 def setDataframe(new_df):
    global df 
    df = new_df
+   
+def setOneCol(new_df,col):
+   global df
+   df[col] = new_df
     
 @st.cache_resource
 def getDataframe():
